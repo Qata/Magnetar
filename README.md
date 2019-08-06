@@ -1,6 +1,6 @@
 # Magnetar
 
-Magnetar is a simple torrent remote controller for iOS 13 and above.
+Magnetar is a simple yet powerful torrent remote for iOS 13 and above and macOS 15 and above.
 
 ## Features
 
