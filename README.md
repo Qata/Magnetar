@@ -15,7 +15,7 @@ Magnetar will have a lot of quality of life improvements that were sorely lackin
 | Accessibility | ❌ | ✅ |
 | Better server timeout handling | ❌ | ✅ |
 | Better server configuration debugging | ❌ | ✅ |
-| Localisation  | 🇬🇧 | 🇬🇧🇨🇳🇩🇪🇫🇷🇪🇸 |
+| Localisation  | 🇬🇧 | 🇬🇧 🇩🇪 🇫🇷 🇪🇸 🇨🇳 |
 
 BarMagnet was the first iOS app I ever created (and it started as a macOS app even before then).
 I was totally blown away by its popularity, but it was just a pet project to scratch an itch I'd had about a lack of good torrent remotes on iOS. 
