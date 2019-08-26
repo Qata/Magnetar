@@ -9,29 +9,33 @@
 import SwiftUI
 
 struct ProgressBar : View {
-    var value: CGFloat
+    @Clamping var value: CGFloat
     
     var body: some View {
-        ZStack(alignment: .leading) {
+        GeometryReader { geometry in
             Rectangle()
                 .opacity(0.3)
                 .foregroundColor(.gray)
+                .frame(width: geometry.size.width)
             Rectangle()
-                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .frame(width: self.value * geometry.size.width, alignment: .leading)
                 .animation(.easeInOut)
         }
         .frame(height: 4)
         .cornerRadius(2)
-        .accessibility(value: Text("\(Int(min(1, max(0, value)) * 100))%"))
+        .accessibility(value: Text("\(Int(value * 100))%"))
     }
 }
 
 extension ProgressBar {
     init<I: BinaryInteger>(current: I, max maximum: I) {
         self.init(
-            value: (maximum != 0).if(
-                true: CGFloat(current) / CGFloat(maximum),
-                false: 0
+            value: Clamping(
+                0...1,
+                initialValue: (maximum != 0).if(
+                    true: CGFloat(current) / CGFloat(maximum),
+                    false: 0
+                )
             )
         )
     }

@@ -8,28 +8,27 @@
 
 import Foundation
 
-fileprivate let numberFormatter: Atomic<NumberFormatter> = {
-    let formatter = NumberFormatter()
-    formatter.maximumFractionDigits = 2
-    return .init(formatter)
-}()
-
 struct Ratio: CustomStringConvertible {
+    static let numberFormatter: Atomic<NumberFormatter> = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        return .init(formatter)
+    }()
     let description: String
     let accessibleDescription: String
     
     init(_ torrent: Torrent) {
-        let description = numberFormatter.access {
-            $0.string(for:
-                (torrent.downloaded != 0).if(
-                    true: torrent.uploaded / torrent.downloaded,
-                    false: 0
-                )
-            )
-        }!
-        self.description = [description, ":", 1.description]
-            .joined()
-        accessibleDescription = [description, "to", 1.description]
-            .joined(separator: " ")
+        let ratio = (torrent.downloaded != 0).if(
+            true: torrent.uploaded / torrent.downloaded,
+            false: 0
+        )
+        let description = [
+            "\(ratio, formatter: Self.numberFormatter)",
+            1.description
+        ]
+        self.description = description
+            .joined(separator: " : ")
+        accessibleDescription = description
+            .joined(separator: " to ")
     }
 }

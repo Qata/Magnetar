@@ -23,7 +23,7 @@ extension Torrent {
 extension TorrentViewModel {
     struct ETA: CustomStringConvertible {
         let description: String
-        let accessibleDescription: Text
+        let accessibleDescription: String
         
         init(eta: Torrent.ETA) {
             switch eta {
@@ -40,23 +40,22 @@ extension TorrentViewModel {
                 let (offset, first) = values.enumerated().first { $1.1 > 0 }
                     ?? values.enumerated().reversed().first!
                 let second = values.dropFirst(offset + 1).first { $1 > 0 }
-                
                 let compacted = [first, second].compactMap { $0 }
                 description = compacted
                     .map { $1.description + String($0.first!) }
-                    .joined()
-                accessibleDescription = Text(
-                    compacted
+                    .joined(separator: " ")
+                accessibleDescription = compacted
                     .map { label, amount in
-                        [amount.description,
-                         String(label.dropLast((amount > 1).if(true: 0, false: 1)))]
-                            .joined(separator: " ")
+                        [
+                        amount.description,
+                        String(label.dropLast((amount == 1).if(true: 1, false: 0)))
+                        ]
+                        .joined(separator: " ")
                     }
                     .joined(separator: ", ")
-                )
             case .infinite:
                 description = "∞"
-                accessibleDescription = Text("Never")
+                accessibleDescription = "Never"
             }
         }
     }

@@ -21,10 +21,10 @@ struct TransferTotals: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("↑ \(uploadSpeed.description)")
-                .accessibility(label: Text("Upload speed"))
+                .accessibility(label: Text("Total upload speed"))
                 .accessibility(value: Text(uploadSpeed.accessibleDescription))
             Text("↓ \(downloadSpeed.description)")
-                .accessibility(label: Text("Download speed"))
+                .accessibility(label: Text("Total download speed"))
                 .accessibility(value: Text(downloadSpeed.accessibleDescription))
         }
         .font(.footnote)

@@ -8,12 +8,6 @@
 
 import Foundation
 
-fileprivate let numberFormatter: NumberFormatter = {
-    let formatter = NumberFormatter()
-    formatter.maximumFractionDigits = 1
-    return formatter
-}()
-
 extension TorrentViewModel {
     enum DataSizeClass: String, CaseIterable {
         case bytes
@@ -94,6 +88,11 @@ extension TorrentViewModel {
     }
     
     struct Size: CustomStringConvertible {
+        static let numberFormatter: Atomic<NumberFormatter> = {
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 1
+            return .init(formatter)
+        }()
         let bytes: UInt
         let sizeClass: DataSizeClass
         
@@ -107,7 +106,7 @@ extension TorrentViewModel {
         }
         
         var rawDescription: String {
-            numberFormatter.string(for: Double(bytes) / pow(2, Double(sizeClass.standing * 10)))!
+            "\(Double(bytes) / pow(2, Double(sizeClass.standing * 10)), formatter: Self.numberFormatter)"
         }
         
         var description: String {

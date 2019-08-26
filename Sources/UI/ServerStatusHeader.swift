@@ -14,12 +14,13 @@ struct ServerStatusHeader: View {
     
     var body: some View {
         ZStack {
-            color.frame(minWidth: UIScreen.main.bounds.size.width)
+            color.frame(width: UIScreen.main.bounds.size.width)
             Text(status.description)
                 .foregroundColor(.white)
         }
         .accessibility(label: Text("Server status"))
         .accessibility(value: Text(status.description))
+        .accessibility(addTraits: .isHeader)
     }
 
     var color: Color {

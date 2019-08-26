@@ -34,6 +34,15 @@ struct TorrentList: View {
             }
         }
         .navigationBarTitle(store.state.name)
-        .navigationBarItems(leading: TransferTotals(torrents: items))
+        .navigationBarItems(
+            leading: TransferTotals(torrents: items),
+            trailing: Button(action: refresh) {
+                Image(systemName: "arrow.clockwise")
+            }
+        )
+    }
+    
+    func refresh() {
+        
     }
 }

@@ -35,7 +35,7 @@ struct AddServerForm: View {
     @State var port: String = ""
     @State var username: String = ""
     @State var password: String = ""
-
+    
     var body: some View {
         Form {
             Section {
@@ -44,30 +44,43 @@ struct AddServerForm: View {
                         Text($0.name).tag($0)
                     }
                 }
-                HStack {
-                    Text("Name")
+                HLabelled("Name") {
                     TextField("Example", text: $name)
+                        .textContentType(.name)
                 }
-                HStack {
-                    Text("Address")
+                HLabelled("URL") {
                     TextField("https://api.example.com", text: $address)
+                        .textContentType(.URL)
                 }
-                HStack {
-                    Text("Port")
+                HLabelled("Port") {
                     TextField("8080", text: $port)
                 }
-                HStack {
-                    Text("Username")
+                HLabelled("Username") {
                     TextField("example_user", text: $username)
+                        .textContentType(.username)
                 }
-                HStack {
-                    Text("Password")
+                HLabelled("Password") {
                     SecureField("Ex4mpleP@ssw0rd", text: $password)
+                        .textContentType(.password)
                 }
+            }
+            Section {
+                Button("Save", action: save).disabled(
+                    name.isEmpty ||
+                    username.isEmpty ||
+                    password.isEmpty ||
+                    URL(string: address) == nil ||
+                    port.first == "0" ||
+                    port.unicodeScalars.contains(where: CharacterSet.decimalDigits.inverted.contains) ||
+                    (UInt(port).map((!) <<< (1...UInt16.max).contains <<< numericCast) ?? true)
+                )
             }
         }
         .navigationBarTitle("Settings")
-        .navigationBarItems(trailing: Button("Save", action: save))
+    }
+    
+    var validUserInput: Bool {
+        return false
     }
     
     func save() {

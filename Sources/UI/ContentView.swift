@@ -8,10 +8,21 @@
 
 import SwiftUI
 
-struct ContentView : View {
+struct ContentView: View {
     var body: some View {
-        NavigationView {
-            TorrentList()
+        TabView {
+            NavigationView {
+                TorrentList()
+            }.tabItem {
+                Image(systemName: "list.dash")
+                Text("Transfers")
+            }
+            NavigationView {
+                AddServerForm()
+            }.tabItem {
+                Image(systemName: "gear")
+                Text("Settings")
+            }
         }
     }
 }

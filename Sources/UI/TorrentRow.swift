@@ -21,28 +21,17 @@ struct TorrentRow: View {
             Text(torrent.name)
                 .font(.headline)
                 .accessibility(label: Text("Name"))
-                .onTapGesture {
-                    Publishers.Sequence(sequence: [
-                        App.Action.set(.name("Hey \(self.torrent.name)"))
-                        ])
-                        .append(Just(.set(.name("Hello \(self.torrent.name)"))).delay(for: 3, scheduler: DispatchQueue.main))
-                        .subscribe(App.store)
-                }
+                .padding(.bottom, -2)
             ProgressBar(current: torrent.downloaded, max: torrent.size)
                 .foregroundColor(viewModel.statusColor)
-                .accessibility(label: Text("Progress"))
             VStack {
                 HStack {
                     HStack {
                         Spacer()
                         Text("\(viewModel.speed(for: \.downloadSpeed).description) ↓")
-                            .accessibility(label: Text("Download speed"))
-                            .accessibility(value: Text(viewModel.speed(for: \.downloadSpeed).accessibleDescription))
                     }
                     HStack {
                         Text("↑ \(viewModel.speed(for: \.uploadSpeed).description)")
-                            .accessibility(label: Text("Upload speed"))
-                            .accessibility(value: Text(viewModel.speed(for: \.uploadSpeed).accessibleDescription))
                         Spacer()
                     }
                 }
@@ -52,17 +41,18 @@ struct TorrentRow: View {
                         Spacer()
                     }
                     Text("Ratio: \(viewModel.ratio.description)")
-                        .accessibility(label: Text("Upload ratio"))
-                        .accessibility(value: Text(viewModel.ratio.accessibleDescription))
                     HStack {
                         Spacer()
-                        Text("ETA: \(viewModel.eta.description)")
-                            .accessibility(label: Text("ETA"))
-                            .accessibility(value: viewModel.eta.accessibleDescription)
+                        if [.downloading, .seeding].contains(torrent.status) {
+                            Text("ETA: \(viewModel.eta.description)")
+                        }
                     }
                 }
             }
             .font(.caption)
         }
+        .accessibilityElement()
+        .accessibility(label: Text(verbatim: torrent.name))
+        .accessibility(value: Text(viewModel.accessibleDescription))
     }
 }

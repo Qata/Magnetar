@@ -46,6 +46,28 @@ struct TorrentViewModel {
         }
     }
     
+    var accessibleDescription: String {
+        let context: [String]
+        switch torrent.status {
+        case .downloading:
+            context = [
+                "\(Double(torrent.downloaded) / Double(torrent.size) * 100)% downloaded",
+                "Estimated completion in \(eta.accessibleDescription)"
+            ]
+        case .seeding:
+            context = [
+                "Upload ratio of \(ratio.accessibleDescription)",
+                "\(size(for: \.uploaded).accessibleDescription) uploaded"
+                ]
+        case .queuedDownloading, .queuedSeeding, .stopped:
+            context = [
+                "Upload ratio of \(ratio.accessibleDescription)"
+            ]
+        }
+        return ([status] + context)
+            .joined(separator: "\n")
+    }
+    
     var eta: ETA {
         ETA(eta: torrent.eta)
     }

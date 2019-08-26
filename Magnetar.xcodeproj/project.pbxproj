@@ -10,6 +10,8 @@
 		F818DAAC22F97D77008FEE5F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F818DAAB22F97D77008FEE5F /* Preview Assets.xcassets */; };
 		F818DAAE22F97EE0008FEE5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F818DAAD22F97EE0008FEE5F /* Assets.xcassets */; };
 		F818DAB222F98115008FEE5F /* Recombine in Frameworks */ = {isa = PBXBuildFile; productRef = F818DAB122F98115008FEE5F /* Recombine */; };
+		F828224C230A691D00DA36A7 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F828224B230A691D00DA36A7 /* StringInterpolation.swift */; };
+		F83A64712302E245006518F1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83A64702302E245006518F1 /* SettingsView.swift */; };
 		F843914022DFFEEA003813E4 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = F843913F22DFFEEA003813E4 /* Measurements.swift */; };
 		F843914922E00531003813E4 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = F843914822E00531003813E4 /* Server.swift */; };
 		F88247B522D6EF6300F832E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88247B422D6EF6300F832E7 /* AppDelegate.swift */; };
@@ -26,19 +28,25 @@
 		F88247F522D864F200F832E7 /* Torrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88247F422D864F200F832E7 /* Torrent.swift */; };
 		F88247F922D865D800F832E7 /* TransferTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88247F822D865D800F832E7 /* TransferTotalsView.swift */; };
 		F88247FB22D865F700F832E7 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88247FA22D865F700F832E7 /* TorrentRow.swift */; };
+		F8B090452300F64A008CA48E /* HLabelledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B090442300F64A008CA48E /* HLabelledView.swift */; };
+		F8C0161B22FA9652007059C4 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0161A22FA9652007059C4 /* Clamping.swift */; };
 		F8D3090822D869120026C76A /* ServerStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3090722D869120026C76A /* ServerStatusHeader.swift */; };
 		F8D3090A22D869950026C76A /* ServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3090922D869950026C76A /* ServerStatus.swift */; };
 		F8D3090C22DB36B40026C76A /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3090B22DB36B40026C76A /* Atomic.swift */; };
 		F8D3091222DD5FED0026C76A /* TorrentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3091122DD5FED0026C76A /* TorrentViewModel.swift */; };
+		F8D35747230CD0F2004D9810 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D35746230CD0F2004D9810 /* Collection.swift */; };
 		F8E2FADF22E03B7000AC3B5D /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2FADE22E03B7000AC3B5D /* App.swift */; };
 		F8E2FAE322E17E2400AC3B5D /* TorrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2FAE222E17E2400AC3B5D /* TorrentList.swift */; };
 		F8E2FAE522E1847300AC3B5D /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2FAE422E1847300AC3B5D /* AddServerForm.swift */; };
 		F8E2FAE722E3092400AC3B5D /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2FAE622E3092400AC3B5D /* Function.swift */; };
+		F8F967B7230D2230001BC442 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F967B6230D2230001BC442 /* Sequence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F818DAAB22F97D77008FEE5F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Preview Assets.xcassets"; path = "Sources/Preview Content/Preview Assets.xcassets"; sourceTree = SOURCE_ROOT; };
 		F818DAAD22F97EE0008FEE5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F828224B230A691D00DA36A7 /* StringInterpolation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringInterpolation.swift; sourceTree = "<group>"; };
+		F83A64702302E245006518F1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F843913F22DFFEEA003813E4 /* Measurements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
 		F843914822E00531003813E4 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		F88247B122D6EF6300F832E7 /* Magnetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magnetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,14 +65,18 @@
 		F88247F422D864F200F832E7 /* Torrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Torrent.swift; sourceTree = "<group>"; };
 		F88247F822D865D800F832E7 /* TransferTotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferTotalsView.swift; sourceTree = "<group>"; };
 		F88247FA22D865F700F832E7 /* TorrentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
+		F8B090442300F64A008CA48E /* HLabelledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLabelledView.swift; sourceTree = "<group>"; };
+		F8C0161A22FA9652007059C4 /* Clamping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
 		F8D3090722D869120026C76A /* ServerStatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusHeader.swift; sourceTree = "<group>"; };
 		F8D3090922D869950026C76A /* ServerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatus.swift; sourceTree = "<group>"; };
 		F8D3090B22DB36B40026C76A /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		F8D3091122DD5FED0026C76A /* TorrentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentViewModel.swift; sourceTree = "<group>"; };
+		F8D35746230CD0F2004D9810 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		F8E2FADE22E03B7000AC3B5D /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		F8E2FAE222E17E2400AC3B5D /* TorrentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentList.swift; sourceTree = "<group>"; };
 		F8E2FAE422E1847300AC3B5D /* AddServerForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServerForm.swift; sourceTree = "<group>"; };
 		F8E2FAE622E3092400AC3B5D /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		F8F967B6230D2230001BC442 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,11 +94,15 @@
 		F818DAAF22F9800F008FEE5F /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				F8D35746230CD0F2004D9810 /* Collection.swift */,
 				F88247E822D81CF200F832E7 /* Optional.swift */,
 				F88247EA22D83A0100F832E7 /* TimeInterval.swift */,
 				F8D3090B22DB36B40026C76A /* Atomic.swift */,
 				F88247F022D843DC00F832E7 /* Bool.swift */,
 				F8E2FAE622E3092400AC3B5D /* Function.swift */,
+				F8C0161A22FA9652007059C4 /* Clamping.swift */,
+				F828224B230A691D00DA36A7 /* StringInterpolation.swift */,
+				F8F967B6230D2230001BC442 /* Sequence.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -146,12 +162,14 @@
 			isa = PBXGroup;
 			children = (
 				F88247B822D6EF6300F832E7 /* ContentView.swift */,
+				F83A64702302E245006518F1 /* SettingsView.swift */,
 				F8D3090722D869120026C76A /* ServerStatusHeader.swift */,
 				F8E2FAE222E17E2400AC3B5D /* TorrentList.swift */,
 				F88247FA22D865F700F832E7 /* TorrentRow.swift */,
 				F88247F822D865D800F832E7 /* TransferTotalsView.swift */,
 				F8E2FAE422E1847300AC3B5D /* AddServerForm.swift */,
 				F88247E422D8180500F832E7 /* ProgressBar.swift */,
+				F8B090442300F64A008CA48E /* HLabelledView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -266,17 +284,23 @@
 				F8D3090A22D869950026C76A /* ServerStatus.swift in Sources */,
 				F88247B722D6EF6300F832E7 /* SceneDelegate.swift in Sources */,
 				F88247E522D8180500F832E7 /* ProgressBar.swift in Sources */,
+				F8F967B7230D2230001BC442 /* Sequence.swift in Sources */,
 				F8E2FAE322E17E2400AC3B5D /* TorrentList.swift in Sources */,
 				F88247F922D865D800F832E7 /* TransferTotalsView.swift in Sources */,
 				F88247F322D8583500F832E7 /* Ratio.swift in Sources */,
 				F8E2FAE722E3092400AC3B5D /* Function.swift in Sources */,
 				F843914922E00531003813E4 /* Server.swift in Sources */,
 				F8E2FAE522E1847300AC3B5D /* AddServerForm.swift in Sources */,
+				F8B090452300F64A008CA48E /* HLabelledView.swift in Sources */,
+				F8D35747230CD0F2004D9810 /* Collection.swift in Sources */,
 				F88247B922D6EF6300F832E7 /* ContentView.swift in Sources */,
 				F88247E922D81CF200F832E7 /* Optional.swift in Sources */,
+				F828224C230A691D00DA36A7 /* StringInterpolation.swift in Sources */,
+				F8C0161B22FA9652007059C4 /* Clamping.swift in Sources */,
 				F843914022DFFEEA003813E4 /* Measurements.swift in Sources */,
 				F8D3091222DD5FED0026C76A /* TorrentViewModel.swift in Sources */,
 				F8E2FADF22E03B7000AC3B5D /* App.swift in Sources */,
+				F83A64712302E245006518F1 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

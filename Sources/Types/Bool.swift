@@ -45,15 +45,3 @@ extension Bool {
         }
     }
 }
-
-public extension Bool {
-    /// An alternative to chaining `&&` that doesn't destroy the compiler.
-    static func conjoin(_ bools: Bool...) -> Bool {
-        return bools.allSatisfy { $0 }
-    }
-    
-    /// An alternative to chaining `||` that doesn't destroy the compiler.
-    static func disjoin(_ bools: Bool...) -> Bool {
-        return bools.contains(true)
-    }
-}

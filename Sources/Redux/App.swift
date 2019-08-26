@@ -8,27 +8,37 @@
 
 import Foundation
 import Recombine
+import Combine
 
 enum App {
     static let store = Store<State, Action>(
-        state: .init(name: "Welcome", server: nil),
-        reducer: reducer
+        state: .init(
+            name: "Welcome",
+            servers: [],
+            selectedServer: nil,
+            refreshInterval: 2
+        ),
+        reducer: MutatingReducer { state, action in
+            switch action {
+            case let .set(.name(name)):
+                state.name = name
+            case let .set(.selectedServer(server)):
+                state.selectedServer = server
+            case let .set(.refreshInterval(refreshInterval)):
+                state.refreshInterval = refreshInterval
+            }
+        },
+        middleware: .sideEffect {
+            print($1)
+        },
+        publishOn: .main
     )
-    
-    static let reducer = Reducer<App.State, App.Action> { state, action in
-        var state = state
-        switch action {
-        case let .set(.name(name)):
-            state.name = name
-        case let .set(.server(server)):
-            state.server = server
-        }
-        return state
-    }
 
     struct State {
         var name: String
-        var server: AnyServer?
+        var servers: [Server]
+        var selectedServer: Server?
+        var refreshInterval: TimeInterval
     }
 
     enum Action {
@@ -36,7 +46,8 @@ enum App {
         
         enum Set {
             case name(String)
-            case server(AnyServer)
+            case selectedServer(Server)
+            case refreshInterval(TimeInterval)
         }
     }
 }
