@@ -23,4 +23,4 @@ Magnetar will be built with my full 8 years of experience in the iOS industry an
 
 ## Credits
 
-Magnetar is brought to you by Charlotte "Lotte" Tortorella and [contributors to the project](https://github.com/Qata/Magnetar/contributors). If you have feature suggestions or bug reports, feel free to help out by sending pull requests or by [creating new issues](https://github.com/Qata/Magnetar/issues/new).
+Magnetar is brought to you by Charlie Tortorella and [contributors to the project](https://github.com/Qata/Magnetar/contributors). If you have feature suggestions or bug reports, feel free to help out by sending pull requests or by [creating new issues](https://github.com/Qata/Magnetar/issues/new).
