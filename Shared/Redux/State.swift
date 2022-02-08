@@ -12,6 +12,7 @@ extension Global {
         var servers: [Server]
         var selectedServer: Server?
         var refreshInterval: TimeInterval
+        var sorting: Sorting
         var errors: [String] = []
     }
 }

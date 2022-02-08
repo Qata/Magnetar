@@ -18,7 +18,7 @@ struct MainView: View {
                 Text("Transfers")
             }
             NavigationView {
-                AddServerForm()
+                SortingView()
             }.tabItem {
                 Image(systemName: "list.number")
                 Text("Sorting")

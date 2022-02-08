@@ -20,7 +20,7 @@ struct JobDescriptor: Codable, Hashable {
     var eta: ETADescriptor
 }
 
-struct JobViewModel: Hashable, Codable {
+struct JobViewModel: Hashable, Codable, AccessibleCustomStringConvertible {
     enum Error: Swift.Error {
         case missing(ExpectedPayload)
     }
@@ -93,6 +93,10 @@ struct JobViewModel: Hashable, Codable {
         }
     }
     
+    var description: String {
+        accessibleDescription
+    }
+    
     var accessibleDescription: String {
         let context: [String]
         switch status {
@@ -114,6 +118,18 @@ struct JobViewModel: Hashable, Codable {
         return ([status.description] + context)
             .joined(separator: "\n")
     }
+}
+
+struct _JobDescriptor: Codable, Hashable {
+    enum Field: Codable, Hashable {
+        case unixDate
+        case speed
+        case size
+        case seconds
+        case string
+    }
+
+    let fields: [String: Field]
 }
 
 struct Job: Codable, Hashable {

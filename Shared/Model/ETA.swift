@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-enum ETA: Hashable, Codable, CustomStringConvertible {
+enum ETA: Hashable, Codable, AccessibleCustomStringConvertible {
     case finite(seconds: UInt)
     case infinite
     

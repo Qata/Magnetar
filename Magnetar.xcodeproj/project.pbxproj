@@ -75,8 +75,6 @@
 		CB6B0F7E27B253E2009CE0B5 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7427B253E2009CE0B5 /* Action.swift */; };
 		CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8027B253EA009CE0B5 /* Ratio.swift */; };
 		CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8027B253EA009CE0B5 /* Ratio.swift */; };
-		CB6B0F8527B253EA009CE0B5 /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */; };
-		CB6B0F8627B253EA009CE0B5 /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */; };
 		CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8227B253EA009CE0B5 /* Measurements.swift */; };
 		CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8227B253EA009CE0B5 /* Measurements.swift */; };
 		CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */; };
@@ -99,6 +97,13 @@
 		CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9327B253F2009CE0B5 /* Status.swift */; };
 		CB6B0FA727B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
 		CB6B0FA827B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
+		CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FA927B2788E009CE0B5 /* Sorting.swift */; };
+		CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FA927B2788E009CE0B5 /* Sorting.swift */; };
+		CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */; };
+		CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */; };
+		CB6B0FB227B27E5A009CE0B5 /* AutomaticSettings in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */; };
+		CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */; };
+		CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,7 +162,6 @@
 		CB6B0F7327B253E2009CE0B5 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		CB6B0F7427B253E2009CE0B5 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		CB6B0F8027B253EA009CE0B5 /* Ratio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ratio.swift; sourceTree = "<group>"; };
-		CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewModel.swift; sourceTree = "<group>"; };
 		CB6B0F8227B253EA009CE0B5 /* Measurements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
 		CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDescription.swift; sourceTree = "<group>"; };
 		CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStatus.swift; sourceTree = "<group>"; };
@@ -169,6 +173,9 @@
 		CB6B0F9227B253F2009CE0B5 /* ETA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
 		CB6B0F9327B253F2009CE0B5 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		CB6B0F9427B253F2009CE0B5 /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		CB6B0FA927B2788E009CE0B5 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
+		CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSorting.swift; sourceTree = "<group>"; };
+		CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleCustomStringConvertible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
+				CB6B0FB227B27E5A009CE0B5 /* AutomaticSettings in Frameworks */,
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 			);
@@ -229,6 +237,7 @@
 				CB6B0F7F27B253EA009CE0B5 /* ViewModel */,
 				CB6B0F6F27B253E2009CE0B5 /* Redux */,
 				CB6B0F4A27B253DC009CE0B5 /* Types */,
+				CB6B0FAC27B27A8B009CE0B5 /* Sourcery */,
 				CB6B0F1827B25234009CE0B5 /* UI */,
 				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
 			);
@@ -326,6 +335,8 @@
 				CB6B0F5427B253DC009CE0B5 /* Function.swift */,
 				CB6B0F5527B253DC009CE0B5 /* Optional.swift */,
 				CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */,
+				CB6B0FA927B2788E009CE0B5 /* Sorting.swift */,
+				CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -346,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				CB6B0F8027B253EA009CE0B5 /* Ratio.swift */,
-				CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */,
 				CB6B0F8227B253EA009CE0B5 /* Measurements.swift */,
 			);
 			path = ViewModel;
@@ -377,6 +387,14 @@
 			path = Payloads;
 			sourceTree = "<group>";
 		};
+		CB6B0FAC27B27A8B009CE0B5 /* Sourcery */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */,
+			);
+			path = Sourcery;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -397,6 +415,7 @@
 				CB6B0F1A27B25262009CE0B5 /* MonadicJSON */,
 				CB6B0F1D27B2528F009CE0B5 /* Recombine */,
 				CB6B0F2027B252A0009CE0B5 /* Algorithms */,
+				CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -499,6 +518,7 @@
 				CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */,
 				CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */,
 				CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -551,7 +571,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
-				CB6B0F8527B253EA009CE0B5 /* FileViewModel.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
@@ -561,6 +580,7 @@
 				CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */,
 				CB6B0FA327B253F3009CE0B5 /* ETA.swift in Sources */,
+				CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
@@ -579,9 +599,11 @@
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9927B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5B27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6B27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */,
 				CB6B0FA127B253F3009CE0B5 /* ServerRunner.swift in Sources */,
@@ -598,7 +620,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
-				CB6B0F8627B253EA009CE0B5 /* FileViewModel.swift in Sources */,
 				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB6B0F6227B253DC009CE0B5 /* Sequence.swift in Sources */,
@@ -608,6 +629,7 @@
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
 				CB6B0FA427B253F3009CE0B5 /* ETA.swift in Sources */,
+				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7C27B253E2009CE0B5 /* State.swift in Sources */,
@@ -626,9 +648,11 @@
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9A27B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
 				CB6B0FA227B253F3009CE0B5 /* ServerRunner.swift in Sources */,
@@ -852,6 +876,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -880,6 +905,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1078,6 +1104,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/AutomaticSettings";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1110,6 +1144,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */;
+			productName = AutomaticSettings;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

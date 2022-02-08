@@ -13,7 +13,8 @@ enum Global {
         state: .init(
             servers: [],
             selectedServer: transmissionServer,
-            refreshInterval: 2
+            refreshInterval: 2,
+            sorting: .ascending(.field(.name))
         ),
         reducer: Reducer.main,
         thunk: thunk,

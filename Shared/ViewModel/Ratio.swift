@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Ratio: Hashable, Codable, CustomStringConvertible {
+struct Ratio: Hashable, Codable, AccessibleCustomStringConvertible {
     static let numberFormatter: Atomic<NumberFormatter> = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
