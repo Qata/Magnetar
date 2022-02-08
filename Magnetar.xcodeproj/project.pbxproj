@@ -1,0 +1,1117 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB6B0EF527B25225009CE0B5 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */; };
+		CB6B0EF727B25225009CE0B5 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */; };
+		CB6B0F0127B25225009CE0B5 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */; };
+		CB6B0F0327B25225009CE0B5 /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F0227B25225009CE0B5 /* Tests_macOSLaunchTests.swift */; };
+		CB6B0F0427B25225009CE0B5 /* MagnetarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */; };
+		CB6B0F0527B25225009CE0B5 /* MagnetarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */; };
+		CB6B0F0827B25225009CE0B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */; };
+		CB6B0F0927B25225009CE0B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */; };
+		CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F1A27B25262009CE0B5 /* MonadicJSON */; };
+		CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F1D27B2528F009CE0B5 /* Recombine */; };
+		CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F2027B252A0009CE0B5 /* Algorithms */; };
+		CB6B0F2427B252AD009CE0B5 /* MonadicJSON in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F2327B252AD009CE0B5 /* MonadicJSON */; };
+		CB6B0F2627B252B2009CE0B5 /* Recombine in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F2527B252B2009CE0B5 /* Recombine */; };
+		CB6B0F2827B252B5009CE0B5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F2727B252B5009CE0B5 /* Algorithms */; };
+		CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */; };
+		CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */; };
+		CB6B0F3027B252FC009CE0B5 /* TorrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */; };
+		CB6B0F3127B252FC009CE0B5 /* TorrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */; };
+		CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */; };
+		CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */; };
+		CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2D27B252FC009CE0B5 /* MainView.swift */; };
+		CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2D27B252FC009CE0B5 /* MainView.swift */; };
+		CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */; };
+		CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */; };
+		CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */; };
+		CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */; };
+		CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */; };
+		CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */; };
+		CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */; };
+		CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */; };
+		CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3B27B2534E009CE0B5 /* HLabelledView.swift */; };
+		CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3B27B2534E009CE0B5 /* HLabelledView.swift */; };
+		CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4B27B253DC009CE0B5 /* Yield.swift */; };
+		CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4B27B253DC009CE0B5 /* Yield.swift */; };
+		CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4C27B253DC009CE0B5 /* Either.swift */; };
+		CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4C27B253DC009CE0B5 /* Either.swift */; };
+		CB6B0F5B27B253DC009CE0B5 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */; };
+		CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */; };
+		CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4E27B253DC009CE0B5 /* Collection.swift */; };
+		CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4E27B253DC009CE0B5 /* Collection.swift */; };
+		CB6B0F5F27B253DC009CE0B5 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */; };
+		CB6B0F6027B253DC009CE0B5 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */; };
+		CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5027B253DC009CE0B5 /* Sequence.swift */; };
+		CB6B0F6227B253DC009CE0B5 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5027B253DC009CE0B5 /* Sequence.swift */; };
+		CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */; };
+		CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */; };
+		CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5227B253DC009CE0B5 /* Atomic.swift */; };
+		CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5227B253DC009CE0B5 /* Atomic.swift */; };
+		CB6B0F6727B253DC009CE0B5 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5327B253DC009CE0B5 /* Bool.swift */; };
+		CB6B0F6827B253DC009CE0B5 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5327B253DC009CE0B5 /* Bool.swift */; };
+		CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5427B253DC009CE0B5 /* Function.swift */; };
+		CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5427B253DC009CE0B5 /* Function.swift */; };
+		CB6B0F6B27B253DC009CE0B5 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5527B253DC009CE0B5 /* Optional.swift */; };
+		CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5527B253DC009CE0B5 /* Optional.swift */; };
+		CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */; };
+		CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */; };
+		CB6B0F7527B253E2009CE0B5 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7027B253E2009CE0B5 /* Global.swift */; };
+		CB6B0F7627B253E2009CE0B5 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7027B253E2009CE0B5 /* Global.swift */; };
+		CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7127B253E2009CE0B5 /* Reducer.swift */; };
+		CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7127B253E2009CE0B5 /* Reducer.swift */; };
+		CB6B0F7927B253E2009CE0B5 /* Thunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7227B253E2009CE0B5 /* Thunk.swift */; };
+		CB6B0F7A27B253E2009CE0B5 /* Thunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7227B253E2009CE0B5 /* Thunk.swift */; };
+		CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7327B253E2009CE0B5 /* State.swift */; };
+		CB6B0F7C27B253E2009CE0B5 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7327B253E2009CE0B5 /* State.swift */; };
+		CB6B0F7D27B253E2009CE0B5 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7427B253E2009CE0B5 /* Action.swift */; };
+		CB6B0F7E27B253E2009CE0B5 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F7427B253E2009CE0B5 /* Action.swift */; };
+		CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8027B253EA009CE0B5 /* Ratio.swift */; };
+		CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8027B253EA009CE0B5 /* Ratio.swift */; };
+		CB6B0F8527B253EA009CE0B5 /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */; };
+		CB6B0F8627B253EA009CE0B5 /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */; };
+		CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8227B253EA009CE0B5 /* Measurements.swift */; };
+		CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8227B253EA009CE0B5 /* Measurements.swift */; };
+		CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */; };
+		CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */; };
+		CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */; };
+		CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */; };
+		CB6B0F9927B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */; };
+		CB6B0F9A27B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */; };
+		CB6B0F9B27B253F2009CE0B5 /* JSONPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */; };
+		CB6B0F9C27B253F3009CE0B5 /* JSONPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */; };
+		CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8F27B253F2009CE0B5 /* Payload.swift */; };
+		CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8F27B253F2009CE0B5 /* Payload.swift */; };
+		CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9027B253F2009CE0B5 /* Server.swift */; };
+		CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9027B253F2009CE0B5 /* Server.swift */; };
+		CB6B0FA127B253F3009CE0B5 /* ServerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */; };
+		CB6B0FA227B253F3009CE0B5 /* ServerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */; };
+		CB6B0FA327B253F3009CE0B5 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9227B253F2009CE0B5 /* ETA.swift */; };
+		CB6B0FA427B253F3009CE0B5 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9227B253F2009CE0B5 /* ETA.swift */; };
+		CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9327B253F2009CE0B5 /* Status.swift */; };
+		CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9327B253F2009CE0B5 /* Status.swift */; };
+		CB6B0FA727B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
+		CB6B0FA827B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CB6B0EF127B25225009CE0B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB6B0ED727B25224009CE0B5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB6B0EE227B25225009CE0B5;
+			remoteInfo = "Magnetar (iOS)";
+		};
+		CB6B0EFD27B25225009CE0B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB6B0ED727B25224009CE0B5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB6B0EE827B25225009CE0B5;
+			remoteInfo = "Magnetar (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetarApp.swift; sourceTree = "<group>"; };
+		CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CB6B0EE327B25225009CE0B5 /* Magnetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magnetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB6B0EE927B25225009CE0B5 /* Magnetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magnetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB6B0EEB27B25225009CE0B5 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		CB6B0EF027B25225009CE0B5 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
+		CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		CB6B0EFC27B25225009CE0B5 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
+		CB6B0F0227B25225009CE0B5 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingView.swift; sourceTree = "<group>"; };
+		CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentList.swift; sourceTree = "<group>"; };
+		CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddServerForm.swift; sourceTree = "<group>"; };
+		CB6B0F2D27B252FC009CE0B5 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
+		CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferTotalsView.swift; sourceTree = "<group>"; };
+		CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStatusHeader.swift; sourceTree = "<group>"; };
+		CB6B0F3B27B2534E009CE0B5 /* HLabelledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLabelledView.swift; sourceTree = "<group>"; };
+		CB6B0F4B27B253DC009CE0B5 /* Yield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Yield.swift; sourceTree = "<group>"; };
+		CB6B0F4C27B253DC009CE0B5 /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
+		CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clamping.swift; sourceTree = "<group>"; };
+		CB6B0F4E27B253DC009CE0B5 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringInterpolation.swift; sourceTree = "<group>"; };
+		CB6B0F5027B253DC009CE0B5 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LosslessValue.swift; sourceTree = "<group>"; };
+		CB6B0F5227B253DC009CE0B5 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		CB6B0F5327B253DC009CE0B5 /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
+		CB6B0F5427B253DC009CE0B5 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		CB6B0F5527B253DC009CE0B5 /* Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		CB6B0F7027B253E2009CE0B5 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		CB6B0F7127B253E2009CE0B5 /* Reducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
+		CB6B0F7227B253E2009CE0B5 /* Thunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thunk.swift; sourceTree = "<group>"; };
+		CB6B0F7327B253E2009CE0B5 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		CB6B0F7427B253E2009CE0B5 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		CB6B0F8027B253EA009CE0B5 /* Ratio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ratio.swift; sourceTree = "<group>"; };
+		CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewModel.swift; sourceTree = "<group>"; };
+		CB6B0F8227B253EA009CE0B5 /* Measurements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
+		CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDescription.swift; sourceTree = "<group>"; };
+		CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStatus.swift; sourceTree = "<group>"; };
+		CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedJobsPayload.swift; sourceTree = "<group>"; };
+		CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPayload.swift; sourceTree = "<group>"; };
+		CB6B0F8F27B253F2009CE0B5 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
+		CB6B0F9027B253F2009CE0B5 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRunner.swift; sourceTree = "<group>"; };
+		CB6B0F9227B253F2009CE0B5 /* ETA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
+		CB6B0F9327B253F2009CE0B5 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		CB6B0F9427B253F2009CE0B5 /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB6B0EE027B25225009CE0B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
+				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
+				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EE627B25225009CE0B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F2827B252B5009CE0B5 /* Algorithms in Frameworks */,
+				CB6B0F2427B252AD009CE0B5 /* MonadicJSON in Frameworks */,
+				CB6B0F2627B252B2009CE0B5 /* Recombine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EED27B25225009CE0B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EF927B25225009CE0B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB6B0ED627B25224009CE0B5 = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EDB27B25224009CE0B5 /* Shared */,
+				CB6B0EEA27B25225009CE0B5 /* macOS */,
+				CB6B0EF327B25225009CE0B5 /* Tests iOS */,
+				CB6B0EFF27B25225009CE0B5 /* Tests macOS */,
+				CB6B0EE427B25225009CE0B5 /* Products */,
+				CB6B0F2227B252AD009CE0B5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CB6B0EDB27B25224009CE0B5 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */,
+				CB6B0F8927B253F2009CE0B5 /* Model */,
+				CB6B0F7F27B253EA009CE0B5 /* ViewModel */,
+				CB6B0F6F27B253E2009CE0B5 /* Redux */,
+				CB6B0F4A27B253DC009CE0B5 /* Types */,
+				CB6B0F1827B25234009CE0B5 /* UI */,
+				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		CB6B0EE427B25225009CE0B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EE327B25225009CE0B5 /* Magnetar.app */,
+				CB6B0EE927B25225009CE0B5 /* Magnetar.app */,
+				CB6B0EF027B25225009CE0B5 /* Tests iOS.xctest */,
+				CB6B0EFC27B25225009CE0B5 /* Tests macOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB6B0EEA27B25225009CE0B5 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EEB27B25225009CE0B5 /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		CB6B0EF327B25225009CE0B5 /* Tests iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */,
+				CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */,
+			);
+			path = "Tests iOS";
+			sourceTree = "<group>";
+		};
+		CB6B0EFF27B25225009CE0B5 /* Tests macOS */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */,
+				CB6B0F0227B25225009CE0B5 /* Tests_macOSLaunchTests.swift */,
+			);
+			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		CB6B0F1827B25234009CE0B5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F2927B252FC009CE0B5 /* Top Level */,
+				CB6B0F4827B25395009CE0B5 /* Components */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		CB6B0F2227B252AD009CE0B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB6B0F2927B252FC009CE0B5 /* Top Level */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
+				CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */,
+				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
+				CB6B0F2D27B252FC009CE0B5 /* MainView.swift */,
+			);
+			path = "Top Level";
+			sourceTree = "<group>";
+		};
+		CB6B0F4827B25395009CE0B5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F3B27B2534E009CE0B5 /* HLabelledView.swift */,
+				CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */,
+				CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */,
+				CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */,
+				CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CB6B0F4A27B253DC009CE0B5 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F4B27B253DC009CE0B5 /* Yield.swift */,
+				CB6B0F4C27B253DC009CE0B5 /* Either.swift */,
+				CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */,
+				CB6B0F4E27B253DC009CE0B5 /* Collection.swift */,
+				CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */,
+				CB6B0F5027B253DC009CE0B5 /* Sequence.swift */,
+				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
+				CB6B0F5227B253DC009CE0B5 /* Atomic.swift */,
+				CB6B0F5327B253DC009CE0B5 /* Bool.swift */,
+				CB6B0F5427B253DC009CE0B5 /* Function.swift */,
+				CB6B0F5527B253DC009CE0B5 /* Optional.swift */,
+				CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		CB6B0F6F27B253E2009CE0B5 /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F7027B253E2009CE0B5 /* Global.swift */,
+				CB6B0F7127B253E2009CE0B5 /* Reducer.swift */,
+				CB6B0F7227B253E2009CE0B5 /* Thunk.swift */,
+				CB6B0F7327B253E2009CE0B5 /* State.swift */,
+				CB6B0F7427B253E2009CE0B5 /* Action.swift */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
+		CB6B0F7F27B253EA009CE0B5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F8027B253EA009CE0B5 /* Ratio.swift */,
+				CB6B0F8127B253EA009CE0B5 /* FileViewModel.swift */,
+				CB6B0F8227B253EA009CE0B5 /* Measurements.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CB6B0F8927B253F2009CE0B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */,
+				CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */,
+				CB6B0F8C27B253F2009CE0B5 /* Payloads */,
+				CB6B0F9027B253F2009CE0B5 /* Server.swift */,
+				CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */,
+				CB6B0F9227B253F2009CE0B5 /* ETA.swift */,
+				CB6B0F9327B253F2009CE0B5 /* Status.swift */,
+				CB6B0F9427B253F2009CE0B5 /* Job.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CB6B0F8C27B253F2009CE0B5 /* Payloads */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */,
+				CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */,
+				CB6B0F8F27B253F2009CE0B5 /* Payload.swift */,
+			);
+			path = Payloads;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB6B0EE227B25225009CE0B5 /* Magnetar (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB6B0F0C27B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Magnetar (iOS)" */;
+			buildPhases = (
+				CB6B0EDF27B25225009CE0B5 /* Sources */,
+				CB6B0EE027B25225009CE0B5 /* Frameworks */,
+				CB6B0EE127B25225009CE0B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Magnetar (iOS)";
+			packageProductDependencies = (
+				CB6B0F1A27B25262009CE0B5 /* MonadicJSON */,
+				CB6B0F1D27B2528F009CE0B5 /* Recombine */,
+				CB6B0F2027B252A0009CE0B5 /* Algorithms */,
+			);
+			productName = "Magnetar (iOS)";
+			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CB6B0EE827B25225009CE0B5 /* Magnetar (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB6B0F0F27B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Magnetar (macOS)" */;
+			buildPhases = (
+				CB6B0EE527B25225009CE0B5 /* Sources */,
+				CB6B0EE627B25225009CE0B5 /* Frameworks */,
+				CB6B0EE727B25225009CE0B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Magnetar (macOS)";
+			packageProductDependencies = (
+				CB6B0F2327B252AD009CE0B5 /* MonadicJSON */,
+				CB6B0F2527B252B2009CE0B5 /* Recombine */,
+				CB6B0F2727B252B5009CE0B5 /* Algorithms */,
+			);
+			productName = "Magnetar (macOS)";
+			productReference = CB6B0EE927B25225009CE0B5 /* Magnetar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CB6B0EEF27B25225009CE0B5 /* Tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB6B0F1227B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Tests iOS" */;
+			buildPhases = (
+				CB6B0EEC27B25225009CE0B5 /* Sources */,
+				CB6B0EED27B25225009CE0B5 /* Frameworks */,
+				CB6B0EEE27B25225009CE0B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB6B0EF227B25225009CE0B5 /* PBXTargetDependency */,
+			);
+			name = "Tests iOS";
+			productName = "Tests iOS";
+			productReference = CB6B0EF027B25225009CE0B5 /* Tests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		CB6B0EFB27B25225009CE0B5 /* Tests macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB6B0F1527B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Tests macOS" */;
+			buildPhases = (
+				CB6B0EF827B25225009CE0B5 /* Sources */,
+				CB6B0EF927B25225009CE0B5 /* Frameworks */,
+				CB6B0EFA27B25225009CE0B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB6B0EFE27B25225009CE0B5 /* PBXTargetDependency */,
+			);
+			name = "Tests macOS";
+			productName = "Tests macOS";
+			productReference = CB6B0EFC27B25225009CE0B5 /* Tests macOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB6B0ED727B25224009CE0B5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1310;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					CB6B0EE227B25225009CE0B5 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					CB6B0EE827B25225009CE0B5 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					CB6B0EEF27B25225009CE0B5 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = CB6B0EE227B25225009CE0B5;
+					};
+					CB6B0EFB27B25225009CE0B5 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = CB6B0EE827B25225009CE0B5;
+					};
+				};
+			};
+			buildConfigurationList = CB6B0EDA27B25224009CE0B5 /* Build configuration list for PBXProject "Magnetar" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CB6B0ED627B25224009CE0B5;
+			packageReferences = (
+				CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */,
+				CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */,
+				CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
+			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB6B0EE227B25225009CE0B5 /* Magnetar (iOS) */,
+				CB6B0EE827B25225009CE0B5 /* Magnetar (macOS) */,
+				CB6B0EEF27B25225009CE0B5 /* Tests iOS */,
+				CB6B0EFB27B25225009CE0B5 /* Tests macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB6B0EE127B25225009CE0B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F0827B25225009CE0B5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EE727B25225009CE0B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F0927B25225009CE0B5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EEE27B25225009CE0B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EFA27B25225009CE0B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB6B0EDF27B25225009CE0B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CB6B0F8527B253EA009CE0B5 /* FileViewModel.swift in Sources */,
+				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
+				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
+				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
+				CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */,
+				CB6B0F7927B253E2009CE0B5 /* Thunk.swift in Sources */,
+				CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
+				CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */,
+				CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */,
+				CB6B0FA327B253F3009CE0B5 /* ETA.swift in Sources */,
+				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
+				CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */,
+				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
+				CB6B0F7D27B253E2009CE0B5 /* Action.swift in Sources */,
+				CB6B0F7527B253E2009CE0B5 /* Global.swift in Sources */,
+				CB6B0F5F27B253DC009CE0B5 /* StringInterpolation.swift in Sources */,
+				CB6B0F0427B25225009CE0B5 /* MagnetarApp.swift in Sources */,
+				CB6B0F9B27B253F2009CE0B5 /* JSONPayload.swift in Sources */,
+				CB6B0F3027B252FC009CE0B5 /* TorrentList.swift in Sources */,
+				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
+				CB6B0F6727B253DC009CE0B5 /* Bool.swift in Sources */,
+				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */,
+				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
+				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
+				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
+				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
+				CB6B0F9927B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0F5B27B253DC009CE0B5 /* Clamping.swift in Sources */,
+				CB6B0F6B27B253DC009CE0B5 /* Optional.swift in Sources */,
+				CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
+				CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */,
+				CB6B0FA127B253F3009CE0B5 /* ServerRunner.swift in Sources */,
+				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
+				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
+				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
+				CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
+				CB6B0FA727B253F3009CE0B5 /* Job.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EE527B25225009CE0B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CB6B0F8627B253EA009CE0B5 /* FileViewModel.swift in Sources */,
+				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
+				CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */,
+				CB6B0F6227B253DC009CE0B5 /* Sequence.swift in Sources */,
+				CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */,
+				CB6B0F7A27B253E2009CE0B5 /* Thunk.swift in Sources */,
+				CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
+				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
+				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
+				CB6B0FA427B253F3009CE0B5 /* ETA.swift in Sources */,
+				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
+				CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */,
+				CB6B0F7C27B253E2009CE0B5 /* State.swift in Sources */,
+				CB6B0F7E27B253E2009CE0B5 /* Action.swift in Sources */,
+				CB6B0F7627B253E2009CE0B5 /* Global.swift in Sources */,
+				CB6B0F6027B253DC009CE0B5 /* StringInterpolation.swift in Sources */,
+				CB6B0F0527B25225009CE0B5 /* MagnetarApp.swift in Sources */,
+				CB6B0F9C27B253F3009CE0B5 /* JSONPayload.swift in Sources */,
+				CB6B0F3127B252FC009CE0B5 /* TorrentList.swift in Sources */,
+				CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */,
+				CB6B0F6827B253DC009CE0B5 /* Bool.swift in Sources */,
+				CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
+				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
+				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
+				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
+				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
+				CB6B0F9A27B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
+				CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */,
+				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
+				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
+				CB6B0FA227B253F3009CE0B5 /* ServerRunner.swift in Sources */,
+				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
+				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
+				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
+				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
+				CB6B0FA827B253F3009CE0B5 /* Job.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EEC27B25225009CE0B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0EF727B25225009CE0B5 /* Tests_iOSLaunchTests.swift in Sources */,
+				CB6B0EF527B25225009CE0B5 /* Tests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB6B0EF827B25225009CE0B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB6B0F0327B25225009CE0B5 /* Tests_macOSLaunchTests.swift in Sources */,
+				CB6B0F0127B25225009CE0B5 /* Tests_macOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB6B0EF227B25225009CE0B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB6B0EE227B25225009CE0B5 /* Magnetar (iOS) */;
+			targetProxy = CB6B0EF127B25225009CE0B5 /* PBXContainerItemProxy */;
+		};
+		CB6B0EFE27B25225009CE0B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB6B0EE827B25225009CE0B5 /* Magnetar (macOS) */;
+			targetProxy = CB6B0EFD27B25225009CE0B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CB6B0F0A27B25225009CE0B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CB6B0F0B27B25225009CE0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CB6B0F0D27B25225009CE0B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = consulting.monadic.Magnetar;
+				PRODUCT_NAME = Magnetar;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB6B0F0E27B25225009CE0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = consulting.monadic.Magnetar;
+				PRODUCT_NAME = Magnetar;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CB6B0F1027B25225009CE0B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = consulting.monadic.Magnetar;
+				PRODUCT_NAME = Magnetar;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CB6B0F1127B25225009CE0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = consulting.monadic.Magnetar;
+				PRODUCT_NAME = Magnetar;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CB6B0F1327B25225009CE0B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "consulting.monadic.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Magnetar (iOS)";
+			};
+			name = Debug;
+		};
+		CB6B0F1427B25225009CE0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "consulting.monadic.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Magnetar (iOS)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CB6B0F1627B25225009CE0B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "consulting.monadic.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Magnetar (macOS)";
+			};
+			name = Debug;
+		};
+		CB6B0F1727B25225009CE0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B52TY2Q6KY;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "consulting.monadic.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Magnetar (macOS)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB6B0EDA27B25224009CE0B5 /* Build configuration list for PBXProject "Magnetar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB6B0F0A27B25225009CE0B5 /* Debug */,
+				CB6B0F0B27B25225009CE0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB6B0F0C27B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Magnetar (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB6B0F0D27B25225009CE0B5 /* Debug */,
+				CB6B0F0E27B25225009CE0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB6B0F0F27B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Magnetar (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB6B0F1027B25225009CE0B5 /* Debug */,
+				CB6B0F1127B25225009CE0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB6B0F1227B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB6B0F1327B25225009CE0B5 /* Debug */,
+				CB6B0F1427B25225009CE0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB6B0F1527B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB6B0F1627B25225009CE0B5 /* Debug */,
+				CB6B0F1727B25225009CE0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Qata/MonadicJSON/";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReSwift/Recombine";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CB6B0F1A27B25262009CE0B5 /* MonadicJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */;
+			productName = MonadicJSON;
+		};
+		CB6B0F1D27B2528F009CE0B5 /* Recombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */;
+			productName = Recombine;
+		};
+		CB6B0F2027B252A0009CE0B5 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+		CB6B0F2327B252AD009CE0B5 /* MonadicJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */;
+			productName = MonadicJSON;
+		};
+		CB6B0F2527B252B2009CE0B5 /* Recombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */;
+			productName = Recombine;
+		};
+		CB6B0F2727B252B5009CE0B5 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CB6B0ED727B25224009CE0B5 /* Project object */;
+}

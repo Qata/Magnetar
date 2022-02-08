@@ -2,7 +2,7 @@
 //  Tests_iOS.swift
 //  Tests iOS
 //
-//  Created by Charlie Tor on 21/10/20.
+//  Created by Charles Maria Tor on 8/2/22.
 //
 
 import XCTest
@@ -32,7 +32,7 @@ class Tests_iOS: XCTestCase {
     }
 
     func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
