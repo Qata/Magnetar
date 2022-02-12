@@ -14,14 +14,21 @@ extension Global {
         case command(Command)
     }
     enum RefinedAction {
-        case error(String)
-        case set(Set)
-        
         enum Set {
             case selectedServer(Server)
             case refreshInterval(TimeInterval)
-            case jobs([JobViewModel])
+            case jobs([String: JobViewModel])
             case token(String?)
         }
+        enum Update {
+            case jobs([String: JobViewModel])
+        }
+        enum Remove {
+            case jobs([String])
+        }
+        case error(String)
+        case set(Set)
+        case update(Update)
+        case remove(Remove)
     }
 }

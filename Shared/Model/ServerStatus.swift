@@ -12,7 +12,7 @@ enum ServerStatus: String, CustomStringConvertible, Codable {
     case online
     case offline
     case attemptingConnection
-    
+
     var description: String {
         switch self {
         case .online, .offline:

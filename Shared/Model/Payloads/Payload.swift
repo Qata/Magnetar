@@ -6,5 +6,5 @@
 //
 
 enum Payload: Codable, Hashable {
-    case json(ExpectedPayload)
+    case json(Payload.Expected)
 }

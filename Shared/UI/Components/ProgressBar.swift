@@ -20,7 +20,7 @@ struct ProgressBar : View {
             Rectangle()
                 .frame(width: self.value * geometry.size.width, alignment: .leading)
         }
-        .frame(height: 4)
+        .frame(height: 2)
         .cornerRadius(2)
         .accessibility(value: Text("\(Int(value * 100))%"))
     }

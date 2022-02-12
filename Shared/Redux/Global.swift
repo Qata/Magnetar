@@ -2,6 +2,7 @@ import Recombine
 import Foundation
 
 typealias MainStore = Store<Global.State, Global.RawAction, Global.RefinedAction>
+typealias SubStore<State: Equatable, AsyncAction, SyncAction> = LensedStore<State, AsyncAction, SyncAction>
 
 enum Global {
     class Environment {
@@ -14,7 +15,7 @@ enum Global {
             servers: [],
             selectedServer: transmissionServer,
             refreshInterval: 2,
-            sorting: .ascending(.field(.name))
+            sorting: .ascending(.field(.preset(.name)))
         ),
         reducer: Reducer.main,
         thunk: thunk,

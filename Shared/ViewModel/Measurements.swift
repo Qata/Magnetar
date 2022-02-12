@@ -62,7 +62,7 @@ enum DataSizeClass: String, Codable, CaseIterable {
     }
 }
 
-struct Speed: Codable, Hashable, CustomStringConvertible {
+struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
     var bytes: UInt {
         size.bytes
     }
@@ -86,7 +86,7 @@ struct Speed: Codable, Hashable, CustomStringConvertible {
     let accessibleDescription: String
 }
 
-struct Size: Codable, Hashable, CustomStringConvertible {
+struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
     static let numberFormatter: Atomic<NumberFormatter> = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1

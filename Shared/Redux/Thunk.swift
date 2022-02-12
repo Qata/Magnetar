@@ -29,13 +29,13 @@ extension Publisher where Output == Global.State {
     }
 }
 
-typealias QueryResult = Either<[Global.Action], (data: Data, command: ServerCommand, context: APIDescriptor)>
+typealias QueryResult = Either<[Global.Action], (data: Data, command: Command.Descriptor, context: APIDescriptor)>
 
 extension Publisher where Output == Global.State, Failure == Never {
     func query(
         command actionCommand: Command
     ) -> AnyPublisher<QueryResult, AppError> {
-        func extractCommands(server: Server) -> AnyPublisher<(Server, ServerCommand), AppError> {
+        func extractCommands(server: Server) -> AnyPublisher<(Server, Command.Descriptor), AppError> {
             Just(server)
                 .setFailureType(to: AppError.self)
                 .zip(
@@ -71,7 +71,7 @@ extension Publisher where Output == Global.State, Failure == Never {
             }
         }
 
-        func handleRequest(server: Server, command: ServerCommand) -> AnyPublisher<QueryResult, AppError> {
+        func handleRequest(server: Server, command: Command.Descriptor) -> AnyPublisher<QueryResult, AppError> {
             func handleTask(
                 _ task: (data: Data, response: URLResponse)
             ) -> AnyPublisher<Either<[Global.Action], Data>, AppError> {
@@ -94,7 +94,7 @@ extension Publisher where Output == Global.State, Failure == Never {
             }
             
             return URLSession.shared
-                .dataTaskPublisher(for: command.request.urlRequest(for: server))
+                .dataTaskPublisher(for: command.request.urlRequest(for: server, ids: actionCommand.ids))
                 .mapError(AppError.serverError)
                 .flatMap(handleTask)
                 .map { $0.mapRight { ($0, command, server.api) } }
@@ -112,45 +112,44 @@ extension Publisher where Output == Global.State, Failure == Never {
         command actionCommand: Command,
         transform: @escaping (T) throws -> [Global.Action]
     ) -> AnyPublisher<Global.Action, AppError> {
-        func handleResult(_ queryResult: QueryResult) -> AnyPublisher<Global.Action, AppError> {
-            switch queryResult {
-            case let .left(actions):
-                return actions.publisher
-                    .setFailureType(to: AppError.self)
-                    .eraseToAnyPublisher()
-            case let .right((data, command, context)):
-                switch command.expected {
-                case let .json(payload):
-                    return JSONParser.parse(data: data)
-                        .publisher
-                        .mapError(AppError.jsonDecoding)
-                        .flatMap { json in
-                            Result {
-                                try T(from: json, against: payload, context: context)
-                            }
-                            .publisher
-                            .mapError { .jsonParsing($0 as! JSONParseError) }
-                            .flatMap { value in
-                                Result {
-                                    try transform(value)
-                                }
-                                .publisher
-                                .mapError(AppError.finalParsing)
-                                .flatMap(\.publisher)
-                            }
-                        }
-                        .eraseToAnyPublisher()
-                }
-            }
-        }
-
         if case .requestToken(andThen: .requestToken) = actionCommand {
             return Fail(error: .tokenRequestFailed)
                 .eraseToAnyPublisher()
+        } else {
+            return query(command: actionCommand)
+                .flatMap { (_ queryResult: QueryResult) -> AnyPublisher<Global.Action, AppError> in
+                    switch queryResult {
+                    case let .left(actions):
+                        return actions.publisher
+                            .setFailureType(to: AppError.self)
+                            .eraseToAnyPublisher()
+                    case let .right((data, command, context)):
+                        switch command.expected {
+                        case let .json(payload):
+                            return JSONParser.parse(data: data)
+                                .publisher
+                                .mapError(AppError.jsonDecoding)
+                                .flatMap { json in
+                                    Result {
+                                        try T(from: json, against: payload, context: context)
+                                    }
+                                    .publisher
+                                    .mapError { .jsonParsing($0 as! JSONParseError) }
+                                    .flatMap { value in
+                                        Result {
+                                            try transform(value)
+                                        }
+                                        .publisher
+                                        .mapError(AppError.finalParsing)
+                                        .flatMap(\.publisher)
+                                    }
+                                }
+                                .eraseToAnyPublisher()
+                        }
+                    }
+                }
+                .eraseToAnyPublisher()
         }
-        return query(command: actionCommand)
-            .flatMap(handleResult)
-            .eraseToAnyPublisher()
     }
     
     func query<T: JSONInitialisable>(
@@ -176,34 +175,43 @@ extension Global {
                     .flatMap { server in
                         state.query(
                             command: command,
-                            setting: { (value: [Job]) in
-                                try .jobs(
-                                    value.map {
+                            transform: { (value: [Job.Raw]) in
+                                let jobs = try Dictionary(
+                                    uniqueKeysWithValues: value.map {
                                         try JobViewModel(from: $0, context: server.api)
                                     }
+                                    .map { ($0.id, $0) }
+                                )
+                                return command.ids.isEmpty.if(
+                                    true: [.sync(.set(.jobs(jobs)))],
+                                    false: [.sync(.update(.jobs(jobs)))]
                                 )
                             }
                         )
                     }
                     .liftError()
-            case let .start(files):
-                return Just(.sync(.set(.jobs([])))).eraseToAnyPublisher()
-            case let .stop(files):
-                    return Just(.sync([])).eraseToAnyPublisher()
-            case let .pause(files):
-                return Just(.sync([])).eraseToAnyPublisher()
-            case .remove(_):
-                return Just(.sync([])).eraseToAnyPublisher()
-            case .delete(_):
-                return Just(.sync([])).eraseToAnyPublisher()
-            case .addMagnet(_):
-                return Just(.sync([])).eraseToAnyPublisher()
-            case .addFile(_):
-                return Just(.sync([])).eraseToAnyPublisher()
+            case .start, .startNow, .pause, .stop:
+                return state
+                    .query(command: command)
+                    .flatMap { $0.left.publisher.flatMap(\.publisher) }
+                    .append(Just(.async(.command(.fetch(.some(command.ids))))).setFailureType(to: AppError.self))
+                    .append(
+                        Just(.async(.command(.fetch(.some(command.ids)))))
+                            .delay(for: 0.5, tolerance: nil, scheduler: DispatchQueue.main, options: nil)
+                            .setFailureType(to: AppError.self)
+                    )
+                    .liftError()
+            case .remove, .deleteData:
+                return state
+                    .query(command: command)
+                    .flatMap { $0.left.publisher.flatMap(\.publisher) }
+                    .append(Just(.sync(.remove(.jobs(command.ids)))).setFailureType(to: AppError.self))
+                    .liftError()
+            case .addMagnet, .addFile:
+                return Empty().eraseToAnyPublisher()
             }
         }
     }
-        .debug()
 }
 
 extension Publisher where Output == Global.Action {

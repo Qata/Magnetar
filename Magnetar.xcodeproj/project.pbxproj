@@ -23,8 +23,8 @@
 		CB6B0F2827B252B5009CE0B5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0F2727B252B5009CE0B5 /* Algorithms */; };
 		CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */; };
 		CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */; };
-		CB6B0F3027B252FC009CE0B5 /* TorrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */; };
-		CB6B0F3127B252FC009CE0B5 /* TorrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */; };
+		CB6B0F3027B252FC009CE0B5 /* JobsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */; };
+		CB6B0F3127B252FC009CE0B5 /* JobsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */; };
 		CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */; };
 		CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */; };
 		CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2D27B252FC009CE0B5 /* MainView.swift */; };
@@ -81,29 +81,40 @@
 		CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */; };
 		CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */; };
 		CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */; };
-		CB6B0F9927B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */; };
-		CB6B0F9A27B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */; };
-		CB6B0F9B27B253F2009CE0B5 /* JSONPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */; };
-		CB6B0F9C27B253F3009CE0B5 /* JSONPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */; };
+		CB6B0F9927B253F2009CE0B5 /* Payload.Expected.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* Payload.Expected.swift */; };
+		CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8D27B253F2009CE0B5 /* Payload.Expected.swift */; };
 		CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8F27B253F2009CE0B5 /* Payload.swift */; };
 		CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F8F27B253F2009CE0B5 /* Payload.swift */; };
 		CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9027B253F2009CE0B5 /* Server.swift */; };
 		CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9027B253F2009CE0B5 /* Server.swift */; };
-		CB6B0FA127B253F3009CE0B5 /* ServerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */; };
-		CB6B0FA227B253F3009CE0B5 /* ServerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */; };
-		CB6B0FA327B253F3009CE0B5 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9227B253F2009CE0B5 /* ETA.swift */; };
-		CB6B0FA427B253F3009CE0B5 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9227B253F2009CE0B5 /* ETA.swift */; };
+		CB6B0FA127B253F3009CE0B5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* Command.swift */; };
+		CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9127B253F2009CE0B5 /* Command.swift */; };
 		CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9327B253F2009CE0B5 /* Status.swift */; };
 		CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9327B253F2009CE0B5 /* Status.swift */; };
-		CB6B0FA727B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
-		CB6B0FA827B253F3009CE0B5 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.swift */; };
+		CB6B0FA727B253F3009CE0B5 /* Job.Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */; };
+		CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */; };
 		CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FA927B2788E009CE0B5 /* Sorting.swift */; };
 		CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FA927B2788E009CE0B5 /* Sorting.swift */; };
 		CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */; };
 		CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */; };
-		CB6B0FB227B27E5A009CE0B5 /* AutomaticSettings in Frameworks */ = {isa = PBXBuildFile; productRef = CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */; };
 		CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */; };
 		CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */; };
+		CB6B0FB727B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
+		CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
+		CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
+		CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
+		CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Mocks.swift */; };
+		CB7AC3C127B3C8FC0087929C /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Mocks.swift */; };
+		CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
+		CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
+		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
+		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
+		CBBF938E27B34A5A0060CB06 /* Equality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Equality.swift */; };
+		CBBF938F27B34A5A0060CB06 /* Equality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Equality.swift */; };
+		CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = CBBF93B527B3C06A0060CB06 /* CodeEditorView */; };
+		CBBF93B927B3C4060060CB06 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93B827B3C4060060CB06 /* Job.swift */; };
+		CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */; };
+		CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93C127B3C4FF0060CB06 /* ETA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +147,7 @@
 		CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		CB6B0F0227B25225009CE0B5 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
 		CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingView.swift; sourceTree = "<group>"; };
-		CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentList.swift; sourceTree = "<group>"; };
+		CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsListView.swift; sourceTree = "<group>"; };
 		CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddServerForm.swift; sourceTree = "<group>"; };
 		CB6B0F2D27B252FC009CE0B5 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
@@ -165,17 +176,24 @@
 		CB6B0F8227B253EA009CE0B5 /* Measurements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
 		CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDescription.swift; sourceTree = "<group>"; };
 		CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStatus.swift; sourceTree = "<group>"; };
-		CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedJobsPayload.swift; sourceTree = "<group>"; };
-		CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPayload.swift; sourceTree = "<group>"; };
+		CB6B0F8D27B253F2009CE0B5 /* Payload.Expected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.Expected.swift; sourceTree = "<group>"; };
 		CB6B0F8F27B253F2009CE0B5 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		CB6B0F9027B253F2009CE0B5 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
-		CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRunner.swift; sourceTree = "<group>"; };
-		CB6B0F9227B253F2009CE0B5 /* ETA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
+		CB6B0F9127B253F2009CE0B5 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		CB6B0F9327B253F2009CE0B5 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		CB6B0F9427B253F2009CE0B5 /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.Raw.swift; sourceTree = "<group>"; };
 		CB6B0FA927B2788E009CE0B5 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
 		CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSorting.swift; sourceTree = "<group>"; };
 		CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleCustomStringConvertible.swift; sourceTree = "<group>"; };
+		CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitialisable.swift; sourceTree = "<group>"; };
+		CB7AC3BF27B3C8FC0087929C /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
+		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
+		CBBF938D27B34A5A0060CB06 /* Equality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equality.swift; sourceTree = "<group>"; };
+		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
+		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,9 +202,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
-				CB6B0FB227B27E5A009CE0B5 /* AutomaticSettings in Frameworks */,
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
+				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */,
+				CB7AC3BF27B3C8FC0087929C /* Mocks.swift */,
 				CB6B0F8927B253F2009CE0B5 /* Model */,
 				CB6B0F7F27B253EA009CE0B5 /* ViewModel */,
 				CB6B0F6F27B253E2009CE0B5 /* Redux */,
@@ -284,7 +303,8 @@
 		CB6B0F1827B25234009CE0B5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				CB6B0F2927B252FC009CE0B5 /* Top Level */,
+				CB6B0F2927B252FC009CE0B5 /* Primary */,
+				CB6B0FB927B28D37009CE0B5 /* Secondary */,
 				CB6B0F4827B25395009CE0B5 /* Components */,
 			);
 			path = UI;
@@ -297,15 +317,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CB6B0F2927B252FC009CE0B5 /* Top Level */ = {
+		CB6B0F2927B252FC009CE0B5 /* Primary */ = {
 			isa = PBXGroup;
 			children = (
-				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
-				CB6B0F2B27B252FC009CE0B5 /* TorrentList.swift */,
-				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
 				CB6B0F2D27B252FC009CE0B5 /* MainView.swift */,
+				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
+				CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */,
+				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
+				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
 			);
-			path = "Top Level";
+			path = Primary;
 			sourceTree = "<group>";
 		};
 		CB6B0F4827B25395009CE0B5 /* Components */ = {
@@ -337,6 +358,8 @@
 				CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */,
 				CB6B0FA927B2788E009CE0B5 /* Sorting.swift */,
 				CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */,
+				CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */,
+				CBBF938D27B34A5A0060CB06 /* Equality.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -367,12 +390,13 @@
 			children = (
 				CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */,
 				CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */,
+				CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */,
 				CB6B0F8C27B253F2009CE0B5 /* Payloads */,
 				CB6B0F9027B253F2009CE0B5 /* Server.swift */,
-				CB6B0F9127B253F2009CE0B5 /* ServerRunner.swift */,
-				CB6B0F9227B253F2009CE0B5 /* ETA.swift */,
+				CB6B0F9127B253F2009CE0B5 /* Command.swift */,
 				CB6B0F9327B253F2009CE0B5 /* Status.swift */,
-				CB6B0F9427B253F2009CE0B5 /* Job.swift */,
+				CBBF93B727B3C3F90060CB06 /* Job */,
+				CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -380,9 +404,8 @@
 		CB6B0F8C27B253F2009CE0B5 /* Payloads */ = {
 			isa = PBXGroup;
 			children = (
-				CB6B0F8D27B253F2009CE0B5 /* ExpectedJobsPayload.swift */,
-				CB6B0F8E27B253F2009CE0B5 /* JSONPayload.swift */,
 				CB6B0F8F27B253F2009CE0B5 /* Payload.swift */,
+				CB6B0F8D27B253F2009CE0B5 /* Payload.Expected.swift */,
 			);
 			path = Payloads;
 			sourceTree = "<group>";
@@ -393,6 +416,32 @@
 				CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */,
 			);
 			path = Sourcery;
+			sourceTree = "<group>";
+		};
+		CB6B0FB927B28D37009CE0B5 /* Secondary */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
+			);
+			path = Secondary;
+			sourceTree = "<group>";
+		};
+		CBBF93B727B3C3F90060CB06 /* Job */ = {
+			isa = PBXGroup;
+			children = (
+				CBBF93C027B3C4F20060CB06 /* Types */,
+				CBBF93B827B3C4060060CB06 /* Job.swift */,
+				CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */,
+			);
+			path = Job;
+			sourceTree = "<group>";
+		};
+		CBBF93C027B3C4F20060CB06 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				CBBF93C127B3C4FF0060CB06 /* ETA.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,7 +464,7 @@
 				CB6B0F1A27B25262009CE0B5 /* MonadicJSON */,
 				CB6B0F1D27B2528F009CE0B5 /* Recombine */,
 				CB6B0F2027B252A0009CE0B5 /* Algorithms */,
-				CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */,
+				CBBF93B527B3C06A0060CB06 /* CodeEditorView */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -518,7 +567,7 @@
 				CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */,
 				CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */,
 				CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
-				CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */,
+				CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -573,45 +622,52 @@
 				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
+				CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */,
 				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */,
 				CB6B0F7927B253E2009CE0B5 /* Thunk.swift in Sources */,
 				CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */,
-				CB6B0FA327B253F3009CE0B5 /* ETA.swift in Sources */,
+				CBBF93B927B3C4060060CB06 /* Job.swift in Sources */,
 				CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
+				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
 				CB6B0F7D27B253E2009CE0B5 /* Action.swift in Sources */,
 				CB6B0F7527B253E2009CE0B5 /* Global.swift in Sources */,
 				CB6B0F5F27B253DC009CE0B5 /* StringInterpolation.swift in Sources */,
 				CB6B0F0427B25225009CE0B5 /* MagnetarApp.swift in Sources */,
-				CB6B0F9B27B253F2009CE0B5 /* JSONPayload.swift in Sources */,
-				CB6B0F3027B252FC009CE0B5 /* TorrentList.swift in Sources */,
+				CB6B0F3027B252FC009CE0B5 /* JobsListView.swift in Sources */,
 				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6727B253DC009CE0B5 /* Bool.swift in Sources */,
 				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */,
+				CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */,
 				CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
+				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
+				CBBF938E27B34A5A0060CB06 /* Equality.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
-				CB6B0F9927B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0F9927B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
 				CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5B27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6B27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0FB727B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
+				CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */,
-				CB6B0FA127B253F3009CE0B5 /* ServerRunner.swift in Sources */,
+				CB6B0FA127B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
-				CB6B0FA727B253F3009CE0B5 /* Job.swift in Sources */,
+				CB6B0FA727B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,43 +680,47 @@
 				CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB6B0F6227B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */,
+				CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0F7A27B253E2009CE0B5 /* Thunk.swift in Sources */,
 				CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
-				CB6B0FA427B253F3009CE0B5 /* ETA.swift in Sources */,
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
+				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7C27B253E2009CE0B5 /* State.swift in Sources */,
 				CB6B0F7E27B253E2009CE0B5 /* Action.swift in Sources */,
 				CB6B0F7627B253E2009CE0B5 /* Global.swift in Sources */,
 				CB6B0F6027B253DC009CE0B5 /* StringInterpolation.swift in Sources */,
 				CB6B0F0527B25225009CE0B5 /* MagnetarApp.swift in Sources */,
-				CB6B0F9C27B253F3009CE0B5 /* JSONPayload.swift in Sources */,
-				CB6B0F3127B252FC009CE0B5 /* TorrentList.swift in Sources */,
+				CB6B0F3127B252FC009CE0B5 /* JobsListView.swift in Sources */,
 				CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6827B253DC009CE0B5 /* Bool.swift in Sources */,
 				CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CB7AC3C127B3C8FC0087929C /* Mocks.swift in Sources */,
 				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
+				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
+				CBBF938F27B34A5A0060CB06 /* Equality.swift in Sources */,
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
-				CB6B0F9A27B253F2009CE0B5 /* ExpectedJobsPayload.swift in Sources */,
+				CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
 				CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
 				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
-				CB6B0FA227B253F3009CE0B5 /* ServerRunner.swift in Sources */,
+				CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
-				CB6B0FA827B253F3009CE0B5 /* Job.swift in Sources */,
+				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,12 +1164,12 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */ = {
+		CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzysztofzablocki/AutomaticSettings";
+			repositoryURL = "https://github.com/mchakravarty/CodeEditorView.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 0.9.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1145,10 +1205,10 @@
 			package = CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
 		};
-		CB6B0FB127B27E5A009CE0B5 /* AutomaticSettings */ = {
+		CBBF93B527B3C06A0060CB06 /* CodeEditorView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CB6B0FB027B27E5A009CE0B5 /* XCRemoteSwiftPackageReference "AutomaticSettings" */;
-			productName = AutomaticSettings;
+			package = CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
+			productName = CodeEditorView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

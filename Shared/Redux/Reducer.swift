@@ -24,6 +24,20 @@ extension Global {
                 case let .token(token):
                     state.selectedServer?.token = token
                 }
+            case let .update(action):
+                switch action {
+                case let .jobs(jobs):
+                    jobs.forEach {
+                        state.selectedServer?.jobs[$0] = $1
+                    }
+                }
+            case let .remove(action):
+                switch action {
+                case let .jobs(ids):
+                    ids.forEach {
+                        state.selectedServer?.jobs.removeValue(forKey: $0)
+                    }
+                }
             }
         }
     }

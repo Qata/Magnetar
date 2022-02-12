@@ -18,10 +18,5 @@ struct Server: Equatable {
     var name: String
     var api: APIDescriptor
     
-    var jobs: [JobViewModel] = []
-}
-
-struct ServerCommand: Codable, Hashable {
-    let expected: Payload
-    let request: Request
+    var jobs: [String: JobViewModel] = [:]
 }

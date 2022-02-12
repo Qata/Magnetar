@@ -1,20 +1,18 @@
 //
 //  ETA.swift
-//  Magnetar
+//  Magnetar (iOS)
 //
-//  Created by Charlotte Tortorella on 12/7/19.
-//  Copyright © 2019 Monadic Consulting. All rights reserved.
+//  Created by Charles Maria Tor on 9/2/22.
 //
 
-import Foundation
 import SwiftUI
 
 enum ETA: Hashable, Codable, AccessibleCustomStringConvertible {
     case finite(seconds: UInt)
     case infinite
     
-    init(_ eta: Int, context: ETADescriptor) {
-        if context.infinity.contains(eta) || eta < 0 {
+    init(_ eta: Int) {
+        if eta < 0 {
             self = .infinite
         } else {
             self = .finite(seconds: numericCast(eta))

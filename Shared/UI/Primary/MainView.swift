@@ -12,21 +12,27 @@ struct MainView: View {
     var body: some View {
         TabView {
             NavigationView {
-                TorrentList()
+                JobListView()
             }.tabItem {
-                Image(systemName: "list.dash")
+                SystemImage.listDash
                 Text("Transfers")
+            }
+            NavigationView {
+                MainQueryView()
+            }.tabItem {
+                SystemImage.magnifyingglass
+                Text("Queries")
             }
             NavigationView {
                 SortingView()
             }.tabItem {
-                Image(systemName: "list.number")
+                SystemImage.listNumber
                 Text("Sorting")
             }
             NavigationView {
                 AddServerForm()
             }.tabItem {
-                Image(systemName: "gear")
+                SystemImage.gear
                 Text("Settings")
             }
         }

@@ -9,7 +9,7 @@
 import Foundation
 import Algorithms
 
-enum Status: String, Codable, Hashable {
+enum Status: String, Codable, Hashable, CaseIterable {
     case stopped
     case seeding
     case downloading
@@ -18,6 +18,7 @@ enum Status: String, Codable, Hashable {
     case checkingFiles
     case fileCheckQueued
     case paused
+    case unknown
     
     var description: String {
         rawValue
