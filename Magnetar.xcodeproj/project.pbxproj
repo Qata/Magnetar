@@ -238,6 +238,7 @@
 		CB6B0ED627B25224009CE0B5 = {
 			isa = PBXGroup;
 			children = (
+				CB9F9E6427B78BE200CA93E6 /* Resources */,
 				CB6B0EDB27B25224009CE0B5 /* Shared */,
 				CB6B0EEA27B25225009CE0B5 /* macOS */,
 				CB6B0EF327B25225009CE0B5 /* Tests iOS */,
@@ -258,7 +259,6 @@
 				CB6B0F4A27B253DC009CE0B5 /* Types */,
 				CB6B0FAC27B27A8B009CE0B5 /* Sourcery */,
 				CB6B0F1827B25234009CE0B5 /* UI */,
-				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -424,6 +424,14 @@
 				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
 			);
 			path = Secondary;
+			sourceTree = "<group>";
+		};
+		CB9F9E6427B78BE200CA93E6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		CBBF93B727B3C3F90060CB06 /* Job */ = {
