@@ -13,7 +13,7 @@ enum Job {
         var status: [Status: LosslessValue<String>]
     }
 
-    struct Field: AccessibleCustomStringConvertible {
+    struct Field: Codable, Hashable, AccessibleCustomStringConvertible {
         enum Descriptor: Codable, Hashable {
             enum FieldType: Codable, Hashable {
                 case unixDate

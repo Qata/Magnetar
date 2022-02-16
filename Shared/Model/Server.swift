@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct Server: Equatable {
+struct Server: Hashable, Codable {
     var url: URL
     var user: String?
     var password: String?

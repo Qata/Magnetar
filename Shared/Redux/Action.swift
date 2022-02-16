@@ -21,7 +21,7 @@ extension Global {
             case token(String?)
         }
         enum Update {
-            case jobs([String: JobViewModel])
+            case jobs([String: JobViewModel?])
         }
         enum Remove {
             case jobs([String])

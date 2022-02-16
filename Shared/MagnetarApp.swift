@@ -6,52 +6,57 @@
 //
 
 import SwiftUI
+import Combine
 
 @main
 struct MagnetarApp: App {
-    static let jobUpdate = Global.store.postMiddlewareSyncActions.filter { actions in
-        actions.contains {
-            if case .update(.jobs) = $0 {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-    static let jobSet = Global.store.postMiddlewareSyncActions.filter { actions in
-        actions.contains {
-            if case .set(.jobs) = $0 {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
+    @State var cancellables: Set<AnyCancellable> = []
     
-    static let refresh = Global.store
-        .$state
-        .map(\.refreshInterval)
-        .removeDuplicates()
-        .filter(>.zero)
-        .map { interval in
-            jobSet.map { _ in
-                Timer.publish(every: interval, on: RunLoop.main, in: .common)
-                    .autoconnect()
-                    .first()
+    init() {
+        let jobUpdate = Global.store.postMiddlewareSyncActions.filter { actions in
+            actions.contains {
+                if case .update(.jobs) = $0 {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+        let jobSet = Global.store.postMiddlewareSyncActions.filter { actions in
+            actions.contains {
+                if case .set(.jobs) = $0 {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+        Global.store
+            .$state
+            .map(\.refreshInterval)
+            .removeDuplicates()
+            .filter(>.zero)
+            .map { interval in
+                jobSet.map { _ in
+                    Timer.publish(every: interval, on: RunLoop.main, in: .common)
+                        .autoconnect()
+                        .first()
+                        .map { _ in () }
+                }
+                .switchToLatest()
             }
             .switchToLatest()
-        }
-        .switchToLatest()
-        .sink { _ in
-            Global.store.dispatch(async: .command(.fetch(.all)))
-        }
+            .prepend(())
+            .map { _ in .async(.command(.fetch(.all))) }
+            .sink {
+                Global.store.dispatch(actions: $0)
+            }
+            .store(in: &cancellables)
+    }
     
     var body: some Scene {
         WindowGroup {
             MainView()
-                .onAppear {
-                    _ = Self.refresh
-                }
         }
     }
 }

@@ -13,7 +13,7 @@ struct ETADescriptor: Codable, Hashable {
     let infinity: [Int]
 }
 
-struct JobViewModel: Hashable, AccessibleCustomStringConvertible {
+struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     enum Error: Swift.Error {
         case missing(Job.Field.Descriptor.PresetField)
     }

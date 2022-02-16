@@ -107,6 +107,7 @@
 		CB7AC3C127B3C8FC0087929C /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Mocks.swift */; };
 		CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
 		CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
+		CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E7727B791D600CA93E6 /* KeychainAccess */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938E27B34A5A0060CB06 /* Equality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Equality.swift */; };
@@ -205,6 +206,7 @@
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
+				CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,9 +240,9 @@
 		CB6B0ED627B25224009CE0B5 = {
 			isa = PBXGroup;
 			children = (
-				CB9F9E6427B78BE200CA93E6 /* Resources */,
 				CB6B0EDB27B25224009CE0B5 /* Shared */,
 				CB6B0EEA27B25225009CE0B5 /* macOS */,
+				CB9F9E6427B78BE200CA93E6 /* Resources */,
 				CB6B0EF327B25225009CE0B5 /* Tests iOS */,
 				CB6B0EFF27B25225009CE0B5 /* Tests macOS */,
 				CB6B0EE427B25225009CE0B5 /* Products */,
@@ -253,9 +255,9 @@
 			children = (
 				CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */,
 				CB7AC3BF27B3C8FC0087929C /* Mocks.swift */,
+				CB6B0F6F27B253E2009CE0B5 /* Redux */,
 				CB6B0F8927B253F2009CE0B5 /* Model */,
 				CB6B0F7F27B253EA009CE0B5 /* ViewModel */,
-				CB6B0F6F27B253E2009CE0B5 /* Redux */,
 				CB6B0F4A27B253DC009CE0B5 /* Types */,
 				CB6B0FAC27B27A8B009CE0B5 /* Sourcery */,
 				CB6B0F1827B25234009CE0B5 /* UI */,
@@ -391,10 +393,10 @@
 				CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */,
 				CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */,
 				CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */,
-				CB6B0F8C27B253F2009CE0B5 /* Payloads */,
 				CB6B0F9027B253F2009CE0B5 /* Server.swift */,
 				CB6B0F9127B253F2009CE0B5 /* Command.swift */,
 				CB6B0F9327B253F2009CE0B5 /* Status.swift */,
+				CB6B0F8C27B253F2009CE0B5 /* Payloads */,
 				CBBF93B727B3C3F90060CB06 /* Job */,
 				CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */,
 			);
@@ -459,6 +461,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB6B0F0C27B25225009CE0B5 /* Build configuration list for PBXNativeTarget "Magnetar (iOS)" */;
 			buildPhases = (
+				CB9F9E7927BC7B3900CA93E6 /* Set Build Number */,
 				CB6B0EDF27B25225009CE0B5 /* Sources */,
 				CB6B0EE027B25225009CE0B5 /* Frameworks */,
 				CB6B0EE127B25225009CE0B5 /* Resources */,
@@ -473,6 +476,7 @@
 				CB6B0F1D27B2528F009CE0B5 /* Recombine */,
 				CB6B0F2027B252A0009CE0B5 /* Algorithms */,
 				CBBF93B527B3C06A0060CB06 /* CodeEditorView */,
+				CB9F9E7727B791D600CA93E6 /* KeychainAccess */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -576,6 +580,7 @@
 				CB6B0F1C27B2528F009CE0B5 /* XCRemoteSwiftPackageReference "Recombine" */,
 				CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
+				CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -621,6 +626,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CB9F9E7927BC7B3900CA93E6 /* Set Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set Build Number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\ngit_release_version=$(\"$git\" describe --tags --always --abbrev=0)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\n  if [ -f \"$plist\" ]; then\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${git_release_version#*v}\" \"$plist\"\n  fi\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CB6B0EDF27B25225009CE0B5 /* Sources */ = {
@@ -1172,6 +1198,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mchakravarty/CodeEditorView.git";
@@ -1212,6 +1246,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
 			productName = Algorithms;
+		};
+		CB9F9E7727B791D600CA93E6 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		CBBF93B527B3C06A0060CB06 /* CodeEditorView */ = {
 			isa = XCSwiftPackageProductDependency;

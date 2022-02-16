@@ -170,7 +170,7 @@ extension Global {
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.publisher) }
                     .liftError()
-            case .fetch:
+            case let .fetch(amount):
                 return state.server
                     .flatMap { server in
                         state.query(
@@ -182,10 +182,12 @@ extension Global {
                                     }
                                     .map { ($0.id, $0) }
                                 )
-                                return command.ids.isEmpty.if(
-                                    true: [.sync(.set(.jobs(jobs)))],
-                                    false: [.sync(.update(.jobs(jobs)))]
-                                )
+                                switch amount {
+                                case .all:
+                                    return [.sync(.set(.jobs(jobs)))]
+                                case .some:
+                                    return [.sync(.update(.jobs(jobs)))]
+                                }
                             }
                         )
                     }

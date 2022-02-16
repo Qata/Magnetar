@@ -8,7 +8,7 @@
 import Foundation
 
 extension Global {
-    struct State: Equatable {
+    struct State: Codable, Hashable {
         var servers: [Server]
         var selectedServer: Server?
         var refreshInterval: TimeInterval
