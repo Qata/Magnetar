@@ -28,7 +28,7 @@ enum Command: Hashable {
         
         var description: String {
             rawValue
-                .chunked(by: { !$1.isUppercase })
+                .unCamelCased
                 .joined(separator: " ")
                 .capitalized
         }

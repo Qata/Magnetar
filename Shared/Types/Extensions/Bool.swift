@@ -11,7 +11,7 @@ import Foundation
 extension Bool {
     /// Returns the inversion of the Boolean's value.
     @inlinable
-    var toggled: Bool {
+    var not: Bool {
         return !self
     }
     

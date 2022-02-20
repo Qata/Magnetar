@@ -10,6 +10,7 @@ import Combine
 import UserNotifications
 import MonadicJSON
 import CoreMedia
+import CasePaths
 
 enum AppError: Error {
     case serverError(URLError)
@@ -29,24 +30,25 @@ extension Publisher where Output == Global.State {
     }
 }
 
-typealias QueryResult = Either<[Global.Action], (data: Data, command: Command.Descriptor, context: APIDescriptor)>
+typealias QueryResult = Either<[Action], (data: Data, command: Command.Descriptor, context: APIDescriptor)>
 
 extension Publisher where Output == Global.State, Failure == Never {
     func query(
         command actionCommand: Command
     ) -> AnyPublisher<QueryResult, AppError> {
         func extractCommands(server: Server) -> AnyPublisher<(Server, Command.Descriptor), AppError> {
-            Just(server)
-                .setFailureType(to: AppError.self)
-                .zip(
-                    server.api
-                        .commands[actionCommand.discriminator]
-                        .publisher(nilError: .commandMissing)
-                )
+            server.api
+                .commands[actionCommand.discriminator]
+                .publisher(nilError: .commandMissing)
+                .map { (server, $0) }
                 .eraseToAnyPublisher()
         }
         
-        func handleAuthentication(_ auth: Authentication, server: Server, response: HTTPURLResponse) -> Result<[Global.Action]?, AppError> {
+        func handleAuthentication(
+            _ auth: Authentication,
+            server: Server,
+            response: HTTPURLResponse
+        ) -> Result<[Action]?, AppError> {
             switch auth {
             case let .password(code):
                 return (code == response.statusCode).if(
@@ -71,10 +73,13 @@ extension Publisher where Output == Global.State, Failure == Never {
             }
         }
 
-        func handleRequest(server: Server, command: Command.Descriptor) -> AnyPublisher<QueryResult, AppError> {
+        func handleRequest(
+            server: Server,
+            command: Command.Descriptor
+        ) -> AnyPublisher<QueryResult, AppError> {
             func handleTask(
                 _ task: (data: Data, response: URLResponse)
-            ) -> AnyPublisher<Either<[Global.Action], Data>, AppError> {
+            ) -> AnyPublisher<Either<[Action], Data>, AppError> {
                 guard let httpResponse = task.response as? HTTPURLResponse else {
                     return Fail(error: .serverError(.init(.badServerResponse)))
                         .eraseToAnyPublisher()
@@ -110,14 +115,14 @@ extension Publisher where Output == Global.State, Failure == Never {
     
     func query<T: JSONInitialisable>(
         command actionCommand: Command,
-        transform: @escaping (T) throws -> [Global.Action]
-    ) -> AnyPublisher<Global.Action, AppError> {
+        transform: @escaping (T) throws -> [Action]
+    ) -> AnyPublisher<Action, AppError> {
         if case .requestToken(andThen: .requestToken) = actionCommand {
             return Fail(error: .tokenRequestFailed)
                 .eraseToAnyPublisher()
         } else {
             return query(command: actionCommand)
-                .flatMap { (_ queryResult: QueryResult) -> AnyPublisher<Global.Action, AppError> in
+                .flatMap { (_ queryResult: QueryResult) -> AnyPublisher<Action, AppError> in
                     switch queryResult {
                     case let .left(actions):
                         return actions.publisher
@@ -154,15 +159,35 @@ extension Publisher where Output == Global.State, Failure == Never {
     
     func query<T: JSONInitialisable>(
         command: Command,
-        setting transform: @escaping (T) throws -> Global.RefinedAction.Set
-    ) -> AnyPublisher<Global.Action, AppError> {
+        setting transform: @escaping (T) throws -> SyncAction.Set
+    ) -> AnyPublisher<Action, AppError> {
         query(command: command, transform: { try [.sync(.set(transform($0)))] })
     }
 }
 
 extension Global {
-    static let thunk = Thunk<State, RawAction, RefinedAction, Global.Environment> { state, action, _ -> AnyPublisher<Action, Never> in
+    static let thunk = Thunk<State, AsyncAction, SyncAction, Global.Environment> { store, action, _ -> AnyPublisher<Action, Never> in
+        let state = store.state.changes.first()
         switch action {
+        case .start:
+            return store.state.changes
+                .map(\.refreshInterval)
+                .removeDuplicates()
+                .filter(>.zero)
+                .map { interval in
+                    Timer.publish(every: interval, on: RunLoop.main, in: .common)
+                        .autoconnect()
+                        .map { _ in () }
+                }
+                .switchToLatest()
+                .prepend(())
+                .map { .async(.command(.fetch(.all))) }
+                .prefix(
+                    // Cancel if `start` is run again.
+                    untilOutputFrom: store.actions.async.all
+                        .first(matching: /Action.Async.start)
+                )
+                .eraseToAnyPublisher()
         case let .command(command):
             switch command {
             case let .requestToken(andThen: command):
@@ -173,33 +198,59 @@ extension Global {
             case let .fetch(amount):
                 return state.server
                     .flatMap { server in
-                        state.query(
-                            command: command,
-                            transform: { (value: [Job.Raw]) in
-                                let jobs = try Dictionary(
-                                    uniqueKeysWithValues: value.map {
-                                        try JobViewModel(from: $0, context: server.api)
+                        state
+                            .query(
+                                command: command,
+                                transform: { (value: [Job.Raw]) in
+                                    let jobs = try Dictionary(
+                                        value
+                                            .map { try JobViewModel(from: $0, context: server.api) }
+                                            .map { ($0.id, $0) },
+                                        uniquingKeysWith: { $1 }
+                                    )
+                                    switch amount {
+                                    case .all:
+                                        return [.sync(.set(.jobs(jobs)))]
+                                    case let .some(ids):
+                                        return [
+                                            .sync(.update(.jobs(
+                                                .init(
+                                                    ids.map { ($0, jobs[$0]) },
+                                                    uniquingKeysWith: { $1 }
+                                                )
+                                            )))
+                                        ]
                                     }
-                                    .map { ($0.id, $0) }
-                                )
-                                switch amount {
-                                case .all:
-                                    return [.sync(.set(.jobs(jobs)))]
-                                case .some:
-                                    return [.sync(.update(.jobs(jobs)))]
                                 }
-                            }
-                        )
+                            )
+//                            .prefix(
+//                                // Cancel/retry if another command comes in.
+//                                untilOutputFrom: store.actions.async.all
+//                                    .first {
+//                                        !((/Action.Async.command..Command.requestToken) ~= $0)
+//                                    }
+//                            )
+                            .prefix(
+                                // Cancel/retry if the jobs data gets updated.
+                                untilOutputFrom: store.actions.sync.middleware.post
+                                    .first(matching: /Action.Sync.update..Action.Sync.Update.jobs)
+                            )
+                            .prefix(
+                                // Cancel/retry if any jobs data gets removed.
+                                untilOutputFrom: store.actions.sync.middleware.post
+                                    .first(matching: /Action.Sync.remove..Action.Sync.Remove.jobs)
+                            )
+                            .replaceEmpty(with: .async(action))
                     }
                     .liftError()
             case .start, .startNow, .pause, .stop:
                 return state
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.publisher) }
-                    .append(Just(.async(.command(.fetch(.some(command.ids))))).setFailureType(to: AppError.self))
+                    .append(.async(.command(.fetch(.some(command.ids)))))
                     .append(
                         Just(.async(.command(.fetch(.some(command.ids)))))
-                            .delay(for: 0.5, tolerance: nil, scheduler: DispatchQueue.main, options: nil)
+                            .delay(for: 0.5, scheduler: DispatchQueue.main)
                             .setFailureType(to: AppError.self)
                     )
                     .liftError()
@@ -207,17 +258,18 @@ extension Global {
                 return state
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.publisher) }
-                    .append(Just(.sync(.remove(.jobs(command.ids)))).setFailureType(to: AppError.self))
+                    .append(.sync(.remove(.jobs(command.ids))))
                     .liftError()
             case .addMagnet, .addFile:
-                return Empty().eraseToAnyPublisher()
+                return Empty()
+                    .eraseToAnyPublisher()
             }
         }
     }
 }
 
-extension Publisher where Output == Global.Action {
-    func liftError() -> AnyPublisher<Global.Action, Never> {
+extension Publisher where Output == Action {
+    func liftError() -> AnyPublisher<Action, Never> {
         `catch` {
             Just(.sync(.error(String(describing: $0))))
         }

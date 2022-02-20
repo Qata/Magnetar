@@ -104,7 +104,7 @@ struct JobDetailView: View {
                         image
                     }
                 }
-                .buttonStyle(BorderedButtonStyle())
+                .buttonStyle(.bordered)
             }
         }
     }
@@ -117,7 +117,7 @@ struct JobDetailView: View {
                     text.map(Text.init)
                 }
             }
-            .buttonStyle(BorderedButtonStyle())
+            .buttonStyle(.bordered)
         )
     }
 

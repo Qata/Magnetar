@@ -9,7 +9,7 @@ import Recombine
 
 extension Global {
     enum Reducer {
-        static let main = Recombine.Reducer<Global.State, RefinedAction, Global.Environment> { state, action, _ in
+        static let main = Recombine.Reducer<Global.State, SyncAction, Global.Environment> { state, action, _ in
             switch action {
             case let .error(error):
                 state.errors.append(error)

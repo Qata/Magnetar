@@ -8,6 +8,9 @@
 import SwiftUI
 
 public enum SystemImage: String, View {
+    case squareAndArrowUp
+    case chevronLeft
+    case chevronRight
     case stopFill
     case playFill
     case pauseFill
@@ -15,6 +18,7 @@ public enum SystemImage: String, View {
     case play
     case pause
     case xmark
+    case xmarkCircleFill
     case exclamationmarkSquareFill
     case xmarkBin
     case gear
@@ -24,6 +28,10 @@ public enum SystemImage: String, View {
     case arrowClockwise
     case linkBadgePlus
     case docFillBadgePlus
+    case plus
+    case plusCircle
+    case infoCircle
+    case serverRack
 
     public var body: Image {
         Image(systemName: systemName)
@@ -31,7 +39,7 @@ public enum SystemImage: String, View {
 
     public var systemName: String {
         rawValue
-            .chunked(by: { !$1.isUppercase }) // Split on camel casing
+            .unCamelCased
             .joined(separator: ".")
             .lowercased()
     }

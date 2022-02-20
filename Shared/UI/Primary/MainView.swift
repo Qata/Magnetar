@@ -18,19 +18,28 @@ struct MainView: View {
                 Text("Transfers")
             }
             NavigationView {
+                
+            }.tabItem {
+                SystemImage.infoCircle
+                Text("Info")
+            }
+            NavigationView {
                 MainQueryView()
             }.tabItem {
                 SystemImage.magnifyingglass
                 Text("Queries")
             }
             NavigationView {
-                SortingView()
-            }.tabItem {
-                SystemImage.listNumber
-                Text("Sorting")
-            }
-            NavigationView {
-                AddServerForm()
+                List {
+                    NavigationLink(
+                        destination: AddServerForm(),
+                        label: Label("Add Server", icon: .plus)
+                    )
+                    NavigationLink(
+                        destination: AddServerForm(),
+                        label: Label("Sorting", icon: .listNumber)
+                    )
+                }
             }.tabItem {
                 SystemImage.gear
                 Text("Settings")

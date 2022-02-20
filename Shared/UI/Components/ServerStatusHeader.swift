@@ -26,21 +26,21 @@ struct ServerStatusHeader: View {
                 } label: {
                     SystemImage.playFill
                 }
-                .buttonStyle(BorderedButtonStyle())
+                .buttonStyle(.bordered)
                 Spacer()
                 Button {
                     dispatch(async: .command(.pause([])))
                 } label: {
                     SystemImage.pauseFill
                 }
-                .buttonStyle(BorderedButtonStyle())
+                .buttonStyle(.bordered)
                 Spacer()
                 Button {
                     dispatch(async: .command(.stop([])))
                 } label: {
                     SystemImage.stopFill
                 }
-                .buttonStyle(BorderedButtonStyle())
+                .buttonStyle(.bordered)
             }
             .padding(.horizontal, 20)
         }
@@ -88,7 +88,7 @@ struct ConditionalCommandView: View {
                         .tag(value)
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(.segmented)
         }
     }
 }

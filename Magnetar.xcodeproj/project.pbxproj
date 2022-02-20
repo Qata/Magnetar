@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
+		CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
+		CB66B87A27BF2B5800C2A62F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIApplication.swift */; };
+		CB66B87B27BF2B5800C2A62F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIApplication.swift */; };
+		CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */ = {isa = PBXBuildFile; productRef = CB66B87D27BF327000C2A62F /* ShareSheetView */; };
+		CB66B88027BF47CF00C2A62F /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */; };
+		CB66B88127BF47CF00C2A62F /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */; };
+		CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
+		CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
 		CB6B0EF527B25225009CE0B5 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */; };
 		CB6B0EF727B25225009CE0B5 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */; };
 		CB6B0F0127B25225009CE0B5 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */; };
@@ -108,10 +117,17 @@
 		CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
 		CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
 		CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E7727B791D600CA93E6 /* KeychainAccess */; };
+		CB9F9E7D27BC877900CA93E6 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* Label.swift */; };
+		CB9F9E7E27BC877900CA93E6 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* Label.swift */; };
+		CB9F9E8027BC89A500CA93E6 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7F27BC89A500CA93E6 /* NavigationLink.swift */; };
+		CB9F9E8127BC89A500CA93E6 /* NavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7F27BC89A500CA93E6 /* NavigationLink.swift */; };
+		CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E8327BCC52E00CA93E6 /* CasePaths */; };
+		CB9F9E8627BCD7FE00CA93E6 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */; };
+		CB9F9E8727BCD7FE00CA93E6 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
-		CBBF938E27B34A5A0060CB06 /* Equality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Equality.swift */; };
-		CBBF938F27B34A5A0060CB06 /* Equality.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Equality.swift */; };
+		CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
+		CBBF938F27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
 		CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */ = {isa = PBXBuildFile; productRef = CBBF93B527B3C06A0060CB06 /* CodeEditorView */; };
 		CBBF93B927B3C4060060CB06 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93B827B3C4060060CB06 /* Job.swift */; };
 		CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */; };
@@ -136,6 +152,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB66B87627BDEAAE00C2A62F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		CB66B87927BF2B5800C2A62F /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
+		CB66B88227BF7AA000C2A62F /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetarApp.swift; sourceTree = "<group>"; };
 		CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB6B0EE327B25225009CE0B5 /* Magnetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magnetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,8 +210,11 @@
 		CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitialisable.swift; sourceTree = "<group>"; };
 		CB7AC3BF27B3C8FC0087929C /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
+		CB9F9E7C27BC877900CA93E6 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		CB9F9E7F27BC89A500CA93E6 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
+		CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
-		CBBF938D27B34A5A0060CB06 /* Equality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equality.swift; sourceTree = "<group>"; };
+		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
 		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
@@ -206,7 +229,9 @@
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
+				CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */,
 				CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */,
+				CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,22 +371,18 @@
 		CB6B0F4A27B253DC009CE0B5 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				CB9F9E7B27BC86D400CA93E6 /* Extensions */,
 				CB6B0F4B27B253DC009CE0B5 /* Yield.swift */,
 				CB6B0F4C27B253DC009CE0B5 /* Either.swift */,
 				CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */,
-				CB6B0F4E27B253DC009CE0B5 /* Collection.swift */,
-				CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */,
-				CB6B0F5027B253DC009CE0B5 /* Sequence.swift */,
 				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
 				CB6B0F5227B253DC009CE0B5 /* Atomic.swift */,
-				CB6B0F5327B253DC009CE0B5 /* Bool.swift */,
 				CB6B0F5427B253DC009CE0B5 /* Function.swift */,
-				CB6B0F5527B253DC009CE0B5 /* Optional.swift */,
-				CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */,
 				CB6B0FA927B2788E009CE0B5 /* Sorting.swift */,
 				CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */,
 				CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */,
-				CBBF938D27B34A5A0060CB06 /* Equality.swift */,
+				CBBF938D27B34A5A0060CB06 /* Operators.swift */,
+				CB66B88227BF7AA000C2A62F /* Regex.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -424,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
+				CB66B87627BDEAAE00C2A62F /* WebView.swift */,
 			);
 			path = Secondary;
 			sourceTree = "<group>";
@@ -434,6 +456,24 @@
 				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		CB9F9E7B27BC86D400CA93E6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F5327B253DC009CE0B5 /* Bool.swift */,
+				CB6B0F5527B253DC009CE0B5 /* Optional.swift */,
+				CB6B0F5627B253DC009CE0B5 /* TimeInterval.swift */,
+				CB6B0F5027B253DC009CE0B5 /* Sequence.swift */,
+				CB6B0F4E27B253DC009CE0B5 /* Collection.swift */,
+				CB6B0F4F27B253DC009CE0B5 /* StringInterpolation.swift */,
+				CB9F9E7C27BC877900CA93E6 /* Label.swift */,
+				CB9F9E7F27BC89A500CA93E6 /* NavigationLink.swift */,
+				CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */,
+				CB66B87927BF2B5800C2A62F /* UIApplication.swift */,
+				CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CBBF93B727B3C3F90060CB06 /* Job */ = {
@@ -477,6 +517,8 @@
 				CB6B0F2027B252A0009CE0B5 /* Algorithms */,
 				CBBF93B527B3C06A0060CB06 /* CodeEditorView */,
 				CB9F9E7727B791D600CA93E6 /* KeychainAccess */,
+				CB9F9E8327BCC52E00CA93E6 /* CasePaths */,
+				CB66B87D27BF327000C2A62F /* ShareSheetView */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -581,6 +623,8 @@
 				CB6B0F1F27B252A0009CE0B5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
+				CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -653,20 +697,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB66B87A27BF2B5800C2A62F /* UIApplication.swift in Sources */,
 				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
+				CB9F9E8027BC89A500CA93E6 /* NavigationLink.swift in Sources */,
 				CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */,
 				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */,
 				CB6B0F7927B253E2009CE0B5 /* Thunk.swift in Sources */,
 				CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
+				CB9F9E7D27BC877900CA93E6 /* Label.swift in Sources */,
 				CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */,
 				CBBF93B927B3C4060060CB06 /* Job.swift in Sources */,
 				CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
+				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
 				CB6B0F7D27B253E2009CE0B5 /* Action.swift in Sources */,
@@ -682,8 +730,9 @@
 				CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
-				CBBF938E27B34A5A0060CB06 /* Equality.swift in Sources */,
+				CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
+				CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9927B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
@@ -700,8 +749,10 @@
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
+				CB9F9E8627BCD7FE00CA93E6 /* Publisher.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CB6B0FA727B253F3009CE0B5 /* Job.Raw.swift in Sources */,
+				CB66B88027BF47CF00C2A62F /* StringProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +771,7 @@
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
+				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */,
@@ -736,8 +788,9 @@
 				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
-				CBBF938F27B34A5A0060CB06 /* Equality.swift in Sources */,
+				CBBF938F27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
+				CB9F9E7E27BC877900CA93E6 /* Label.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
@@ -745,14 +798,19 @@
 				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB9F9E8727BCD7FE00CA93E6 /* Publisher.swift in Sources */,
 				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
+				CB66B88127BF47CF00C2A62F /* StringProtocol.swift in Sources */,
 				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
+				CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
+				CB66B87B27BF2B5800C2A62F /* UIApplication.swift in Sources */,
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
+				CB9F9E8127BC89A500CA93E6 /* NavigationLink.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 			);
@@ -1174,6 +1232,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rebeloper/ShareSheetView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 		CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Qata/MonadicJSON/";
@@ -1206,6 +1272,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mchakravarty/CodeEditorView.git";
@@ -1217,6 +1291,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CB66B87D27BF327000C2A62F /* ShareSheetView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */;
+			productName = ShareSheetView;
+		};
 		CB6B0F1A27B25262009CE0B5 /* MonadicJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */;
@@ -1251,6 +1330,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		CB9F9E8327BCC52E00CA93E6 /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
 		};
 		CBBF93B527B3C06A0060CB06 /* CodeEditorView */ = {
 			isa = XCSwiftPackageProductDependency;

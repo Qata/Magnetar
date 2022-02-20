@@ -73,7 +73,7 @@ enum Job {
                         return rawValue.uppercased()
                     default:
                         return rawValue
-                            .chunked(by: { !$1.isUppercase }) // Split on camel casing
+                            .unCamelCased
                             .joined(separator: " ")
                             .capitalized
                     }

@@ -14,13 +14,16 @@ struct JobListView: View {
     @State var searchText: String = ""
     
     var data: [JobViewModel] {
-        guard let jobs = store.state.selectedServer?.jobs.values.sorted(keyPath: \.name) else {
-            return []
-        }
-        return searchText.isEmpty.if(
-            true: jobs,
-            false: jobs.filter { $0.name.contains(searchText) }
-        )
+        store.state.selectedServer
+            .map(\.jobs.values)
+            .map { $0.sorted(keyPath: \.name) }
+            .map {
+                searchText.isEmpty.if(
+                    true: $0,
+                    false: $0.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+                )
+            }
+            .default([])
     }
     
     @ViewBuilder
@@ -30,11 +33,7 @@ struct JobListView: View {
             Button {
                 store.dispatch(async: .command(.start([job.id])))
             } label: {
-                Label {
-                    Text("Play")
-                } icon: {
-                    SystemImage.playFill
-                }
+                Label("Plus", icon: .playFill)
             }
             .tint(.green)
         default:
@@ -42,22 +41,14 @@ struct JobListView: View {
                 Button {
                     store.dispatch(async: .command(.pause([job.id])))
                 } label: {
-                    Label {
-                        Text("Pause")
-                    } icon: {
-                        SystemImage.pauseFill
-                    }
+                    Label("Pause", icon: .pauseFill)
                 }
                 .tint(.gray)
             } else {
                 Button {
                     store.dispatch(async: .command(.stop([job.id])))
                 } label: {
-                    Label {
-                        Text("Stop")
-                    } icon: {
-                        SystemImage.stopFill
-                    }
+                    Label(("Stop"), icon: .stopFill)
                 }
                 .tint(.gray)
             }
@@ -72,18 +63,18 @@ struct JobListView: View {
                         NavigationLink(destination: JobDetailView(viewModel: job)) {
                             EmptyView()
                         }
-                        .swipeActions(edge: .leading) {
-                            leadingSwipeActions(job: job)
-                        }
                         .opacity(0)
                         JobRowView(viewModel: job)
+                    }
+                    .swipeActions(edge: .leading) {
+                        leadingSwipeActions(job: job)
                     }
                 }
             }
         }
         .searchable(text: $searchText)
         .refreshable(action: { store.dispatch(async: .command(.fetch(.all))) })
-        .listStyle(PlainListStyle())
+        .listStyle(.plain)
         .modifier(TopBar())
     }
 }
@@ -96,8 +87,8 @@ private struct TopBar: ViewModifier {
         return content
             .navigationBarItems(
                 leading: store.state.selectedServer.map(\.jobs).map(TransferTotals.init),
-                trailing: Button(action: refresh) {
-                    Image(systemName: "arrow.clockwise")
+                trailing: NavigationLink(destination: SortingView()) {
+                    SystemImage.listNumber
                 }
             )
             .navigationBarTitle(store.state.selectedServer?.name ?? "")

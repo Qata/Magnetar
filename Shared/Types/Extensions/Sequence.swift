@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CasePaths
 
 public extension Sequence {
     /// Returns the first element in `self` that matches the given type.
@@ -57,5 +58,17 @@ public extension Sequence {
     /// Allows lensing properties before comparison by the std lib `sorted(by:)` function, using the `by` closure.
     func sorted<T>(keyPath path: KeyPath<Element, T>) -> [Element] where T: Comparable {
         sorted(keyPath: path, by: <)
+    }
+
+    func filter<T>(keyPath path: KeyPath<Element, T>, _ isIncluded: (T) -> Bool) -> [Element] {
+        filter {
+            isIncluded($0[keyPath: path])
+        }
+    }
+
+    func contains<Value>(matching casePath: CasePath<Element, Value>) -> Bool {
+        contains {
+            casePath ~= $0
+        }
     }
 }

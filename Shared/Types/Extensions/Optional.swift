@@ -21,6 +21,10 @@ extension Optional {
         }
     }
     
+    func `default`(_ value: Wrapped) -> Wrapped {
+        self ?? value
+    }
+    
     func filter(_ isIncluded: (Wrapped) throws -> Bool) rethrows -> Optional {
         switch self {
         case let value? where try isIncluded(value):

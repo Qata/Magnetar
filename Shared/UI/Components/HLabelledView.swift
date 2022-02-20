@@ -14,14 +14,24 @@ struct HLabelled<Content: View>: View {
     let spacing: CGFloat?
     let view: Content
     
-    init(_ label: Text, alignment: VerticalAlignment = .firstTextBaseline, spacing: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+    init(
+        _ label: Text,
+        alignment: VerticalAlignment = .firstTextBaseline,
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
         self.alignment = alignment
         self.spacing = spacing
         self.label = label
         view = content()
     }
     
-    init<S: StringProtocol>(_ label: S, alignment: VerticalAlignment = .firstTextBaseline, spacing: CGFloat? = nil, @ViewBuilder content: () -> Content) {
+    init<S: StringProtocol>(
+        _ label: S,
+        alignment: VerticalAlignment = .firstTextBaseline,
+        spacing: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
         self = .init(Text(label), alignment: alignment, spacing: spacing, content: content)
     }
 

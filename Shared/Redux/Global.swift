@@ -1,7 +1,7 @@
 import Recombine
 import Foundation
 
-typealias MainStore = Store<Global.State, Global.RawAction, Global.RefinedAction>
+typealias MainStore = Store<Global.State, AsyncAction, SyncAction>
 typealias SubStore<State: Equatable, AsyncAction, SyncAction> = LensedStore<State, AsyncAction, SyncAction>
 
 enum Global {
