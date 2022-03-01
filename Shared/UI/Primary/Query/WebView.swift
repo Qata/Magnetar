@@ -9,73 +9,12 @@ import SwiftUI
 import WebKit
 import ShareSheetView
 
-struct Query {
-    enum Component: Codable, Hashable, CustomStringConvertible {
-        case string(String)
-        case query
-        
-        var description: String {
-            switch self {
-            case let .string(string):
-                return string
-            case .query:
-                return "Query"
-            }
-        }
-    }
-
-    enum SpaceCharacter: Character, Hashable, CaseIterable {
-        case space = " "
-        case plus = "+"
-    }
-    
-    struct QueryItem: Codable, CustomStringConvertible {
-        var name: String
-        var value: Component
-        
-        var description: String {
-            "\(name) = \(value.description)"
-        }
-    }
-
-    let space: SpaceCharacter
-    let base: URL
-    let path: [Component]
-    let queryItems: [QueryItem]
-    
-    func url(for query: String) -> URL? {
-        let query = query.replacingOccurrences(of: " ", with: String(space.rawValue))
-        func string(for component: Component) -> String {
-            switch component {
-            case .string(let string):
-                return string
-            case .query:
-                return query
-            }
-        }
-        
-        var url = URLComponents(url: base, resolvingAgainstBaseURL: true)
-        url?.path = path
-            .map(string(for:))
-            .map("/"+)
-            .joined()
-        url?.queryItems = queryItems.map { item in
-            .init(
-                name: item.name,
-                value: string(for: item.value)
-            )
-        }
-        
-        return base
-    }
-}
-
 struct WebView: View {
+    @Environment(\.dismiss) var dismiss
     @State var urlString = ""
     @State private var isShareSheetViewPresented = false
     @FocusState private var urlFocused: Bool
     @StateObject private var model: WebViewModel
-    @Environment(\.presentationMode) private var presentationMode
     
     init(url: String) {
         _model = .init(wrappedValue: WebViewModel(url: url))
@@ -100,7 +39,7 @@ struct WebView: View {
             VStack(alignment: .trailing) {
                 HStack {
                     Button {
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     } label: {
                         Text("Done").bold()
                     }
@@ -208,11 +147,10 @@ struct WebViewRepresentable: UIViewRepresentable {
 class WebViewModel: ObservableObject {
     let webView: WKWebView
     
-    // outputs
+    @Published var urlString: String = ""
     @Published var canGoBack: Bool = false
     @Published var canGoForward: Bool = false
     @Published var isLoading: Bool = false
-    @Published var urlString: String = ""
     
     init(url: String) {
         webView = WKWebView(frame: .zero)

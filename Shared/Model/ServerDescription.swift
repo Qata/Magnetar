@@ -15,7 +15,7 @@ struct APIDescriptor: Codable, Hashable {
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
     
-    func commandAvailable(_ command: Command.Discriminator) -> Bool {
+    func available(command: Command.Discriminator) -> Bool {
         commands.keys.contains(command)
     }
 }

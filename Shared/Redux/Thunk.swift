@@ -238,7 +238,7 @@ extension Global {
                             .prefix(
                                 // Cancel/retry if any jobs data gets removed.
                                 untilOutputFrom: store.actions.sync.middleware.post
-                                    .first(matching: /Action.Sync.remove..Action.Sync.Remove.jobs)
+                                    .first(matching: /Action.Sync.delete..Action.Sync.Delete.jobs)
                             )
                             .replaceEmpty(with: .async(action))
                     }
@@ -258,7 +258,7 @@ extension Global {
                 return state
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.publisher) }
-                    .append(.sync(.remove(.jobs(command.ids))))
+                    .append(.sync(.delete(.jobs(command.ids))))
                     .liftError()
             case .addMagnet, .addFile:
                 return Empty()

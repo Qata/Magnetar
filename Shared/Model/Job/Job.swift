@@ -10,7 +10,7 @@ import Foundation
 
 enum Job {
     struct Descriptor: Codable, Hashable {
-        var status: [Status: LosslessValue<String>]
+        var status: [Status: [LosslessValue<String>]]
     }
 
     struct Field: Codable, Hashable, AccessibleCustomStringConvertible {

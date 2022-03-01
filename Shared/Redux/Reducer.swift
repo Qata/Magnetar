@@ -13,6 +13,11 @@ extension Global {
             switch action {
             case let .error(error):
                 state.errors.append(error)
+            case let .create(action):
+                switch action {
+                case let .query(query):
+                    state.queries.append(query)
+                }
             case let .set(action):
                 switch action {
                 case let .selectedServer(server):
@@ -31,7 +36,7 @@ extension Global {
                         state.selectedServer?.jobs[$0] = $1
                     }
                 }
-            case let .remove(action):
+            case let .delete(action):
                 switch action {
                 case let .jobs(ids):
                     ids.forEach {

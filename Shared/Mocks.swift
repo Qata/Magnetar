@@ -31,13 +31,13 @@ let transmissionServer = Server(
         ],
         jobs: .init(
             status: [
-                .stopped: 0,
-                .seeding: 6,
-                .downloading: 4,
-                .downloadQueued: 3,
-                .seedQueued: 5,
-                .checkingFiles: 2,
-                .fileCheckQueued: 1
+                .stopped: [0],
+                .seeding: [6],
+                .downloading: [4],
+                .downloadQueued: [3],
+                .seedQueued: [5],
+                .checkingFiles: [2],
+                .fileCheckQueued: [1]
             ]
         ),
         commands: [

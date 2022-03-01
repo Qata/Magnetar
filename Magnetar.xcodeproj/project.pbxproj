@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB577E0B27C4827D00F59AB3 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* StoreView.swift */; };
+		CB577E0C27C4827D00F59AB3 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* StoreView.swift */; };
+		CB577E0E27C4968600F59AB3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* Button.swift */; };
+		CB577E0F27C4968600F59AB3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* Button.swift */; };
 		CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
 		CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
 		CB66B87A27BF2B5800C2A62F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIApplication.swift */; };
@@ -16,6 +20,14 @@
 		CB66B88127BF47CF00C2A62F /* StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */; };
 		CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
 		CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
+		CB66B88927C3330900C2A62F /* AddQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88827C3330900C2A62F /* AddQueryView.swift */; };
+		CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88827C3330900C2A62F /* AddQueryView.swift */; };
+		CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */; };
+		CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */; };
+		CB66B88F27C3334000C2A62F /* SaveQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88E27C3334000C2A62F /* SaveQueryView.swift */; };
+		CB66B89027C3334000C2A62F /* SaveQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88E27C3334000C2A62F /* SaveQueryView.swift */; };
+		CB66B89227C3397400C2A62F /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* Query.swift */; };
+		CB66B89327C3397400C2A62F /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* Query.swift */; };
 		CB6B0EF527B25225009CE0B5 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */; };
 		CB6B0EF727B25225009CE0B5 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */; };
 		CB6B0F0127B25225009CE0B5 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F0027B25225009CE0B5 /* Tests_macOS.swift */; };
@@ -152,10 +164,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB577E0A27C4827D00F59AB3 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
+		CB577E0D27C4968600F59AB3 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		CB66B87627BDEAAE00C2A62F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		CB66B87927BF2B5800C2A62F /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringProtocol.swift; sourceTree = "<group>"; };
 		CB66B88227BF7AA000C2A62F /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		CB66B88827C3330900C2A62F /* AddQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQueryView.swift; sourceTree = "<group>"; };
+		CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplodedUrlView.swift; sourceTree = "<group>"; };
+		CB66B88E27C3334000C2A62F /* SaveQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveQueryView.swift; sourceTree = "<group>"; };
+		CB66B89127C3397400C2A62F /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetarApp.swift; sourceTree = "<group>"; };
 		CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB6B0EE327B25225009CE0B5 /* Magnetar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Magnetar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,6 +280,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB66B88527C323DD00C2A62F /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */,
+				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
+			);
+			path = Jobs;
+			sourceTree = "<group>";
+		};
+		CB66B88627C323EB00C2A62F /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				CB66B88727C332D300C2A62F /* Add Query */,
+				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
+				CB66B87627BDEAAE00C2A62F /* WebView.swift */,
+				CB66B89127C3397400C2A62F /* Query.swift */,
+			);
+			path = Query;
+			sourceTree = "<group>";
+		};
+		CB66B88727C332D300C2A62F /* Add Query */ = {
+			isa = PBXGroup;
+			children = (
+				CB66B88827C3330900C2A62F /* AddQueryView.swift */,
+				CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */,
+				CB66B88E27C3334000C2A62F /* SaveQueryView.swift */,
+			);
+			path = "Add Query";
+			sourceTree = "<group>";
+		};
 		CB6B0ED627B25224009CE0B5 = {
 			isa = PBXGroup;
 			children = (
@@ -349,9 +397,9 @@
 			children = (
 				CB6B0F2D27B252FC009CE0B5 /* MainView.swift */,
 				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
-				CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */,
+				CB66B88527C323DD00C2A62F /* Jobs */,
 				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
-				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
+				CB66B88627C323EB00C2A62F /* Query */,
 			);
 			path = Primary;
 			sourceTree = "<group>";
@@ -444,8 +492,6 @@
 		CB6B0FB927B28D37009CE0B5 /* Secondary */ = {
 			isa = PBXGroup;
 			children = (
-				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
-				CB66B87627BDEAAE00C2A62F /* WebView.swift */,
 			);
 			path = Secondary;
 			sourceTree = "<group>";
@@ -472,6 +518,8 @@
 				CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */,
 				CB66B87927BF2B5800C2A62F /* UIApplication.swift */,
 				CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */,
+				CB577E0A27C4827D00F59AB3 /* StoreView.swift */,
+				CB577E0D27C4968600F59AB3 /* Button.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -702,22 +750,27 @@
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB9F9E8027BC89A500CA93E6 /* NavigationLink.swift in Sources */,
+				CB577E0E27C4968600F59AB3 /* Button.swift in Sources */,
 				CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */,
 				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */,
 				CB6B0F7927B253E2009CE0B5 /* Thunk.swift in Sources */,
+				CB577E0B27C4827D00F59AB3 /* StoreView.swift in Sources */,
 				CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB9F9E7D27BC877900CA93E6 /* Label.swift in Sources */,
 				CB6B0F9D27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9727B253F2009CE0B5 /* ServerStatus.swift in Sources */,
+				CB66B88927C3330900C2A62F /* AddQueryView.swift in Sources */,
 				CBBF93B927B3C4060060CB06 /* Job.swift in Sources */,
 				CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
+				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
 				CB6B0F7D27B253E2009CE0B5 /* Action.swift in Sources */,
+				CB66B88F27C3334000C2A62F /* SaveQueryView.swift in Sources */,
 				CB6B0F7527B253E2009CE0B5 /* Global.swift in Sources */,
 				CB6B0F5F27B253DC009CE0B5 /* StringInterpolation.swift in Sources */,
 				CB6B0F0427B25225009CE0B5 /* MagnetarApp.swift in Sources */,
@@ -734,6 +787,7 @@
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
+				CB66B89227C3397400C2A62F /* Query.swift in Sources */,
 				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9927B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
 				CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
@@ -761,11 +815,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CB577E0F27C4968600F59AB3 /* Button.swift in Sources */,
 				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
+				CB577E0C27C4827D00F59AB3 /* StoreView.swift in Sources */,
 				CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB6B0F6227B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */,
 				CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */,
+				CB66B89027C3334000C2A62F /* SaveQueryView.swift in Sources */,
 				CB6B0F7A27B253E2009CE0B5 /* Thunk.swift in Sources */,
 				CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
@@ -791,6 +848,7 @@
 				CBBF938F27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB9F9E7E27BC877900CA93E6 /* Label.swift in Sources */,
+				CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
@@ -804,6 +862,7 @@
 				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
+				CB66B89327C3397400C2A62F /* Query.swift in Sources */,
 				CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
@@ -811,6 +870,7 @@
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
 				CB9F9E8127BC89A500CA93E6 /* NavigationLink.swift in Sources */,
+				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 			);

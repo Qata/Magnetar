@@ -14,6 +14,9 @@ enum AsyncAction {
     case command(Command)
 }
 enum SyncAction {
+    enum Create {
+        case query(Query)
+    }
     enum Set {
         case selectedServer(Server)
         case refreshInterval(TimeInterval)
@@ -23,11 +26,12 @@ enum SyncAction {
     enum Update {
         case jobs([String: JobViewModel?])
     }
-    enum Remove {
+    enum Delete {
         case jobs([String])
     }
     case error(String)
+    case create(Create)
     case set(Set)
     case update(Update)
-    case remove(Remove)
+    case delete(Delete)
 }

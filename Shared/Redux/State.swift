@@ -9,6 +9,7 @@ import Foundation
 
 extension Global {
     struct State: Codable, Hashable {
+        var queries: [Query]
         var servers: [Server]
         var selectedServer: Server?
         var refreshInterval: TimeInterval

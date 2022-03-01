@@ -35,10 +35,9 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
             throw Error.missing(.name)
         }
         let statusDescriptor = context.jobs.status.firstNonNil { key, value in
-            (job.status == value.wrappedValue).if(
-                true: key,
-                false: nil
-            )
+            value
+                .contains { $0.wrappedValue == job.status }
+                .if(true: key)
         } ?? .unknown
         guard let id = job.id else {
             throw Error.missing(.id)

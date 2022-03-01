@@ -30,7 +30,7 @@ struct CommandButton<Content: View>: View {
     }
     
     var body: some View {
-        if api.commandAvailable(command.discriminator) {
+        if api.available(command: command.discriminator) {
             content(
                 title,
                 image,
@@ -132,7 +132,7 @@ struct JobDetailView: View {
                 image: .playFill,
                 action: { server.dispatch(async: .command(.start([viewModel.id]))) }
             ).disabled(
-                !api.commandAvailable(.start)
+                !api.available(command: .start)
                 || [.downloading, .seeding].contains(viewModel.status)
             )
             Spacer()
@@ -141,7 +141,7 @@ struct JobDetailView: View {
                     image: .pauseFill,
                     action: { server.dispatch(async: .command(.pause([viewModel.id]))) }
                 ).disabled(
-                    !api.commandAvailable(.pause)
+                    !api.available(command: .pause)
                     || [.paused, .stopped].contains(viewModel.status)
                 )
                 Spacer()
@@ -151,7 +151,7 @@ struct JobDetailView: View {
                 action: { server.dispatch(async: .command(.stop([viewModel.id]))) }
             )
             .disabled(
-                !api.commandAvailable(.stop)
+                !api.available(command: .stop)
                 || viewModel.status == .stopped
             )
             Spacer()
@@ -159,15 +159,15 @@ struct JobDetailView: View {
                 Button("Remove") {
                     server.dispatch(async: .command(.remove([viewModel.id])))
                 }
-                .disabled(!api.commandAvailable(.remove))
+                .disabled(!api.available(command: .remove))
                 Button("Delete Data") {
                     server.dispatch(async: .command(.deleteData([viewModel.id])))
                 }
-                .disabled(!api.commandAvailable(.deleteData))
+                .disabled(!api.available(command: .deleteData))
             } label: {
                 button(image: .xmark, action: {})
             }
-            .disabled(![.remove, .deleteData].contains(where: api.commandAvailable))
+            .disabled(![.remove, .deleteData].contains(where: api.available))
         case nil:
             EmptyView()
         }

@@ -12,6 +12,7 @@ enum Global {
 
     static let store = MainStore(
         state: .init(
+            queries: [],
             servers: [],
             selectedServer: transmissionServer,
             refreshInterval: 2,
@@ -19,8 +20,8 @@ enum Global {
         ),
         reducer: Reducer.main,
         thunk: thunk,
-        sideEffect: .init { _, _ in
-            
+        sideEffect: .init { actions, environment in
+            print("::\(actions)")
         },
         environment: environment,
         publishOn: DispatchQueue.main

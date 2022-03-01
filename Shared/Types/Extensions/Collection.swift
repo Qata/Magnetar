@@ -23,3 +23,21 @@ public extension Collection {
             .map { dropFirst($0).prefix(numericCast(length)) }
     }
 }
+
+extension Array {
+    public subscript(index: Int, default defaultValue: @autoclosure () -> Element) -> Element {
+        guard index >= 0, index < endIndex else {
+            return defaultValue()
+        }
+
+        return self[index]
+    }
+
+    public subscript(index index: Int) -> Element? {
+        guard index >= 0, index < endIndex else {
+            return nil
+        }
+
+        return self[index]
+    }
+}
