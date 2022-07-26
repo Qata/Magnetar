@@ -15,6 +15,7 @@ struct JobListView: View {
 
     func data(for server: Server) -> [JobViewModel] {
         let jobs = server.jobs.values
+            .sorted(keyPath: \.name)
             .sorted { lhs, rhs in
                 let order = server.sorting.order
                 switch server.sorting.value {

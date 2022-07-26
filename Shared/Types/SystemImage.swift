@@ -32,6 +32,8 @@ public enum SystemImage: String, View {
     case plusCircle
     case infoCircle
     case serverRack
+    case arrowUpArrowDown
+    case arrowTriangle2Circlepath
 
     public var body: Image {
         Image(systemName: systemName)
@@ -39,8 +41,6 @@ public enum SystemImage: String, View {
 
     public var systemName: String {
         rawValue
-            .unCamelCased
-            .joined(separator: ".")
-            .lowercased()
+            .sfSymbolString
     }
 }

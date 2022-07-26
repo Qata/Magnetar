@@ -14,7 +14,7 @@ struct MainView: View {
             NavigationView {
                 JobListView()
             }.tabItem {
-                SystemImage.listDash
+                SystemImage.arrowTriangle2Circlepath
                 Text("Transfers")
             }
             NavigationView {

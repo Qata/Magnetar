@@ -126,6 +126,6 @@ extension Payload {
         case let .json(expected):
             recurse(expected: expected)
         }
-        return fields
+        return fields.sorted(keyPath: \.name)
     }
 }

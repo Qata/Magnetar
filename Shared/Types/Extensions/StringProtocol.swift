@@ -11,4 +11,12 @@ extension StringProtocol {
     var unCamelCased: [SubSequence] {
         chunked(by: { $1.isUppercase.not })
     }
+    
+    var sfSymbolString: String {
+        chunked {
+            $0.isNumber.not && $1.isNumber.not && $1.isUppercase.not
+        }
+        .joined(separator: ".")
+        .lowercased()
+    }
 }
