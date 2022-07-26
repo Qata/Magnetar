@@ -6,23 +6,50 @@
 //
 
 import Algorithms
+import Foundation
 
-enum Sorting: Codable, Hashable {
-    enum Value: Codable, Hashable {
-        case field(Job.Field.Descriptor)
-        case status(Status)
+extension SortOrder: CustomStringConvertible {
+    public var description: String {
+        String(reflecting: self)
+    }
+}
+
+struct Sorting: Codable, Hashable {
+    enum Order: String, Codable, Hashable, CaseIterable, CustomStringConvertible {
+        case ascending
+        case descending
         
-        static func allCases(additional: [Job.Field]) -> FlattenSequence<[[Sorting.Value]]> {
-            [
-                chain(
-                    Job.Field.Descriptor.PresetField.allCases.map(Job.Field.Descriptor.preset),
-                    additional.map { Job.Field.Descriptor.additional(name: $0.name, type: $0.type) }
-                ).map(Self.field),
-                Status.allCases.map(Self.status)
-            ].joined()
+        var description: String {
+            rawValue.capitalized
+        }
+        
+        func comparator<T: Comparable>() -> (T, T) -> Bool {
+            switch self {
+            case .ascending:
+                return (<)
+            case .descending:
+                return (>)
+            }
         }
     }
 
-    case ascending(Value)
-    case descending(Value)
+    enum Value: Codable, Hashable, CustomStringConvertible {
+        case presetField(Job.Field.Descriptor.PresetField)
+        case adHocField(Job.Field.Descriptor.AdHocField)
+        case status(Status)
+        
+        var description: String {
+            switch self {
+            case let .status(status):
+                return "\(status.description) (Status)"
+            case let .adHocField(field):
+                return "\(field.description) (Field)"
+            case let .presetField(field):
+                return "\(field.description) (Field)"
+            }
+        }
+    }
+
+    var order: Order = .ascending
+    var value: Value = .presetField(.name)
 }

@@ -17,6 +17,8 @@ struct Server: Hashable, Codable {
     var port: UInt16
     var name: String
     var api: APIDescriptor
-    
+    var lastSeen: Date?
+
+    var sorting: Sorting = .init(order: .ascending, value: .presetField(.name))
     var jobs: [String: JobViewModel] = [:]
 }

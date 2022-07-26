@@ -15,7 +15,7 @@ struct ServerStatusHeader: View {
     var status: ServerStatus
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
 //            Text(status.description)
 //                .accessibility(label: Text("Server status"))
 //                .accessibility(value: Text(status.description))

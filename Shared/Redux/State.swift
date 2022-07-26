@@ -13,7 +13,6 @@ extension Global {
         var servers: [Server]
         var selectedServer: Server?
         var refreshInterval: TimeInterval
-        var sorting: Sorting
-        var errors: [String] = []
+        var errors: RingBuffer<String> = .init(count: 100)
     }
 }

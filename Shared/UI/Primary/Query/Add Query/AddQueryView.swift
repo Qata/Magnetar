@@ -34,7 +34,7 @@ struct AddQueryView: View {
                 }
             }
         }
-        .navigationTitle("Enter the query URL")
+        .navigationTitle("Enter The Query URL")
         .interactiveDismissDisabled()
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

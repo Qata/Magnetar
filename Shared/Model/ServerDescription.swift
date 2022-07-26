@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Algorithms
 import MonadicJSON
+import CasePaths
 
 struct APIDescriptor: Codable, Hashable {
     var authentication: [Authentication]
@@ -16,13 +17,17 @@ struct APIDescriptor: Codable, Hashable {
     var commands: [Command.Discriminator: Command.Descriptor]
     
     func available(command: Command.Discriminator) -> Bool {
-        commands.keys.contains(command)
+        return commands.keys.contains(command)
     }
 }
 
-struct QueryItem: Codable, Hashable {
+struct QueryItem: Codable, Hashable, CustomStringConvertible {
     var name: String
     var value: String
+    
+    var description: String {
+        "\(name) = \(value)"
+    }
 }
 
 enum QueryItemValue: Codable, Hashable {

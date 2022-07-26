@@ -14,7 +14,7 @@ enum Job {
     }
 
     struct Field: Codable, Hashable, AccessibleCustomStringConvertible {
-        enum Descriptor: Codable, Hashable {
+        enum Descriptor: Codable, Hashable, CustomStringConvertible {
             enum FieldType: Codable, Hashable {
                 case unixDate
                 case speed
@@ -22,22 +22,24 @@ enum Job {
                 case seconds
                 case string
                 case bool
+                // Useful for APIs that return arrays.
                 case irrelevant
 
-                func field(for json: JSON, name: String) -> Job.Field? {
+                #warning("Don't like this. It's hacky.")
+                func jobField(for json: JSON, name: String) -> Job.Field? {
                     switch (self, json) {
                     case let (.unixDate, .number(value)):
                         return TimeInterval(value)
                             .map(Date.init(timeIntervalSince1970:))
-                            .map { .init(name: name, type: self, $0) }
+                            .map { .init(name: name, value: .unixDate($0)) }
                     case let (.speed, .number(value)):
                         return Double(value)
                             .map { Speed(bytes: .init(max(0, $0))) }
-                            .map { .init(name: name, type: self, $0) }
+                            .map { .init(name: name, value: .speed($0)) }
                     case let (.size, .number(value)):
                         return Double(value)
                             .map { Size(bytes: .init(max(0, $0))) }
-                            .map { .init(name: name, type: self, $0) }
+                            .map { .init(name: name, value: .size($0)) }
                     case let (.seconds, .number(value)):
                         return Double(value)
                             .map { number in
@@ -46,11 +48,11 @@ enum Job {
                                     false: ETA.finite(seconds: UInt(number))
                                 )
                             }
-                            .map { .init(name: name, type: self, $0) }
+                            .map { .init(name: name, value: .seconds($0)) }
                     case let (.string, .string(value)):
-                        return .init(name: name, type: self, value)
+                        return .init(name: name, value: .string(value))
                     case let (.bool, .bool(value)):
-                        return .init(name: name, type: self, value.description.capitalized)
+                        return .init(name: name, value: .bool(value))
                     default:
                         return nil
                     }
@@ -79,24 +81,111 @@ enum Job {
                     }
                 }
             }
-            case preset(PresetField)
-            case additional(name: String, type: FieldType)
-        }
-        
-        let name: String
-        let type: Magnetar.Job.Field.Descriptor.FieldType
-        let description: String
-        let accessibleDescription: String
+            struct AdHocField: Codable, Hashable, CustomStringConvertible {
+                var name: String
+                var type: FieldType
 
-        init<T: AccessibleCustomStringConvertible>(
+                var description: String {
+                    name
+                }
+            }
+            case preset(PresetField)
+            case adHoc(AdHocField)
+            
+            var description: String {
+                switch self {
+                case let .preset(field):
+                    return field.description
+                case let .adHoc(field):
+                    return field.description
+                }
+            }
+        }
+
+        enum Value: Codable, Hashable, Comparable, AccessibleCustomStringConvertible {
+            case unixDate(Date)
+            case speed(Speed)
+            case size(Size)
+            case seconds(ETA)
+            case string(String)
+            case bool(Bool)
+
+            static func < (lhs: Self, rhs: Self) -> Bool {
+                switch (lhs, rhs) {
+                case let (.unixDate(lhs), .unixDate(rhs)):
+                    return lhs < rhs
+                case let (.speed(lhs), .speed(rhs)):
+                    return lhs < rhs
+                case let (.size(lhs), .size(rhs)):
+                    return lhs < rhs
+                case let (.seconds(lhs), .seconds(rhs)):
+                    return lhs < rhs
+                case let (.string(lhs), .string(rhs)):
+                    return lhs < rhs
+                case let (.bool(lhs), .bool(rhs)):
+                    switch (lhs, rhs) {
+                    case (false, true):
+                        return true
+                    default:
+                        return false
+                    }
+                default:
+                    return false
+                }
+            }
+
+            var description: String {
+                switch self {
+                case let .unixDate(date):
+                    return date.description
+                case let .speed(speed):
+                    return speed.description
+                case let .size(size):
+                    return size.description
+                case let .seconds(eta):
+                    return eta.description
+                case let .string(string):
+                    return string
+                case let .bool(bool):
+                    return bool.description.capitalized
+                }
+            }
+
+            var accessibleDescription: String {
+                switch self {
+                case let .unixDate(date):
+                    return date.accessibleDescription
+                case let .speed(speed):
+                    return speed.accessibleDescription
+                case let .size(size):
+                    return size.accessibleDescription
+                case let .seconds(eta):
+                    return eta.accessibleDescription
+                case let .string(string):
+                    return string
+                case let .bool(bool):
+                    return bool.description.capitalized
+                }
+            }
+        }
+
+        let name: String
+        let value: Value
+
+        init(
             name: String,
-            type: Magnetar.Job.Field.Descriptor.FieldType,
-            _ underlying: T
+            value: Value
         ) {
             self.name = name
-            self.type = type
-            self.description = underlying.description
-            self.accessibleDescription = underlying.accessibleDescription
+            self.value = value
+        }
+        
+        var description: String {
+            value.description
+        }
+        
+        var accessibleDescription: String {
+            value.accessibleDescription
         }
     }
     
@@ -166,11 +255,11 @@ extension Job.Raw: JSONInitialisable {
                     case .eta:
                         _eta = try .init(from: json)
                     }
-                case .additional(_, .irrelevant):
+                case let .adHoc(field) where field.type == .irrelevant:
                     break
-                case let .additional(name, type):
-                    if let field = type.field(for: json, name: name) {
-                        fields.append(field)
+                case let .adHoc(field):
+                    if let jobField = field.type.jobField(for: json, name: field.name) {
+                        fields.append(jobField)
                     }
                 }
             case .forEach:

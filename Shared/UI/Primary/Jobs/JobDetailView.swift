@@ -57,10 +57,8 @@ struct CommandButton<Content: View>: View {
             return .xmark
         case .deleteData:
             return .xmarkBin
-        case .addMagnet:
+        case .addURI:
             return .linkBadgePlus
-        case .addFile:
-            return .docFillBadgePlus
         }
     }
 }

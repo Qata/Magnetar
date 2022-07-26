@@ -30,6 +30,13 @@ struct MainView: View {
                 Text("Queries")
             }
             NavigationView {
+                SortingView()
+            }
+            .tabItem {
+                SystemImage.listNumber
+                Text("Sorting")
+            }
+            NavigationView {
                 List {
                     NavigationLink(
                         destination: AddServerForm(),

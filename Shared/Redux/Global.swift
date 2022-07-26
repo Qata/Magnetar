@@ -7,16 +7,13 @@ typealias SubStore<State: Equatable, AsyncAction, SyncAction> = LensedStore<Stat
 enum Global {
     class Environment {
     }
-    
     static let environment = Environment()
-
     static let store = MainStore(
         state: .init(
             queries: [],
             servers: [],
             selectedServer: transmissionServer,
-            refreshInterval: 2,
-            sorting: .ascending(.field(.preset(.name)))
+            refreshInterval: 2
         ),
         reducer: Reducer.main,
         thunk: thunk,

@@ -63,19 +63,24 @@ enum DataSizeClass: String, Codable, CaseIterable {
 }
 
 struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
-    var bytes: UInt {
-        size.bytes
-    }
-    var sizeClass: DataSizeClass {
-        size.sizeClass
-    }
     private let size: Size
     
     init(bytes: UInt) {
         size = .init(bytes: bytes)
         description = size.description + "/s"
-        accessibleDescription = [size.accessibleDescription, "per", "second"]
-            .joined(separator: " ")
+        accessibleDescription = [
+            size.accessibleDescription,
+            "per",
+            "second"
+        ].joined(separator: " ")
+    }
+
+    var bytes: UInt {
+        size.bytes
+    }
+
+    var sizeClass: DataSizeClass {
+        size.sizeClass
     }
     
     var rawDescription: String {
@@ -122,5 +127,17 @@ struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
             sizeClass.name
             ]
             .joined(separator: " ")
+    }
+}
+
+extension Speed: Comparable {
+    static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.bytes < rhs.bytes
+    }
+}
+
+extension Size: Comparable {
+    static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.bytes < rhs.bytes
     }
 }

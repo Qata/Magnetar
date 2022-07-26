@@ -17,7 +17,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     enum Error: Swift.Error {
         case missing(Job.Field.Descriptor.PresetField)
     }
-    
+
     let name: String
     let status: Status
     let id: String
@@ -29,7 +29,8 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     let eta: ETA
     let ratio: Ratio
     let additional: [Job.Field]
-    
+    let additionalDictionary: [String: Job.Field]
+
     init(from job: Job.Raw, context: APIDescriptor) throws {
         guard let name = job.name else {
             throw Error.missing(.name)
@@ -71,6 +72,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
         self.eta = .init(eta)
         self.ratio = .init(downloaded: downloaded, uploaded: uploaded)
         self.additional = job.fields
+        self.additionalDictionary = Dictionary(job.fields.map { ($0.name, $0) }, uniquingKeysWith: { $1 })
     }
     
     var statusColor: Color {
@@ -93,9 +95,13 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     var accessibleDescription: String {
         let context: [String]
         switch status {
+        case .downloading where size.bytes > 0:
+            context = [
+                String(format: "%.2f%% downloaded", Double(downloaded.bytes) / Double(size.bytes) * 100),
+                "Estimated completion in \(eta.accessibleDescription)"
+            ]
         case .downloading:
             context = [
-                "\(Double(downloaded.bytes) / Double(size.bytes) * 100)% downloaded",
                 "Estimated completion in \(eta.accessibleDescription)"
             ]
         case .seeding:

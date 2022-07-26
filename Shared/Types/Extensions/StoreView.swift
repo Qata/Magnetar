@@ -34,13 +34,18 @@ struct OptionalStoreView<State: Equatable, AsyncAction, SyncAction, Content: Vie
     init<Store: StoreProtocol>(
         _ store: Store,
         @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content
-    ) where Store.State == State, Store.AsyncAction == AsyncAction, Store.SyncAction == SyncAction {
+    ) where Store.State == State?, Store.AsyncAction == AsyncAction, Store.SyncAction == SyncAction {
         self._store = .init(wrappedValue: store.lensing(state: { $0 }))
         self.content = content
     }
     
     init(_ keyPath: KeyPath<Global.State, State?>, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
         self._store = .init(wrappedValue: Global.store.lensing(state: { $0[keyPath: keyPath]}))
+        self.content = content
+    }
+    
+    init(_ lens: @escaping (Global.State) -> State?, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self._store = .init(wrappedValue: Global.store.lensing(state: { lens($0) }))
         self.content = content
     }
     

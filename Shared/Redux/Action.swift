@@ -18,18 +18,25 @@ enum SyncAction {
         case query(Query)
     }
     enum Set {
+        case sorting(Sorting)
         case selectedServer(Server)
         case refreshInterval(TimeInterval)
         case jobs([String: JobViewModel])
         case token(String?)
     }
     enum Update {
+        enum Sorting {
+            case order(Magnetar.Sorting.Order)
+            case value(Magnetar.Sorting.Value)
+        }
+
+        case sorting(Sorting)
         case jobs([String: JobViewModel?])
     }
     enum Delete {
         case jobs([String])
     }
-    case error(String)
+    case error(AppError)
     case create(Create)
     case set(Set)
     case update(Update)

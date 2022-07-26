@@ -61,3 +61,16 @@ enum ETA: Hashable, Codable, AccessibleCustomStringConvertible {
         .value
     }
 }
+
+extension ETA: Comparable {
+    static func < (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.infinite, _):
+            return false
+        case (_, .infinite):
+            return true
+        case let (.finite(lhs), .finite(rhs)):
+            return lhs < rhs
+        }
+    }
+}

@@ -47,8 +47,7 @@ enum Command: Hashable {
     case pause([String])
     case remove([String])
     case deleteData([String])
-    case addMagnet(URL)
-    case addFile(URL)
+    case addURI(URL)
     
     var ids: [String] {
         switch self {
@@ -71,7 +70,7 @@ enum Command: Hashable {
             }
         case let .startNow(ids):
             return ids
-        case .addFile, .addMagnet, .requestToken:
+        case .addURI, .requestToken:
             return []
         }
     }
@@ -94,10 +93,39 @@ enum Command: Hashable {
             return .remove
         case .deleteData:
             return .deleteData
-        case .addMagnet:
-            return .addMagnet
-        case .addFile:
+        case .addURI:
             return .addFile
         }
+    }
+}
+
+extension Payload {
+    var adHocFields: [Job.Field.Descriptor.AdHocField] {
+        var fields = [Job.Field.Descriptor.AdHocField]()
+        
+        func recurse(expected: Payload.Expected) {
+            switch expected {
+            case let .object(expected):
+                expected.values.forEach(recurse)
+            case let .array(expected):
+                expected.forEach(recurse)
+            case let .field(field):
+                switch field {
+                case .preset:
+                    break
+                case let .adHoc(field) where field.type == .irrelevant:
+                    break
+                case let .adHoc(field):
+                    fields.append(field)
+                }
+            case let .forEach(expected):
+                expected.forEach(recurse)
+            }
+        }
+        switch self {
+        case let .json(expected):
+            recurse(expected: expected)
+        }
+        return fields
     }
 }

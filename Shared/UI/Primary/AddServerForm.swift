@@ -32,11 +32,6 @@ struct AddServerForm: View {
     var body: some View {
         Form {
             Section {
-//                Picker(selection: $type, label: Text("Software")) {
-//                    ForEach(ServerType.allCases) {
-//                        Text($0.name).tag($0)
-//                    }
-//                }
                 HLabelled("Name") {
                     TextField("Example", text: $name)
                         .textContentType(.name)
