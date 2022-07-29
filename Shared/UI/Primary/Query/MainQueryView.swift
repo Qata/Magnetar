@@ -9,7 +9,7 @@ import SwiftUI
 import Algorithms
 
 struct MainQueryView: View {
-    @StateObject var store = Global.store.lensing(state: \.queries)
+    @StateObject var store = Global.store.lensing(state: \.persistent.queries)
     @State var showAddQuery = false
     @State var query: Query?
     @State var urlString: String?

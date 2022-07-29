@@ -33,23 +33,11 @@ struct Sorting: Codable, Hashable {
         }
     }
 
-    enum Value: Codable, Hashable, CustomStringConvertible {
-        case presetField(Job.Field.Descriptor.PresetField)
-        case adHocField(Job.Field.Descriptor.AdHocField)
-        case status(Status)
-        
-        var description: String {
-            switch self {
-            case let .status(status):
-                return "\(status.description) (Status)"
-            case let .adHocField(field):
-                return "\(field.description) (Field)"
-            case let .presetField(field):
-                return "\(field.description) (Field)"
-            }
-        }
+    struct Value: Codable, Hashable {
+        var field: Job.Field.Descriptor
+        var status: Status
     }
 
     var order: Order = .ascending
-    var value: Value = .presetField(.name)
+    var value: Value = .init(field: .preset(.name), status: .downloading)
 }

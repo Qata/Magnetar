@@ -82,7 +82,7 @@ struct JobDetailView: View {
         }
     }
 
-    @StateObject var server = Global.store.lensing(state: { $0.selectedServer })
+    @StateObject var server = Global.store.lensing(state: { $0.persistent.selectedServer })
     let viewModel: JobViewModel
     
     @ViewBuilder

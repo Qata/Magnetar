@@ -30,7 +30,7 @@ extension AppError {
 
 extension Publisher where Output == Global.State {
     var server: AnyPublisher<Server, Failure> {
-        flatMap(\.selectedServer.publisher).eraseToAnyPublisher()
+        flatMap(\.persistent.selectedServer.publisher).eraseToAnyPublisher()
     }
 }
 
@@ -40,7 +40,7 @@ extension Global {
         switch action {
         case .start:
             return store.state.changes
-                .map(\.refreshInterval)
+                .map(\.persistent.refreshInterval)
                 .removeDuplicates()
                 .filter(>.zero)
                 .map { interval in

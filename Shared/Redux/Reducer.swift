@@ -28,37 +28,42 @@ extension Global {
             case let .create(action):
                 switch action {
                 case let .query(query):
-                    state.queries.append(query)
+                    state.persistent.queries.append(query)
                 }
             case let .set(action):
                 switch action {
                 case let .selectedServer(server):
-                    state.selectedServer = server
+                    state.persistent.selectedServer = server
                 case let .refreshInterval(refreshInterval):
-                    state.refreshInterval = refreshInterval
+                    state.persistent.refreshInterval = refreshInterval
                 case let .jobs(jobs):
-                    state.selectedServer?.jobs = jobs
+                    state.jobs = jobs
                 case let .token(token):
-                    state.selectedServer?.token = token
+                    state.persistent.selectedServer?.token = token
                 case let .sorting(sorting):
-                    state.selectedServer?.sorting = sorting
+                    state.persistent.selectedServer?.sorting = sorting
                 }
             case let .update(action):
                 switch action {
                 case let .jobs(jobs):
                     jobs.forEach {
-                        state.selectedServer?.jobs[$0] = $1
+                        state.jobs[$0] = $1
                     }
                 case let .sorting(.order(order)):
-                    state.selectedServer?.sorting.order = order
+                    state.persistent.selectedServer?.sorting.order = order
                 case let .sorting(.value(value)):
-                    state.selectedServer?.sorting.value = value
+                    switch value {
+                    case let .status(value):
+                        state.persistent.selectedServer?.sorting.value.status = value
+                    case let .field(value):
+                        state.persistent.selectedServer?.sorting.value.field = value
+                    }
                 }
             case let .delete(action):
                 switch action {
                 case let .jobs(ids):
                     ids.forEach {
-                        state.selectedServer?.jobs.removeValue(forKey: $0)
+                        state.jobs.removeValue(forKey: $0)
                     }
                 }
             }

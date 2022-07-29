@@ -12,7 +12,7 @@ import Combine
 
 struct JobRowView: View {
     let dispatch = Global.store.writeOnly()
-    @StateObject var api = Global.store.lensing(state: \.selectedServer?.api)
+    @StateObject var api = Global.store.lensing(state: \.persistent.selectedServer?.api)
     
     var viewModel: JobViewModel
     

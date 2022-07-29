@@ -25,7 +25,6 @@ enum Job {
                 // Useful for APIs that return arrays.
                 case irrelevant
 
-                #warning("Don't like this. It's hacky.")
                 func jobField(for json: JSON, name: String) -> Job.Field? {
                     switch (self, json) {
                     case let (.unixDate, .number(value)):

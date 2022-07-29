@@ -10,10 +10,12 @@ enum Global {
     static let environment = Environment()
     static let store = MainStore(
         state: .init(
-            queries: [],
-            servers: [],
-            selectedServer: transmissionServer,
-            refreshInterval: 2
+            persistent: .init(
+                queries: [],
+                servers: [],
+                selectedServer: transmissionServer,
+                refreshInterval: 2
+            )
         ),
         reducer: Reducer.main,
         thunk: thunk,
