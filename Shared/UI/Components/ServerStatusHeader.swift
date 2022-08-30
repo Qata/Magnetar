@@ -11,15 +11,11 @@ import SwiftUI
 
 struct ServerStatusHeader: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
-    
-    var status: ServerStatus
+    let status: ServerStatus
+    let filteredJobIDs: [String]?
     
     var body: some View {
         VStack {
-//            Text(status.description)
-//                .accessibility(label: Text("Server status"))
-//                .accessibility(value: Text(status.description))
-//                .accessibility(addTraits: .isHeader)
             HStack {
                 Button {
                     dispatch(async: .command(.start([])))
@@ -41,6 +37,23 @@ struct ServerStatusHeader: View {
                     SystemImage.stopFill
                 }
                 .buttonStyle(.bordered)
+                if let ids = filteredJobIDs {
+                    Spacer()
+                    Menu {
+                        Button("Remove") {
+                            dispatch(async: .command(.remove(ids)))
+                        }
+                        Button("Delete Data") {
+                            dispatch(async: .command(.deleteData(ids)))
+                        }
+                    } label: {
+                        Button {
+                        } label: {
+                            SystemImage.xmark
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
             }
             .padding(.horizontal, 20)
         }

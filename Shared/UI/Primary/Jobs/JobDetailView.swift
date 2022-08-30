@@ -1,5 +1,4 @@
 import SwiftUI
-import MarqueeText
 
 struct CommandButton<Content: View>: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
@@ -66,26 +65,58 @@ struct CommandButton<Content: View>: View {
 
 struct JobDetailView: View {
     struct HLabel: View {
+        enum LabelType {
+            case preset
+            case adHoc
+        }
+        
         let label: String
         let text: String
+        let type: LabelType
 
-        init(_ label: String, text: String) {
+        init(_ label: String, text: String, type: LabelType = .preset) {
             self.label = label
             self.text = text
+            self.type = type
         }
 
         var body: some View {
             HLabelled(label) {
-                Spacer()
-                Text(text)
-                    .foregroundColor(.secondary)
+                Menu {
+                    Text(text)
+                    Button("Copy", action: copy)
+                    Button("View", action: view)
+                    if type == .adHoc {
+                        Button("Rename", action: rename)
+                    }
+                } label: {
+                    Text(text)
+                        .lineLimit(nil)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.trailing)
+                        .frame(maxHeight: .infinity, alignment: .trailing)
+                        .padding(.vertical, 10)
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
+        }
+        
+        func copy() {
+            UIPasteboard.general.string = text
+        }
+        
+        func rename() {
+            
+        }
+        
+        func view() {
+            
         }
     }
 
     @StateObject var server = Global.store.lensing(state: { $0.persistent.selectedServer })
     let viewModel: JobViewModel
-    
+
     @ViewBuilder
     func button(disabledIf invalidStatuses: [Status] = [], command: @escaping ([String]) -> Command) -> some View {
         if let api = server.state?.api {
@@ -107,7 +138,7 @@ struct JobDetailView: View {
             }
         }
     }
-    
+
     func button(image: SystemImage, text: String? = nil, action: @escaping () -> Void) -> AnyView {
         .init(
             Button(action: action) {
@@ -171,18 +202,15 @@ struct JobDetailView: View {
 
     var body: some View {
         List {
-            Section(viewModel.name) {
+            Section {
+                HLabel("Name", text: viewModel.name)
                 HLabel("Status", text: viewModel.status.description)
                 HLabel("Size", text: viewModel.size.description)
                 HLabel("Downloaded", text: viewModel.downloaded.description)
                 HLabel("Uploaded", text: viewModel.uploaded.description)
             }
             Section {
-                HStack {
-                    buttons
-                }
-            }
-            Section(viewModel.id) {
+                HLabel("ID", text: viewModel.id)
                 HLabel("Upload Speed", text: viewModel.uploadSpeed.description)
                 HLabel("Download Speed", text: viewModel.downloadSpeed.description)
                 HLabel("Ratio", text: viewModel.ratio.description)
@@ -190,11 +218,16 @@ struct JobDetailView: View {
             }
 
             Section {
-                ForEach(viewModel.additional, id: \.name) { field in
+                ForEach(viewModel.additional.sorted(keyPath: \.name), id: \.name) { field in
                     field.isValid.if(
-                        true: HLabel(field.name, text: field.description)
+                        true: HLabel(field.name, text: field.description, type: .adHoc)
                     )
                 }
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                buttons
             }
         }
     }

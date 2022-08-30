@@ -111,9 +111,10 @@ struct JobListView: View {
     var body: some View {
         OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
             List {
-                Section(header: ServerStatusHeader(status: .online)) {
-                    StoreView(\.jobs) { jobs, _ in
-                        ForEach(data(for: server, jobs: jobs), id: \.id) { job in
+                StoreView(\.jobs) { jobs, _ in
+                    let filteredJobs = data(for: server, jobs: jobs)
+                    Section(header: ServerStatusHeader(status: .online, filteredJobIDs: searchText.isEmpty.if(false: filteredJobs.map(\.id)))) {
+                        ForEach(filteredJobs, id: \.id) { job in
                             ZStack(alignment: .leading) {
                                 NavigationLink(destination: JobDetailView(viewModel: job)) {
                                     EmptyView()
