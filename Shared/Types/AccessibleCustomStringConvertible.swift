@@ -11,16 +11,9 @@ protocol AccessibleCustomStringConvertible: Hashable, CustomStringConvertible {
     var accessibleDescription: String { get }
 }
 
-private let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .short
-    return formatter
-}()
-
 extension Date: AccessibleCustomStringConvertible {
     var accessibleDescription: String {
-        dateFormatter.string(from: self)
+        formatted(date: .numeric, time: .standard)
     }
 }
 

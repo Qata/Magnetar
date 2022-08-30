@@ -42,7 +42,7 @@ extension SortingView {
 
 extension SortingView {
     struct FieldView: View {
-        let store = Global.store.lensing(state: \.persistent.selectedServer?.sorting)
+        @StateObject var store = Global.store.lensing(state: \.persistent.selectedServer?.sorting)
 
         var body: some View {
             OptionalStoreView {

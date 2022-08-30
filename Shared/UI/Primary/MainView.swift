@@ -18,7 +18,13 @@ struct MainView: View {
                 Text("Transfers")
             }
             NavigationView {
-                
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading) {
+                        Text("Created by Charles Maria Tor.")
+                        Text("If you find this project useful, please consider supporting its continued development over on Patreon.")
+                    }
+                }
+                .navigationTitle("Info")
             }.tabItem {
                 SystemImage.infoCircle
                 Text("Info")

@@ -107,7 +107,9 @@ let transmissionAPI = APIDescriptor(
                             "sizeWhenDone": .field(.preset(.size)),
                             "eta": .field(.preset(.eta)),
                             "errorString": .field(.adHoc(.init(name: "Error", type: .string))),
-                            "doneDate": .field(.adHoc(.init(name: "Done Date", type: .unixDate))),
+                            "addedDate": .field(.adHoc(.init(name: "Date Added", type: .unixDate))),
+                            "doneDate": .field(.adHoc(.init(name: "Date Finished", type: .unixDate))),
+                            "downloadDir": .field(.adHoc(.init(name: "Download Directory", type: .string))),
                         ])
                     ])
                 ])
@@ -128,8 +130,10 @@ let transmissionAPI = APIDescriptor(
                             .string("downloadedEver"),
                             .string("sizeWhenDone"),
                             .string("eta"),
-                            .string("doneDate"),
                             .string("errorString"),
+                            .string("addedDate"),
+                            .string("doneDate"),
+                            .string("downloadDir"),
                         ])
                     ])
                 ])

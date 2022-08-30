@@ -1,4 +1,5 @@
 import SwiftUI
+import MarqueeText
 
 struct CommandButton<Content: View>: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
@@ -67,12 +68,12 @@ struct JobDetailView: View {
     struct HLabel: View {
         let label: String
         let text: String
-        
+
         init(_ label: String, text: String) {
             self.label = label
             self.text = text
         }
-        
+
         var body: some View {
             HLabelled(label) {
                 Spacer()
@@ -121,11 +122,8 @@ struct JobDetailView: View {
 
     @ViewBuilder
     var buttons: some View {
-        
-        
         switch server.state?.api {
         case let api?:
-            
             button(
                 image: .playFill,
                 action: { server.dispatch(async: .command(.start([viewModel.id]))) }
@@ -193,9 +191,9 @@ struct JobDetailView: View {
 
             Section {
                 ForEach(viewModel.additional, id: \.name) { field in
-                    if !field.description.isEmpty {
-                        HLabel(field.name, text: field.description)
-                    }
+                    field.isValid.if(
+                        true: HLabel(field.name, text: field.description)
+                    )
                 }
             }
         }

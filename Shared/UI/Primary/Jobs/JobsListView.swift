@@ -146,7 +146,8 @@ private struct TopBar: ViewModifier {
                         leading: TransferTotals(jobs: jobs),
                         trailing: EmptyView()
                     )
-                    .navigationBarTitle("🟢 \(name)")
+                    .navigationBarTitle(name)
+                    .navigationBarTitleDisplayMode(.inline)
             }
         }
         #else

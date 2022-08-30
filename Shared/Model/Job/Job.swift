@@ -14,160 +14,6 @@ enum Job {
     }
 
     struct Field: Codable, Hashable, AccessibleCustomStringConvertible {
-        enum Descriptor: Codable, Hashable, CustomStringConvertible {
-            enum FieldType: Codable, Hashable {
-                case unixDate
-                case speed
-                case size
-                case seconds
-                case string
-                case bool
-                // Useful for APIs that return arrays.
-                case irrelevant
-
-                func jobField(for json: JSON, name: String) -> Job.Field? {
-                    switch (self, json) {
-                    case let (.unixDate, .number(value)):
-                        return TimeInterval(value)
-                            .map(Date.init(timeIntervalSince1970:))
-                            .map { .init(name: name, value: .unixDate($0)) }
-                    case let (.speed, .number(value)):
-                        return Double(value)
-                            .map { Speed(bytes: .init(max(0, $0))) }
-                            .map { .init(name: name, value: .speed($0)) }
-                    case let (.size, .number(value)):
-                        return Double(value)
-                            .map { Size(bytes: .init(max(0, $0))) }
-                            .map { .init(name: name, value: .size($0)) }
-                    case let (.seconds, .number(value)):
-                        return Double(value)
-                            .map { number in
-                                (number < 0).if(
-                                    true: ETA.infinite,
-                                    false: ETA.finite(seconds: UInt(number))
-                                )
-                            }
-                            .map { .init(name: name, value: .seconds($0)) }
-                    case let (.string, .string(value)):
-                        return .init(name: name, value: .string(value))
-                    case let (.bool, .bool(value)):
-                        return .init(name: name, value: .bool(value))
-                    default:
-                        return nil
-                    }
-                }
-            }
-            enum PresetField: String, Codable, Hashable, CaseIterable, CustomStringConvertible {
-                case name
-                case status
-                case id
-                case uploadSpeed
-                case downloadSpeed
-                case uploaded
-                case downloaded
-                case size
-                case eta
-                
-                var description: String {
-                    switch self {
-                    case .eta, .id:
-                        return rawValue.uppercased()
-                    default:
-                        return rawValue
-                            .unCamelCased
-                            .joined(separator: " ")
-                            .capitalized
-                    }
-                }
-            }
-            struct AdHocField: Codable, Hashable, CustomStringConvertible {
-                var name: String
-                var type: FieldType
-
-                var description: String {
-                    name
-                }
-            }
-            case preset(PresetField)
-            case adHoc(AdHocField)
-            
-            var description: String {
-                switch self {
-                case let .preset(field):
-                    return field.description
-                case let .adHoc(field):
-                    return field.description
-                }
-            }
-        }
-
-        enum Value: Codable, Hashable, Comparable, AccessibleCustomStringConvertible {
-            case unixDate(Date)
-            case speed(Speed)
-            case size(Size)
-            case seconds(ETA)
-            case string(String)
-            case bool(Bool)
-
-            static func < (lhs: Self, rhs: Self) -> Bool {
-                switch (lhs, rhs) {
-                case let (.unixDate(lhs), .unixDate(rhs)):
-                    return lhs < rhs
-                case let (.speed(lhs), .speed(rhs)):
-                    return lhs < rhs
-                case let (.size(lhs), .size(rhs)):
-                    return lhs < rhs
-                case let (.seconds(lhs), .seconds(rhs)):
-                    return lhs < rhs
-                case let (.string(lhs), .string(rhs)):
-                    return lhs < rhs
-                case let (.bool(lhs), .bool(rhs)):
-                    switch (lhs, rhs) {
-                    case (false, true):
-                        return true
-                    default:
-                        return false
-                    }
-                default:
-                    return false
-                }
-            }
-
-            var description: String {
-                switch self {
-                case let .unixDate(date):
-                    return date.description
-                case let .speed(speed):
-                    return speed.description
-                case let .size(size):
-                    return size.description
-                case let .seconds(eta):
-                    return eta.description
-                case let .string(string):
-                    return string
-                case let .bool(bool):
-                    return bool.description.capitalized
-                }
-            }
-
-            var accessibleDescription: String {
-                switch self {
-                case let .unixDate(date):
-                    return date.accessibleDescription
-                case let .speed(speed):
-                    return speed.accessibleDescription
-                case let .size(size):
-                    return size.accessibleDescription
-                case let .seconds(eta):
-                    return eta.accessibleDescription
-                case let .string(string):
-                    return string
-                case let .bool(bool):
-                    return bool.description.capitalized
-                }
-            }
-        }
-
         let name: String
         let value: Value
 
@@ -186,6 +32,19 @@ enum Job {
         var accessibleDescription: String {
             value.accessibleDescription
         }
+        
+        var isValid: Bool {
+            switch value {
+            case let .size(size):
+                return size.bytes > 0
+            case let .unixDate(date):
+                return date.timeIntervalSince1970 > 0
+            case let .string(string):
+                return !string.isEmpty
+            case .speed, .seconds, .bool:
+                return true
+            }
+        }
     }
     
     struct Raw: Hashable {
@@ -199,6 +58,164 @@ enum Job {
         @LosslessValue var size: UInt?
         @LosslessValue var eta: Int?
         var fields: [Field] = []
+    }
+}
+
+extension Job.Field {
+    enum Descriptor: Codable, Hashable, CustomStringConvertible {
+        enum FieldType: Codable, Hashable {
+            case unixDate
+            case speed
+            case size
+            case seconds
+            case string
+            case bool
+            // Useful for APIs that return arrays.
+            case irrelevant
+
+            func jobField(for json: JSON, name: String) -> Job.Field? {
+                switch (self, json) {
+                case let (.unixDate, .number(value)):
+                    return TimeInterval(value)
+                        .map(Date.init(timeIntervalSince1970:))
+                        .map { .init(name: name, value: .unixDate($0)) }
+                case let (.speed, .number(value)):
+                    return Double(value)
+                        .map { Speed(bytes: .init(max(0, $0))) }
+                        .map { .init(name: name, value: .speed($0)) }
+                case let (.size, .number(value)):
+                    return Double(value)
+                        .map { Size(bytes: .init(max(0, $0))) }
+                        .map { .init(name: name, value: .size($0)) }
+                case let (.seconds, .number(value)):
+                    return Double(value)
+                        .map { number in
+                            (number < 0).if(
+                                true: ETA.infinite,
+                                false: ETA.finite(seconds: UInt(number))
+                            )
+                        }
+                        .map { .init(name: name, value: .seconds($0)) }
+                case let (.string, .string(value)):
+                    return .init(name: name, value: .string(value))
+                case let (.bool, .bool(value)):
+                    return .init(name: name, value: .bool(value))
+                default:
+                    return nil
+                }
+            }
+        }
+        enum PresetField: String, Codable, Hashable, CaseIterable, CustomStringConvertible {
+            case name
+            case status
+            case id
+            case uploadSpeed
+            case downloadSpeed
+            case uploaded
+            case downloaded
+            case size
+            case eta
+
+            var description: String {
+                switch self {
+                case .uploaded, .downloaded:
+                    return "\(rawValue.capitalized) Bytes"
+                case .eta, .id:
+                    return rawValue.uppercased()
+                default:
+                    return rawValue
+                        .unCamelCased
+                        .joined(separator: " ")
+                        .capitalized
+                }
+            }
+        }
+        struct AdHocField: Codable, Hashable, CustomStringConvertible {
+            var name: String
+            var type: FieldType
+
+            var description: String {
+                name
+            }
+        }
+        case preset(PresetField)
+        case adHoc(AdHocField)
+        
+        var description: String {
+            switch self {
+            case let .preset(field):
+                return field.description
+            case let .adHoc(field):
+                return field.description
+            }
+        }
+    }
+
+    enum Value: Codable, Hashable, Comparable, AccessibleCustomStringConvertible {
+        case unixDate(Date)
+        case speed(Speed)
+        case size(Size)
+        case seconds(ETA)
+        case string(String)
+        case bool(Bool)
+
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case let (.unixDate(lhs), .unixDate(rhs)):
+                return lhs < rhs
+            case let (.speed(lhs), .speed(rhs)):
+                return lhs < rhs
+            case let (.size(lhs), .size(rhs)):
+                return lhs < rhs
+            case let (.seconds(lhs), .seconds(rhs)):
+                return lhs < rhs
+            case let (.string(lhs), .string(rhs)):
+                return lhs < rhs
+            case let (.bool(lhs), .bool(rhs)):
+                switch (lhs, rhs) {
+                case (false, true):
+                    return true
+                default:
+                    return false
+                }
+            default:
+                return false
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .unixDate:
+                return accessibleDescription
+            case let .speed(speed):
+                return speed.description
+            case let .size(size):
+                return size.description
+            case let .seconds(eta):
+                return eta.description
+            case let .string(string):
+                return string
+            case .bool:
+                return accessibleDescription
+            }
+        }
+
+        var accessibleDescription: String {
+            switch self {
+            case let .unixDate(date):
+                return date.accessibleDescription
+            case let .speed(speed):
+                return speed.accessibleDescription
+            case let .size(size):
+                return size.accessibleDescription
+            case let .seconds(eta):
+                return eta.accessibleDescription
+            case let .string(string):
+                return string
+            case let .bool(bool):
+                return bool.description.capitalized
+            }
+        }
     }
 }
 
