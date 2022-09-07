@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Recombine
+import Algorithms
 
 struct JobListView: View {
     @State var searchText: String = ""
@@ -17,53 +18,42 @@ struct JobListView: View {
         jobs.values
             .sorted(keyPath: \.name)
             .sorted { lhs, rhs in
-                func fieldSort() -> Bool {
-                    let order = server.sorting.order
-                    switch server.sorting.value.field {
-                    case let .preset(field):
-                        switch field {
-                        case .name:
-                            return order.comparator()(lhs.name, rhs.name)
-                        case .status:
-                            return order.comparator()(lhs.status, rhs.status)
-                        case .id:
-                            return order.comparator()(lhs.id, rhs.id)
-                        case .uploadSpeed:
-                            return order.comparator()(lhs.uploadSpeed, rhs.uploadSpeed)
-                        case .downloadSpeed:
-                            return order.comparator()(lhs.downloadSpeed, rhs.downloadSpeed)
-                        case .uploaded:
-                            return order.comparator()(lhs.uploaded, rhs.uploaded)
-                        case .downloaded:
-                            return order.comparator()(lhs.downloaded, rhs.downloaded)
-                        case .size:
-                            return order.comparator()(lhs.size, rhs.size)
-                        case .eta:
-                            return order.comparator()(lhs.eta, rhs.eta)
-                        }
-                    case let .adHoc(field):
-                        return Optional.zip(
-                            lhs.additionalDictionary[field.name],
-                            rhs.additionalDictionary[field.name]
-                        )
-                        .map {
-                            if $0.value != $1.value {
-                                return order.comparator()($0.value, $1.value)
-                            } else {
-                                return lhs.name < rhs.name
-                            }
-                        }
-                        ?? (lhs.name < rhs.name)
+                let order = server.sorting.order
+                switch server.sorting.value {
+                case let .preset(field):
+                    switch field {
+                    case .name:
+                        return order.comparator()(lhs.name, rhs.name)
+                    case .status:
+                        return order.comparator()(lhs.status, rhs.status)
+                    case .id:
+                        return order.comparator()(lhs.id, rhs.id)
+                    case .uploadSpeed:
+                        return order.comparator()(lhs.uploadSpeed, rhs.uploadSpeed)
+                    case .downloadSpeed:
+                        return order.comparator()(lhs.downloadSpeed, rhs.downloadSpeed)
+                    case .uploaded:
+                        return order.comparator()(lhs.uploaded, rhs.uploaded)
+                    case .downloaded:
+                        return order.comparator()(lhs.downloaded, rhs.downloaded)
+                    case .size:
+                        return order.comparator()(lhs.size, rhs.size)
+                    case .eta:
+                        return order.comparator()(lhs.eta, rhs.eta)
                     }
-                }
-                let preferencedStatus = server.sorting.value.status
-                switch (lhs.status, rhs.status) {
-                case (preferencedStatus, preferencedStatus):
-                    return fieldSort()
-                case (preferencedStatus, _):
-                    return true
-                default:
-                    return fieldSort()
+                case let .adHoc(field):
+                    return Optional.zip(
+                        lhs.additionalDictionary[field.name],
+                        rhs.additionalDictionary[field.name]
+                    )
+                    .map {
+                        if $0.value != $1.value {
+                            return order.comparator()($0.value, $1.value)
+                        } else {
+                            return lhs.name < rhs.name
+                        }
+                    }
+                    ?? (lhs.name < rhs.name)
                 }
             }
     }
@@ -112,12 +102,12 @@ struct JobListView: View {
     }
 
     var body: some View {
-        OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
-            List {
-                StoreView(\.jobs) { jobs, _ in
-                    StoreView(\.persistent.filter) { filter, _ in
-                        let sortedJobs = sorted(jobs: jobs, server: server)
-                        let filteredJobs = filtered(jobs: sortedJobs, statuses: filter)
+        StoreView(\.persistent.filter) { filter, _ in
+            StoreView(\.jobs) { jobs, _ in
+                OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
+                    let sortedJobs = sorted(jobs: jobs, server: server)
+                    let filteredJobs = filtered(jobs: sortedJobs, statuses: filter)
+                    List {
                         Section(
                             header: ServerStatusHeader(
                                 status: .online,
@@ -147,18 +137,20 @@ struct JobListView: View {
                             }
                         }
                     }
+                    .searchable(text: $searchText)
+                    .disableAutocorrection(true)
+                    .refreshable(action: { dispatch(async: .command(.fetch(.all))) })
+                    .listStyle(.plain)
+                    .modifier(TopBar(jobs: filteredJobs))
                 }
             }
-            .searchable(text: $searchText)
-            .disableAutocorrection(true)
-            .refreshable(action: { dispatch(async: .command(.fetch(.all))) })
-            .listStyle(.plain)
-            .modifier(TopBar())
         }
     }
 }
 
 private struct TopBar: ViewModifier {
+    let jobs: [JobViewModel]
+    
     func buttons(
         for servers: [Server],
         selected: Server,
@@ -203,7 +195,7 @@ private struct TopBar: ViewModifier {
     
     var filter: some View {
         StoreView(\.persistent.filter) { filter, dispatch in
-            Menu(content: {
+            Menu {
                 if !filter.isEmpty {
                     Button {
                         dispatch(sync: .delete(.filter))
@@ -232,30 +224,96 @@ private struct TopBar: ViewModifier {
                         }
                     }
                 }
-            }, label: {
+            } label: {
                 filter.isEmpty.if(
                     true: SystemImage.filter,
                     false: SystemImage.filterFilled
                 )
-            })
+            }
+        }
+    }
+    
+    func sortingButton(order: Sorting.Order) -> some View {
+        OptionalStoreView(\.persistent.selectedServer?.sorting.order) { sorting, dispatch in
+            Button {
+                dispatch(sync: .update(.sorting(.order(order))))
+            } label: {
+                HStack {
+                    Text(order.description)
+                    Spacer()
+                    if sorting == order {
+                        SystemImage.checkmark
+                    }
+                }
+            }
+        }
+    }
+    
+    func sortingButton(field: Job.Field.Descriptor) -> some View {
+        OptionalStoreView(\.persistent.selectedServer?.sorting.value) { sorting, dispatch in
+            Button {
+                dispatch(sync: .update(.sorting(.value(field))))
+            } label: {
+                HStack {
+                    Text(field.description)
+                    Spacer()
+                    if sorting == field {
+                        SystemImage.checkmark
+                    }
+                }
+            }
+        }
+    }
+    
+    var sorting: some View {
+        OptionalStoreView {
+            $0.persistent.selectedServer?
+                .api.commands[.fetch]?.expected
+                .adHocFields
+                .map(Job.Field.Descriptor.adHoc)
+        } content: { fields, _ in
+            Menu {
+                Section {
+                    ForEach(
+                        Sorting.Order.allCases,
+                        id: \.self,
+                        content: sortingButton(order:)
+                    )
+                }
+                Section {
+                    ForEach(
+                        chain(
+                            Job.Field.Descriptor.PresetField
+                                .allCases
+                                .map(Job.Field.Descriptor.preset),
+                            fields
+                        ),
+                        id: \.self,
+                        content: sortingButton(field:)
+                    )
+                }
+            } label: {
+                SystemImage.listNumber
+            }
         }
     }
     
     func body(content: Content) -> some View {
         #if os(iOS)
-        return StoreView(\.jobs) { jobs, _ in
-            content
-                .navigationBarItems(
-                    leading: TransferTotals(jobs: jobs),
-                    trailing: filter
-                )
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .principal) {
-                        title
-                    }
+        content
+            .navigationBarItems(
+                leading: TransferTotals(jobs: jobs),
+                trailing: HStack {
+                    sorting
+                    filter
                 }
-        }
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .principal) {
+                    title
+                }
+            }
         #else
         return content
         #endif

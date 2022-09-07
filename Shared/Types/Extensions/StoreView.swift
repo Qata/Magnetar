@@ -16,7 +16,7 @@ struct StoreView<State: Equatable, AsyncAction, SyncAction, Content: View>: View
         self._store = .init(wrappedValue: lens)
         self.content = content
     }
-    
+
     init(_ keyPath: KeyPath<Global.State, State>, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
         self._store = .init(wrappedValue: Global.store.lensing(state: { $0[keyPath: keyPath]}))
         self.content = content

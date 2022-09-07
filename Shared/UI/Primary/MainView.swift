@@ -18,41 +18,43 @@ struct MainView: View {
                 Text("Transfers")
             }
             NavigationView {
-                List {
-                    Text("Created by Charles Maria Tor.")
-                    Text("If you find this project useful, please consider supporting its continued development over on Patreon.")
-                }
-                .navigationTitle("Info")
-            }.tabItem {
-                SystemImage.infoCircle
-                Text("Info")
-            }
-            NavigationView {
                 MainQueryView()
             }.tabItem {
                 SystemImage.magnifyingglass
                 Text("Queries")
             }
             NavigationView {
-                SortingView()
-            }
-            .tabItem {
-                SystemImage.listNumber
-                Text("Sorting")
-            }
-            NavigationView {
                 List {
                     NavigationLink(
-                        destination: AddServerForm(),
+                        destination: EmptyView(),
+                        label: Label("APIs", icon: .cloudFill)
+                    )
+                    NavigationLink(
+                        destination: StoreView(\.persistent.servers) { servers, _ in
+                            List {
+                                ForEach(servers, id: \.self) {
+                                    Text($0.name)
+                                }
+                            }
+                            .navigationTitle("Servers")
+                            .toolbar {
+                                ToolbarItemGroup(placement: .primaryAction) {
+                                    NavigationLink {
+                                        AddServerForm()
+                                    } label: {
+                                        SystemImage.plus
+                                    }
+                                }
+                            }
+                        },
                         label: Label("Servers", icon: .serverRack)
                     )
                     NavigationLink(
-                        destination: AddServerForm(),
-                        label: Label("Add Server", icon: .plus)
-                    )
-                    NavigationLink(
-                        destination: AddServerForm(),
-                        label: Label("Sorting", icon: .listNumber)
+                        destination: List {
+                            Text("Created by Charles Maria Tor.")
+                            Text("If you find this app useful, please consider supporting its continued development over on Patreon.")
+                        },
+                        label: Label("Info", icon: .infoCircle)
                     )
                 }
             }.tabItem {

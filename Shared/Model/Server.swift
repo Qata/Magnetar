@@ -20,5 +20,5 @@ struct Server: Hashable, Codable {
     var api: APIDescriptor
     var lastSeen: Unhashed<Date?>
 
-    var sorting: Sorting = .init(order: .ascending, value: .init(field: .preset(.name), status: .downloading))
+    var sorting: Sorting = .init()
 }

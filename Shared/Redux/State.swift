@@ -12,6 +12,7 @@ extension Global {
         struct PersistentState: Codable, Hashable {
             var queries: [Query]
             var servers: [Server]
+            var apis: [APIDescriptor]
             var selectedServer: Server?
             var refreshInterval: TimeInterval
             var filter: Set<Status> = []

@@ -48,8 +48,14 @@ struct AddServerForm: View {
                         .textContentType(.username)
                 }
                 HLabelled("Password") {
-                    SecureField("", text: $password)
+                    SecureField(String(repeating: "*", count: 16), text: $password)
                         .textContentType(.password)
+                }
+                HLabelled("API") {
+                    Spacer()
+                    Menu("None Selected") {
+                        Text("Transmission v2")
+                    }
                 }
             }
             Section {

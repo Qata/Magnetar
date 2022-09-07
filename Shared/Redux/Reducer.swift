@@ -53,12 +53,7 @@ extension Global {
                 case let .sorting(.order(order)):
                     state.persistent.selectedServer?.sorting.order = order
                 case let .sorting(.value(value)):
-                    switch value {
-                    case let .status(value):
-                        state.persistent.selectedServer?.sorting.value.status = value
-                    case let .field(value):
-                        state.persistent.selectedServer?.sorting.value.field = value
-                    }
+                    state.persistent.selectedServer?.sorting.value = value
                 case let .filter(status):
                     switch status {
                     case let .add(status):

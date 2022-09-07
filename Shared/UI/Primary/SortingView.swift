@@ -13,7 +13,6 @@ struct SortingView: View {
         Form {
             OrderView()
             FieldView()
-            StatusView()
         }
         .navigationTitle("Transfer Sorting")
     }
@@ -52,8 +51,8 @@ extension SortingView {
                     .map(Job.Field.Descriptor.adHoc)
             } content: { fields, _ in
                 Picker("Field", selection: store.binding(
-                    get: \.!.value.field,
-                    send: { .update(.sorting(.value(.field($0)))) }
+                    get: \.!.value,
+                    send: { .update(.sorting(.value($0))) }
                 )) {
                     ForEach(
                         chain(
@@ -66,24 +65,6 @@ extension SortingView {
                     ) { field in
                         Text(field.description)
                             .tag(Optional(field))
-                    }
-                }
-            }
-        }
-    }
-}
-
-extension SortingView {
-    struct StatusView: View {
-        var body: some View {
-            OptionalStoreView(\.persistent.selectedServer?.sorting) { sorting, dispatch in
-                Picker("Status", selection: .init(
-                    get: { sorting.value.status },
-                    set: { dispatch(sync: .update(.sorting(.value(.status($0))))) }
-                )) {
-                    ForEach(Status.allCases, id: \.self) { status in
-                        Text(status.description)
-                            .tag(Optional(status))
                     }
                 }
             }

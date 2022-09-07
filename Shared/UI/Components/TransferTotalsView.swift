@@ -14,9 +14,9 @@ struct TransferTotals: View {
     let uploadSpeed: Speed
     @Environment(\.layoutDirection) var direction
     
-    init(jobs: [String: JobViewModel]) {
-        downloadSpeed = .init(bytes: jobs.values.reduce(0, { $0 + $1.downloadSpeed.bytes }))
-        uploadSpeed = .init(bytes: jobs.values.reduce(0, { $0 + $1.uploadSpeed.bytes }))
+    init(jobs: [JobViewModel]) {
+        downloadSpeed = .init(bytes: jobs.reduce(0, { $0 + $1.downloadSpeed.bytes }))
+        uploadSpeed = .init(bytes: jobs.reduce(0, { $0 + $1.uploadSpeed.bytes }))
     }
     
     var body: some View {

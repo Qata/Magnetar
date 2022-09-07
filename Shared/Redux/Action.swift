@@ -26,12 +26,8 @@ enum SyncAction {
     }
     enum Update {
         enum Sorting {
-            enum Value {
-                case field(Job.Field.Descriptor)
-                case status(Magnetar.Status)
-            }
             case order(Magnetar.Sorting.Order)
-            case value(Value)
+            case value(Job.Field.Descriptor)
         }
         
         enum Status {

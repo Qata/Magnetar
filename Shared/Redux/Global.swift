@@ -17,6 +17,7 @@ enum Global {
             } ?? .init(
                 queries: [],
                 servers: [transmissionServer, transmissionServer2],
+                apis: [transmissionAPI],
                 selectedServer: transmissionServer,
                 refreshInterval: 2
             )

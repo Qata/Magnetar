@@ -33,11 +33,6 @@ struct Sorting: Codable, Hashable {
         }
     }
 
-    struct Value: Codable, Hashable {
-        var field: Job.Field.Descriptor
-        var status: Status
-    }
-
     var order: Order = .ascending
-    var value: Value = .init(field: .preset(.name), status: .downloading)
+    var value: Job.Field.Descriptor = .preset(.name)
 }

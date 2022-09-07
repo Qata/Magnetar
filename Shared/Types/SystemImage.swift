@@ -16,6 +16,7 @@ public enum SystemImage: String, View {
     case checkmark
     case chevronLeft
     case chevronRight
+    case cloudFill
     case docBadgePlus
     case docFillBadgePlus
     case exclamationmarkSquareFill
