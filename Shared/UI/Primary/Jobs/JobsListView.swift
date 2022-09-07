@@ -13,9 +13,8 @@ struct JobListView: View {
     @State var searchText: String = ""
     let dispatch = Global.store.writeOnly()
 
-    func data(for server: Server, jobs: [String: JobViewModel]) -> [JobViewModel] {
-        let jobs = jobs
-            .values
+    func sorted(jobs: [String: JobViewModel], server: Server) -> [JobViewModel] {
+        jobs.values
             .sorted(keyPath: \.name)
             .sorted { lhs, rhs in
                 func fieldSort() -> Bool {
@@ -67,14 +66,18 @@ struct JobListView: View {
                     return fieldSort()
                 }
             }
-        return searchText.isEmpty.if(
-            true: jobs,
-            false: jobs.filter { job -> Bool in
-                [\JobViewModel.name, \.id, \.status.description]
-                    .map { job[keyPath: $0].lowercased() }
-                    .contains { $0.contains(searchText.lowercased()) }
-            }
-        )
+    }
+    
+    func filtered(jobs: [JobViewModel], statuses filter: Set<Status>) -> [JobViewModel] {
+        jobs.filter {
+            filter.isEmpty || filter.contains($0.status)
+        }
+        .filter { job -> Bool in
+            guard searchText.isEmpty.not else { return true }
+            return [\JobViewModel.name, \.id]
+                .map { job[keyPath: $0].lowercased() }
+                .contains { $0.contains(searchText.lowercased()) }
+        }
     }
 
     @ViewBuilder
@@ -112,24 +115,42 @@ struct JobListView: View {
         OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
             List {
                 StoreView(\.jobs) { jobs, _ in
-                    let filteredJobs = data(for: server, jobs: jobs)
-                    Section(header: ServerStatusHeader(status: .online, filteredJobIDs: searchText.isEmpty.if(false: filteredJobs.map(\.id)))) {
-                        ForEach(filteredJobs, id: \.id) { job in
-                            ZStack(alignment: .leading) {
-                                NavigationLink(destination: JobDetailView(viewModel: job)) {
-                                    EmptyView()
+                    StoreView(\.persistent.filter) { filter, _ in
+                        let sortedJobs = sorted(jobs: jobs, server: server)
+                        let filteredJobs = filtered(jobs: sortedJobs, statuses: filter)
+                        Section(
+                            header: ServerStatusHeader(
+                                status: .online,
+                                ids: filteredJobs.map(\.id)
+                            )
+                        ) {
+                            if filteredJobs.isEmpty, !jobs.isEmpty, searchText.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Group {
+                                        Text(SystemImage.filterFilled.body)
+                                        Text(SystemImage.arrowUp.body)
+                                    }
                                 }
-                                .opacity(0)
-                                JobRowView(viewModel: job)
                             }
-                            .swipeActions(edge: .leading) {
-                                leadingSwipeActions(job: job)
+                            ForEach(filteredJobs, id: \.id) { job in
+                                ZStack(alignment: .leading) {
+                                    NavigationLink(destination: JobDetailView(viewModel: job)) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
+                                    JobRowView(viewModel: job)
+                                }
+                                .swipeActions(edge: .leading) {
+                                    leadingSwipeActions(job: job)
+                                }
                             }
                         }
                     }
                 }
             }
             .searchable(text: $searchText)
+            .disableAutocorrection(true)
             .refreshable(action: { dispatch(async: .command(.fetch(.all))) })
             .listStyle(.plain)
             .modifier(TopBar())
@@ -138,21 +159,130 @@ struct JobListView: View {
 }
 
 private struct TopBar: ViewModifier {
+    func buttons(
+        for servers: [Server],
+        selected: Server,
+        dispatch: @escaping (Server) -> Void
+    ) -> some View {
+        ForEach(servers.sorted(keyPath: \.name), id: \.self) { server in
+            Button {
+                dispatch(server)
+            } label: {
+                HStack {
+                    Text(server.name)
+                    Spacer()
+                    if server.name == selected.name {
+                        SystemImage.checkmark
+                    }
+                }
+            }
+            .disabled(server.name == selected.name)
+        }
+    }
+    
+    var title: some View {
+        OptionalStoreView(\.persistent.selectedServer) { selectedServer, _ in
+            Menu {
+                StoreView(\.persistent.servers) { servers, dispatch in
+                    buttons(
+                        for: servers,
+                        selected: selectedServer,
+                        dispatch: { dispatch(sync: .set(.selectedServer($0))) }
+                    )
+                }
+            } label: {
+                VStack {
+                    Text(selectedServer.name)
+                        .font(.headline)
+                    Text("Online")
+                        .font(.subheadline)
+                }
+            }
+        }
+    }
+    
+    var filter: some View {
+        StoreView(\.persistent.filter) { filter, dispatch in
+            Menu(content: {
+                if !filter.isEmpty {
+                    Button {
+                        dispatch(sync: .delete(.filter))
+                    } label: {
+                        HStack {
+                            Text("Clear Selection")
+                            Spacer()
+                            SystemImage.xmark
+                        }
+                    }
+                }
+                ForEach(Status.allCases, id: \.self) { status in
+                    Button {
+                        let transform = filter.contains(status).if(
+                            true: SyncAction.Update.Status.remove,
+                            false: SyncAction.Update.Status.add
+                        )
+                        dispatch(sync: .update(.filter(transform(status))))
+                    } label: {
+                        HStack {
+                            Text(status.description)
+                            Spacer()
+                            if filter.contains(status) {
+                                SystemImage.checkmark
+                            }
+                        }
+                    }
+                }
+            }, label: {
+                filter.isEmpty.if(
+                    true: SystemImage.filter,
+                    false: SystemImage.filterFilled
+                )
+            })
+        }
+    }
+    
     func body(content: Content) -> some View {
         #if os(iOS)
-        return OptionalStoreView(\.persistent.selectedServer?.name) { name, _ in
-            StoreView(\.jobs) { jobs, _ in
-                content
-                    .navigationBarItems(
-                        leading: TransferTotals(jobs: jobs),
-                        trailing: EmptyView()
-                    )
-                    .navigationBarTitle(name)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
+        return StoreView(\.jobs) { jobs, _ in
+            content
+                .navigationBarItems(
+                    leading: TransferTotals(jobs: jobs),
+                    trailing: filter
+                )
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItemGroup(placement: .principal) {
+                        title
+                    }
+                }
         }
         #else
         return content
         #endif
+    }
+}
+
+struct AddURIView: View {
+    @State var text = ""
+    
+    var body: some View {
+        VStack {
+            TextField("URI", text: $text)
+            Menu("Add") {
+                OptionalStoreView(
+                    \.persistent.selectedServer?.downloadDirectories
+                ) { directories, dispatch in
+                    ForEach(directories, id: \.self) { directory in
+                        Button(directory) {
+                            dispatch(async: .command(.addURI(text, location: directory)))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func add() {
+        
     }
 }

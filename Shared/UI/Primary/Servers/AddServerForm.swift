@@ -48,7 +48,7 @@ struct AddServerForm: View {
                         .textContentType(.username)
                 }
                 HLabelled("Password") {
-                    SecureField("Ex4mpleP@ssw0rd", text: $password)
+                    SecureField("", text: $password)
                         .textContentType(.password)
                 }
             }

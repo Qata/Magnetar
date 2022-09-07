@@ -28,17 +28,24 @@ enum SyncAction {
         enum Sorting {
             enum Value {
                 case field(Job.Field.Descriptor)
-                case status(Status)
+                case status(Magnetar.Status)
             }
             case order(Magnetar.Sorting.Order)
             case value(Value)
         }
+        
+        enum Status {
+            case add(Magnetar.Status)
+            case remove(Magnetar.Status)
+        }
 
         case sorting(Sorting)
         case jobs([String: JobViewModel?])
+        case filter(Status)
     }
     enum Delete {
         case jobs([String])
+        case filter
     }
     case error(AppError)
     case create(Create)

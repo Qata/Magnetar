@@ -110,6 +110,9 @@ let transmissionAPI = APIDescriptor(
                             "addedDate": .field(.adHoc(.init(name: "Date Added", type: .unixDate))),
                             "doneDate": .field(.adHoc(.init(name: "Date Finished", type: .unixDate))),
                             "downloadDir": .field(.adHoc(.init(name: "Download Directory", type: .string))),
+                            "isStalled": .field(.adHoc(.init(name: "Stalled", type: .bool))),
+                            "queuePosition": .field(.adHoc(.init(name: "Queue Position", type: .int))),
+                            "comment": .field(.adHoc(.init(name: "Comment", type: .string))),
                         ])
                     ])
                 ])
@@ -134,19 +137,52 @@ let transmissionAPI = APIDescriptor(
                             .string("addedDate"),
                             .string("doneDate"),
                             .string("downloadDir"),
+                            .string("isStalled"),
+                            .string("queuePosition"),
+                            .string("comment"),
                         ])
                     ])
                 ])
             ))
         ),
+        .addURI: .init(
+            expected: .json(.object([
+                "result": .string("success")
+            ])),
+            request: .jsonrpc(.post(
+                endpoint: transmissionEndpoint,
+                payload: .object([
+                    "method": .string("torrent-add"),
+                    "arguments": .object([
+                        "filename": .uri,
+                        "download-dir": .location
+                    ])
+                ])
+            ))
+        )
     ]
 )
 
 let transmissionServer = Server(
-    url: URL(string: "http://mini.local")!,
+    url: URL(string: "http://192.168.20.21")!,
     user: "lotte",
     password: "lol",
     port: 9091,
     name: "Home",
-    api: transmissionAPI
+    downloadDirectories: [
+        "/Volumes/Storage/Entertainment/Series",
+        "/Volumes/Storage/Entertainment/Movies"
+    ],
+    api: transmissionAPI,
+    lastSeen: .init(underlying: nil)
+)
+
+let transmissionServer2 = Server(
+    url: URL(string: "http://192.168.20.21")!,
+    user: "lotte",
+    password: "lol",
+    port: 9091,
+    name: "Away",
+    api: transmissionAPI,
+    lastSeen: .init(underlying: nil)
 )

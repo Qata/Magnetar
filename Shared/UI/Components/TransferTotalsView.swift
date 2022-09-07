@@ -12,6 +12,7 @@ import SwiftUI
 struct TransferTotals: View {
     let downloadSpeed: Speed
     let uploadSpeed: Speed
+    @Environment(\.layoutDirection) var direction
     
     init(jobs: [String: JobViewModel]) {
         downloadSpeed = .init(bytes: jobs.values.reduce(0, { $0 + $1.downloadSpeed.bytes }))
@@ -20,10 +21,20 @@ struct TransferTotals: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("↓ \(downloadSpeed.description)")
+            let download = ["↓", downloadSpeed.description]
+            let downloadDescription = (direction == .leftToRight).if(
+                true: download,
+                false: download.reversed()
+            ).joined(separator: " ")
+            Text(downloadDescription)
                 .accessibility(label: Text("Total download speed"))
                 .accessibility(value: Text(downloadSpeed.accessibleDescription))
-            Text("↑ \(uploadSpeed.description)")
+            let upload = ["↑", uploadSpeed.description]
+            let uploadDescription = (direction == .leftToRight).if(
+                true: upload,
+                false: upload.reversed()
+            ).joined(separator: " ")
+            Text(uploadDescription)
                 .accessibility(label: Text("Total upload speed"))
                 .accessibility(value: Text(uploadSpeed.accessibleDescription))
         }

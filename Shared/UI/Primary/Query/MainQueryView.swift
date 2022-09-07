@@ -19,7 +19,7 @@ struct MainQueryView: View {
         List {
             Section("Actions") {
                 Button("Browser") {
-                    
+                    urlString = "google.com"
                 }
             }
             Section("Queries") {
@@ -51,18 +51,25 @@ struct MainQueryView: View {
                     Text("Please enter the search terms")
                 }
         }
-        .navigationBarItems(trailing: Button(image: .plus, binding: $showAddQuery))
+        .navigationBarItems(
+            leading: NavigationLink(
+                destination: AddURIView()
+            ) {
+                Text("URI")
+            },
+            trailing: Button(image: .plus, binding: $showAddQuery)
+        )
         .navigationBarTitle("Query Central")
         .sheet(isPresented: $showAddQuery) {
             NavigationView {
                 AddQueryView(
-                    text: "https://www.google.com/search?q=test&testname=yes&value=true",
+                    text: "",
                     showModal: $showAddQuery
                 )
             }
         }
         .sheet(isPresented: .init(get: { urlString != nil }, set: { _ in urlString = nil })) {
-            WebView(url: urlString ?? "")
+            WebViewSheet(url: urlString ?? "")
         }
     }
 }

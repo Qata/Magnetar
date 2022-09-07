@@ -15,16 +15,6 @@ public extension Sequence {
         firstNonNil { $0 as? T }
     }
 
-    /// Returns the first element in `self` that `transform` maps to a non-`nil` value.
-    func firstNonNil<T>(_ transform: (Element) throws -> T?) rethrows -> T? {
-        for value in self {
-            if let value = try transform(value) {
-                return value
-            }
-        }
-        return nil
-    }
-
     /// Returns an array containing the results of applying the given `KeyPath`
     /// over the sequence's elements.
     func map<U>(_ keyPath: KeyPath<Element, U>) -> [U] {

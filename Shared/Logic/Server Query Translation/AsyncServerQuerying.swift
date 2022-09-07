@@ -64,7 +64,15 @@ extension Publisher where Output == Global.State, Failure == Never {
             }
             
             return URLSession.shared
-                .dataTaskPublisher(for: command.request.urlRequest(for: server, ids: actionCommand.ids))
+                .dataTaskPublisher(
+                    for: command.request.urlRequest(
+                        for: server,
+                        command: actionCommand
+                    )
+                )
+//                .handleEvents(receiveOutput: { data, _ in
+//                    Swift.print(":::\(String(data: data, encoding: .utf8)!)")
+//                })
                 .mapError(AppError.urlError)
                 .flatMap { handleTask(data: $0, response: $1) }
                 .map {

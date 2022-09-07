@@ -44,6 +44,10 @@ struct MainView: View {
                 List {
                     NavigationLink(
                         destination: AddServerForm(),
+                        label: Label("Servers", icon: .serverRack)
+                    )
+                    NavigationLink(
+                        destination: AddServerForm(),
                         label: Label("Add Server", icon: .plus)
                     )
                     NavigationLink(

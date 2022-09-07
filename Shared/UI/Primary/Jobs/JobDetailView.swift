@@ -2,14 +2,14 @@ import SwiftUI
 
 struct CommandButton<Content: View>: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
-    
+
     let title: Text?
     let command: Command
     let status: Status
     let invalidStatuses: [Status]
     let api: APIDescriptor
     let content: (_ title: Text?, _ image: SystemImage, _ action: @escaping () -> Void) -> Content
-    
+
     init(
         title: Bool,
         command: ([String]) -> Command,
@@ -59,6 +59,8 @@ struct CommandButton<Content: View>: View {
             return .xmarkBin
         case .addURI:
             return .linkBadgePlus
+        case .addFile:
+            return .docFillBadgePlus
         }
     }
 }
@@ -72,11 +74,13 @@ struct JobDetailView: View {
         
         let label: String
         let text: String
+        let binding: Binding<String>
         let type: LabelType
 
-        init(_ label: String, text: String, type: LabelType = .preset) {
+        init(_ label: String, text: String, detail: Binding<String>, type: LabelType = .preset) {
             self.label = label
             self.text = text
+            self.binding = detail
             self.type = type
         }
 
@@ -94,7 +98,7 @@ struct JobDetailView: View {
                         .lineLimit(nil)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.trailing)
-                        .frame(maxHeight: .infinity, alignment: .trailing)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.vertical, 10)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -110,16 +114,16 @@ struct JobDetailView: View {
         }
         
         func view() {
-            
+            binding.wrappedValue = text
         }
     }
 
-    @StateObject var server = Global.store.lensing(state: { $0.persistent.selectedServer })
+    @State var detailViewText = ""
     let viewModel: JobViewModel
 
     @ViewBuilder
     func button(disabledIf invalidStatuses: [Status] = [], command: @escaping ([String]) -> Command) -> some View {
-        if let api = server.state?.api {
+        OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
             CommandButton(
                 title: false,
                 command: command,
@@ -153,20 +157,19 @@ struct JobDetailView: View {
 
     @ViewBuilder
     var buttons: some View {
-        switch server.state?.api {
-        case let api?:
+        OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
             button(
                 image: .playFill,
-                action: { server.dispatch(async: .command(.start([viewModel.id]))) }
+                action: { dispatch(async: .command(.start([viewModel.id]))) }
             ).disabled(
                 !api.available(command: .start)
                 || [.downloading, .seeding].contains(viewModel.status)
             )
             Spacer()
-            if server.state?.api.jobs.status[.paused] != nil {
+            if api.jobs.status[.paused] != nil {
                 button(
                     image: .pauseFill,
-                    action: { server.dispatch(async: .command(.pause([viewModel.id]))) }
+                    action: { dispatch(async: .command(.pause([viewModel.id]))) }
                 ).disabled(
                     !api.available(command: .pause)
                     || [.paused, .stopped].contains(viewModel.status)
@@ -175,7 +178,7 @@ struct JobDetailView: View {
             }
             button(
                 image: .stopFill,
-                action: { server.dispatch(async: .command(.stop([viewModel.id]))) }
+                action: { dispatch(async: .command(.stop([viewModel.id]))) }
             )
             .disabled(
                 !api.available(command: .stop)
@@ -184,45 +187,76 @@ struct JobDetailView: View {
             Spacer()
             Menu {
                 Button("Remove") {
-                    server.dispatch(async: .command(.remove([viewModel.id])))
+                    dispatch(async: .command(.remove([viewModel.id])))
                 }
                 .disabled(!api.available(command: .remove))
                 Button("Delete Data") {
-                    server.dispatch(async: .command(.deleteData([viewModel.id])))
+                    dispatch(async: .command(.deleteData([viewModel.id])))
                 }
                 .disabled(!api.available(command: .deleteData))
             } label: {
                 button(image: .xmark, action: {})
             }
             .disabled(![.remove, .deleteData].contains(where: api.available))
-        case nil:
-            EmptyView()
         }
     }
 
     var body: some View {
         List {
             Section {
-                HLabel("Name", text: viewModel.name)
-                HLabel("Status", text: viewModel.status.description)
-                HLabel("Size", text: viewModel.size.description)
-                HLabel("Downloaded", text: viewModel.downloaded.description)
-                HLabel("Uploaded", text: viewModel.uploaded.description)
+                HLabel("Name", text: viewModel.name, detail: $detailViewText)
+                HLabel("Status", text: viewModel.status.description, detail: $detailViewText)
+                HLabel("Size", text: viewModel.size.description, detail: $detailViewText)
+                HLabel("Downloaded", text: viewModel.downloaded.description, detail: $detailViewText)
+                HLabel("Uploaded", text: viewModel.uploaded.description, detail: $detailViewText)
             }
             Section {
-                HLabel("ID", text: viewModel.id)
-                HLabel("Upload Speed", text: viewModel.uploadSpeed.description)
-                HLabel("Download Speed", text: viewModel.downloadSpeed.description)
-                HLabel("Ratio", text: viewModel.ratio.description)
-                HLabel("ETA", text: viewModel.eta.description)
+                HLabel("ID", text: viewModel.id, detail: $detailViewText)
+                HLabel("Upload Speed", text: viewModel.uploadSpeed.description, detail: $detailViewText)
+                HLabel("Download Speed", text: viewModel.downloadSpeed.description, detail: $detailViewText)
+                HLabel("Ratio", text: viewModel.ratio.description, detail: $detailViewText)
+                HLabel("ETA", text: viewModel.eta.description, detail: $detailViewText)
             }
 
             Section {
                 ForEach(viewModel.additional.sorted(keyPath: \.name), id: \.name) { field in
                     field.isValid.if(
-                        true: HLabel(field.name, text: field.description, type: .adHoc)
+                        true: HLabel(
+                            field.name,
+                            text: field.description,
+                            detail: $detailViewText,
+                            type: .adHoc
+                        )
                     )
                 }
+            }
+        }
+        .navigationTitle(viewModel.name)
+        .overlay {
+            NavigationLink(
+                isActive: .init(
+                    get: {
+                        !detailViewText.isEmpty
+                    },
+                    set: { _ in
+                        detailViewText.removeAll()
+                    }
+                )
+            ) {
+                ScrollView(.vertical) {
+                    Text(detailViewText)
+                        .lineLimit(nil)
+                        .padding()
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        Button("Copy") {
+                            UIPasteboard.general.string = detailViewText
+                        }
+                    }
+                }
+            } label: {
+                EmptyView()
             }
         }
         .toolbar {

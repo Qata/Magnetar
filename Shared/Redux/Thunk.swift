@@ -39,6 +39,7 @@ extension Global {
         let state = store.state.changes.first()
         switch action {
         case .start:
+            #warning("When the UI is driven from the state, add a filter based on whether the torrent list is visible")
             return store.state.changes
                 .map(\.persistent.refreshInterval)
                 .removeDuplicates()
@@ -49,6 +50,10 @@ extension Global {
                         .map { _ in () }
                 }
                 .switchToLatest()
+//                .drop(
+//                    untilOutputFrom: store.actions.sync.middleware.post
+//                        .first(matching: /Action.Sync.set..Action.Sync.Set.token)
+//                )
                 .prepend(())
                 .map { .async(.command(.fetch(.all))) }
                 .prefix(
@@ -104,7 +109,7 @@ extension Global {
                         .replaceEmpty(with: .async(action))
                     }
                     .liftError()
-            case .start, .startNow, .pause, .stop:
+            case .start, .startNow, .pause, .stop, .addURI, .addFile:
                 return state
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.actions.publisher) }
@@ -121,9 +126,6 @@ extension Global {
                     .flatMap { $0.left.publisher.flatMap(\.actions.publisher) }
                     .append(.sync(.delete(.jobs(command.ids))))
                     .liftError()
-            case .addURI:
-                return Empty()
-                    .eraseToAnyPublisher()
             }
         }
     }

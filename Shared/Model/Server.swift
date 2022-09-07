@@ -16,8 +16,9 @@ struct Server: Hashable, Codable {
     var token: String?
     var port: UInt16
     var name: String
+    var downloadDirectories: [String] = []
     var api: APIDescriptor
-    var lastSeen: Date?
+    var lastSeen: Unhashed<Date?>
 
     var sorting: Sorting = .init(order: .ascending, value: .init(field: .preset(.name), status: .downloading))
 }

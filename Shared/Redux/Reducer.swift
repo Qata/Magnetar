@@ -33,6 +33,7 @@ extension Global {
             case let .set(action):
                 switch action {
                 case let .selectedServer(server):
+                    state.jobs.removeAll()
                     state.persistent.selectedServer = server
                 case let .refreshInterval(refreshInterval):
                     state.persistent.refreshInterval = refreshInterval
@@ -58,6 +59,13 @@ extension Global {
                     case let .field(value):
                         state.persistent.selectedServer?.sorting.value.field = value
                     }
+                case let .filter(status):
+                    switch status {
+                    case let .add(status):
+                        state.persistent.filter.insert(status)
+                    case let .remove(status):
+                        state.persistent.filter.remove(status)
+                    }
                 }
             case let .delete(action):
                 switch action {
@@ -65,6 +73,8 @@ extension Global {
                     ids.forEach {
                         state.jobs.removeValue(forKey: $0)
                     }
+                case .filter:
+                    state.persistent.filter.removeAll()
                 }
             }
         }

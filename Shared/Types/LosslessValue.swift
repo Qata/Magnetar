@@ -29,6 +29,26 @@ public protocol LosslessDecodingStrategy {
     static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] { get }
 }
 
+private func losslessStringCodable(from json: JSON) throws -> LosslessStringCodable {
+    switch json {
+    case let .bool(value):
+        return value
+    case let .string(value):
+        return value
+    case let .number(value):
+        switch (Int(value), Double(value)) {
+        case let (int?, double) where double == .init(int):
+            return int
+        case let (_, double?):
+            return double
+        default:
+            throw AppError.jsonParsing(.init(json: json, expected: "Int | Double"))
+        }
+    case .object, .array, .null:
+        throw AppError.jsonParsing(.init(json: json, expected: "Int | Double | Bool | String"))
+    }
+}
+
 /// Decodes Codable values into their respective preferred types.
 ///
 /// `@LosslessValueCodable` attempts to decode Codable types into their preferred order while preserving the data in the most lossless format.
@@ -47,25 +67,7 @@ public struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable 
     
     public init(from json: JSON) throws {
         try self.init(
-            value: yield { () -> LosslessStringCodable in
-                switch json {
-                case let .bool(value):
-                    return value
-                case let .string(value):
-                    return value
-                case let .number(value):
-                    switch (Int(value), Double(value)) {
-                    case let (int?, double) where double == .init(int):
-                        return int
-                    case let (_, double?):
-                        return double
-                    default:
-                        throw AppError.jsonParsing(.init(json: json, expected: "Int | Double"))
-                    }
-                case .object, .array, .null:
-                    throw AppError.jsonParsing(.init(json: json, expected: "Int | Double | Bool | String"))
-                }
-            }
+            value: losslessStringCodable(from: json)
         )
     }
     

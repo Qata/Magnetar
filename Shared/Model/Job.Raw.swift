@@ -7,6 +7,7 @@
 
 import Foundation
 import MonadicJSON
+import Algorithms
 import SwiftUI
 
 struct ETADescriptor: Codable, Hashable {
@@ -108,7 +109,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
             context = [
                 "Upload ratio of \(ratio.accessibleDescription)",
                 "\(uploaded.accessibleDescription) uploaded"
-                ]
+            ]
         case .downloadQueued, .seedQueued, .stopped, .paused, .checkingFiles, .fileCheckQueued, .unknown:
             context = [
                 "Upload ratio of \(ratio.accessibleDescription)"

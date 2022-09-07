@@ -94,7 +94,8 @@ struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
 struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
     static let numberFormatter: Atomic<NumberFormatter> = {
         let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
         return .init(formatter)
     }()
     let bytes: UInt
@@ -108,11 +109,11 @@ struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
             .first { $0.standing == logged }
             ?? .bytes
     }
-    
+
     var rawDescription: String {
         "\(Double(bytes) / pow(2, Double(sizeClass.standing * 10)), formatter: Self.numberFormatter)"
     }
-    
+
     var description: String {
         return [
             rawDescription,

@@ -23,7 +23,7 @@ enum Command: Hashable {
         case pause
         case remove
         case deleteData
-        case addMagnet
+        case addURI
         case addFile
         
         var description: String {
@@ -47,7 +47,8 @@ enum Command: Hashable {
     case pause([String])
     case remove([String])
     case deleteData([String])
-    case addURI(URL)
+    case addURI(String, location: String?)
+    case addFile(Data, location: String?)
     
     var ids: [String] {
         switch self {
@@ -70,8 +71,37 @@ enum Command: Hashable {
             }
         case let .startNow(ids):
             return ids
-        case .addURI, .requestToken:
+        case .addURI, .requestToken, .addFile:
             return []
+        }
+    }
+    
+    var uri: String? {
+        switch self {
+        case let .addURI(uri, _):
+            return uri
+        default:
+            return nil
+        }
+    }
+
+    var location: String? {
+        switch self {
+        case let .addURI(_, location):
+            return location
+        case let .addFile(_, location):
+            return location
+        default:
+            return nil
+        }
+    }
+
+    var file: Data? {
+        switch self {
+        case let .addFile(data, _):
+            return data
+        default:
+            return nil
         }
     }
 
@@ -94,6 +124,8 @@ enum Command: Hashable {
         case .deleteData:
             return .deleteData
         case .addURI:
+            return .addURI
+        case .addFile:
             return .addFile
         }
     }
@@ -109,6 +141,8 @@ extension Payload {
                 expected.values.forEach(recurse)
             case let .array(expected):
                 expected.forEach(recurse)
+            case .string:
+                break
             case let .field(field):
                 switch field {
                 case .preset:

@@ -35,13 +35,11 @@ enum Job {
         
         var isValid: Bool {
             switch value {
-            case let .size(size):
-                return size.bytes > 0
             case let .unixDate(date):
                 return date.timeIntervalSince1970 > 0
             case let .string(string):
                 return !string.isEmpty
-            case .speed, .seconds, .bool:
+            case .speed, .seconds, .bool, .size, .int, .float:
                 return true
             }
         }
@@ -69,12 +67,20 @@ extension Job.Field {
             case size
             case seconds
             case string
+            case int
+            case float
             case bool
             // Useful for APIs that return arrays.
             case irrelevant
 
             func jobField(for json: JSON, name: String) -> Job.Field? {
                 switch (self, json) {
+                case let (.int, .number(value)):
+                    return Int(value)
+                        .map { .init(name: name, value: .int($0)) }
+                case let (.float, .number(value)):
+                    return Double(value)
+                        .map { .init(name: name, value: .float($0)) }
                 case let (.unixDate, .number(value)):
                     return TimeInterval(value)
                         .map(Date.init(timeIntervalSince1970:))
@@ -156,6 +162,8 @@ extension Job.Field {
         case speed(Speed)
         case size(Size)
         case seconds(ETA)
+        case int(Int)
+        case float(Double)
         case string(String)
         case bool(Bool)
 
@@ -168,6 +176,10 @@ extension Job.Field {
             case let (.size(lhs), .size(rhs)):
                 return lhs < rhs
             case let (.seconds(lhs), .seconds(rhs)):
+                return lhs < rhs
+            case let (.int(lhs), .int(rhs)):
+                return lhs < rhs
+            case let (.float(lhs), .float(rhs)):
                 return lhs < rhs
             case let (.string(lhs), .string(rhs)):
                 return lhs < rhs
@@ -187,6 +199,10 @@ extension Job.Field {
             switch self {
             case .unixDate:
                 return accessibleDescription
+            case let .int(number):
+                return number.description
+            case let .float(number):
+                return number.description
             case let .speed(speed):
                 return speed.description
             case let .size(size):
@@ -204,6 +220,10 @@ extension Job.Field {
             switch self {
             case let .unixDate(date):
                 return date.accessibleDescription
+            case let .int(number):
+                return number.description
+            case let .float(number):
+                return number.description
             case let .speed(speed):
                 return speed.accessibleDescription
             case let .size(size):
@@ -235,6 +255,13 @@ extension Job.Raw: JSONInitialisable {
                 switch json {
                 case let .object(json):
                     try recurseObjects(json: json, expected: expected)
+                default:
+                    throw JSONParseError(json: json, expected: expected)
+                }
+            case let .string(expected):
+                switch json {
+                case .string(expected):
+                    break
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }

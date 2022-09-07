@@ -13,6 +13,7 @@ extension Payload {
         case object([String: Self])
         case array([Self])
         case forEach([Self])
+        case string(String)
         case field(Job.Field.Descriptor)
     }
 }

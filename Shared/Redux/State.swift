@@ -14,6 +14,7 @@ extension Global {
             var servers: [Server]
             var selectedServer: Server?
             var refreshInterval: TimeInterval
+            var filter: Set<Status> = []
         }
         var persistent: PersistentState
         var errors: RingBuffer<String> = .init(count: 100)

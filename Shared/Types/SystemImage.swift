@@ -8,32 +8,47 @@
 import SwiftUI
 
 public enum SystemImage: String, View {
-    case squareAndArrowUp
+    case arrowClockwise
+    case arrowTriangle2Circlepath
+    case arrowUp
+    case arrowUpArrowDown
+    case arrowUpForward
+    case checkmark
     case chevronLeft
     case chevronRight
-    case stopFill
-    case playFill
-    case pauseFill
-    case stop
-    case play
-    case pause
-    case xmark
-    case xmarkCircleFill
+    case docBadgePlus
+    case docFillBadgePlus
     case exclamationmarkSquareFill
-    case xmarkBin
+    case line3HorizontalDecreaseCircle
+    case line3HorizontalDecreaseCircleFill
     case gear
+    case infoCircle
+    case linkBadgePlus
+    case linkCircle
     case listDash
     case listNumber
     case magnifyingglass
-    case arrowClockwise
-    case linkBadgePlus
-    case docFillBadgePlus
+    case pause
+    case pauseFill
+    case play
+    case playFill
     case plus
     case plusCircle
-    case infoCircle
     case serverRack
-    case arrowUpArrowDown
-    case arrowTriangle2Circlepath
+    case squareAndArrowUp
+    case stop
+    case stopFill
+    case xmark
+    case xmarkBin
+    case xmarkCircleFill
+    
+    static var filter: Self {
+        .line3HorizontalDecreaseCircle
+    }
+    
+    static var filterFilled: Self {
+        .line3HorizontalDecreaseCircleFill
+    }
 
     public var body: Image {
         Image(systemName: systemName)

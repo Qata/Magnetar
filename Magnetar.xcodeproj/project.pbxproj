@@ -147,7 +147,10 @@
 		CBBF93B927B3C4060060CB06 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93B827B3C4060060CB06 /* Job.swift */; };
 		CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */; };
 		CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93C127B3C4FF0060CB06 /* ETA.swift */; };
-		CBF7DE2D28BC8A9B00A342A9 /* MarqueeText in Frameworks */ = {isa = PBXBuildFile; productRef = CBF7DE2C28BC8A9B00A342A9 /* MarqueeText */; };
+		CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
+		CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
+		CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
+		CBE69F8C28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +245,8 @@
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
 		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
+		CBE69F8728BF237500BCECF7 /* ServerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerList.swift; sourceTree = "<group>"; };
+		CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unhashed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,7 +254,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBF7DE2D28BC8A9B00A342A9 /* MarqueeText in Frameworks */,
 				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
@@ -421,8 +425,8 @@
 				CB6B0F2D27B252FC009CE0B5 /* MainView.swift */,
 				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
 				CB66B88527C323DD00C2A62F /* Jobs */,
-				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
 				CB66B88627C323EB00C2A62F /* Query */,
+				CBE69F8628BF236A00BCECF7 /* Servers */,
 			);
 			path = Primary;
 			sourceTree = "<group>";
@@ -456,6 +460,7 @@
 				CBBF938D27B34A5A0060CB06 /* Operators.swift */,
 				CB66B88227BF7AA000C2A62F /* Regex.swift */,
 				CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */,
+				CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -567,6 +572,15 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		CBE69F8628BF236A00BCECF7 /* Servers */ = {
+			isa = PBXGroup;
+			children = (
+				CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */,
+				CBE69F8728BF237500BCECF7 /* ServerList.swift */,
+			);
+			path = Servers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -592,7 +606,6 @@
 				CB9F9E7727B791D600CA93E6 /* KeychainAccess */,
 				CB9F9E8327BCC52E00CA93E6 /* CasePaths */,
 				CB66B87D27BF327000C2A62F /* ShareSheetView */,
-				CBF7DE2C28BC8A9B00A342A9 /* MarqueeText */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -699,7 +712,6 @@
 				CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */,
-				CBF7DE2B28BC8A9B00A342A9 /* XCRemoteSwiftPackageReference "MarqueeText" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -793,6 +805,7 @@
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8E9CAF28582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
+				CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
@@ -833,6 +846,7 @@
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
 				CB9F9E8627BCD7FE00CA93E6 /* Publisher.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
+				CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB673482287FE38400F9F35F /* AsyncServerQuerying.swift in Sources */,
 				CB6B0FA727B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 				CB66B88027BF47CF00C2A62F /* StringProtocol.swift in Sources */,
@@ -844,6 +858,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CBE69F8C28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CB577E0F27C4968600F59AB3 /* Button.swift in Sources */,
 				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB577E0C27C4827D00F59AB3 /* StoreView.swift in Sources */,
@@ -873,6 +888,7 @@
 				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
+				CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB8E9CB028582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CBBF938F27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
@@ -1378,14 +1394,6 @@
 				minimumVersion = 0.9.0;
 			};
 		};
-		CBF7DE2B28BC8A9B00A342A9 /* XCRemoteSwiftPackageReference "MarqueeText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/joekndy/MarqueeText";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1438,11 +1446,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
 			productName = CodeEditorView;
-		};
-		CBF7DE2C28BC8A9B00A342A9 /* MarqueeText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBF7DE2B28BC8A9B00A342A9 /* XCRemoteSwiftPackageReference "MarqueeText" */;
-			productName = MarqueeText;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

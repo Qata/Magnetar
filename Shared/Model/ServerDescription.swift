@@ -49,7 +49,7 @@ enum Request: Codable, Hashable {
         }
     }
 
-    func urlRequest(for server: Server, ids: [String]) -> URLRequest {
+    func urlRequest(for server: Server, command: Command) -> URLRequest {
         let url = server.url
         let port = server.port
         switch self {
@@ -74,8 +74,14 @@ enum Request: Codable, Hashable {
                 if server.token != nil, let field = server.api.authentication.firstNonNil(\.headerField) {
                     request.setValue(server.token, forHTTPHeaderField: field)
                 }
-                request.httpBody = try! JSONEncoder().encode(payload.resolve(ids: ids).encodable())
+                request.httpBody = try! JSONEncoder().encode(
+                    payload
+                        .resolve(command: command)
+                        .encodable()
+                )
                 request.httpMethod = method
+                request.timeoutInterval
+//                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
                 return request
             }
         }
@@ -146,17 +152,23 @@ indirect enum RequestJSON: Hashable, Codable {
     enum Field: Hashable, Codable {
         case id
     }
+    enum Encoding: Hashable, Codable {
+        case base64
+    }
     case null
     case string(String)
     case number(String)
     case bool(Bool)
     case object([String: Self])
     case array([Self])
+    case uri
+    case location
+    case file(Encoding)
     case field(Field)
     case forEach(Field)
     
-    func resolve(ids: [String]) -> JSON {
-        var ids: [String] = ids.reversed()
+    func resolve(command: Command) -> JSON {
+        var ids: [String] = command.ids.reversed()
         func recurse(json: RequestJSON) -> JSON? {
             switch json {
             case let .object(json):
@@ -171,6 +183,19 @@ indirect enum RequestJSON: Hashable, Codable {
                 return .bool(value)
             case .null:
                 return .null
+            case .uri:
+                return command.uri.map(JSON.string)
+            case .location:
+                return command.location.map(JSON.string)
+            case let .file(encoding):
+                return command.file
+                    .map {
+                        switch encoding {
+                        case .base64:
+                            return $0.base64EncodedString()
+                        }
+                    }
+                    .map(JSON.string)
             case let .field(value):
                 switch value {
                 case .id:
