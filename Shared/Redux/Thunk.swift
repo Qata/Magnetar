@@ -17,7 +17,7 @@ enum AppError: Error {
     case jsonDecoding(JSONParser.Error)
     case jsonParsing(JSONParseError)
     case finalParsing(Error)
-    case invalidUsernameOrPassword
+    case authenticationFailure
     case invalidTokenWithoutRecourse
     case commandMissing
     case tokenRequestFailed
@@ -41,7 +41,7 @@ extension Global {
         case .start:
             #warning("When the UI is driven from the state, add a filter based on whether the torrent list is visible")
             return store.state.changes
-                .map(\.persistent.refreshInterval)
+                .compactMap(\.persistent.selectedServer?.refreshInterval)
                 .removeDuplicates()
                 .filter(>.zero)
                 .map { interval in

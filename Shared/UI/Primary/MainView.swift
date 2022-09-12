@@ -14,7 +14,7 @@ struct MainView: View {
             NavigationView {
                 JobListView()
             }.tabItem {
-                SystemImage.arrowTriangle2Circlepath
+                SystemImage.arrowUpArrowDown
                 Text("Transfers")
             }
             NavigationView {
@@ -30,23 +30,7 @@ struct MainView: View {
                         label: Label("APIs", icon: .cloudFill)
                     )
                     NavigationLink(
-                        destination: StoreView(\.persistent.servers) { servers, _ in
-                            List {
-                                ForEach(servers, id: \.self) {
-                                    Text($0.name)
-                                }
-                            }
-                            .navigationTitle("Servers")
-                            .toolbar {
-                                ToolbarItemGroup(placement: .primaryAction) {
-                                    NavigationLink {
-                                        AddServerForm()
-                                    } label: {
-                                        SystemImage.plus
-                                    }
-                                }
-                            }
-                        },
+                        destination: ServerList(),
                         label: Label("Servers", icon: .serverRack)
                     )
                     NavigationLink(

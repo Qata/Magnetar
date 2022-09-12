@@ -93,9 +93,9 @@ extension Publisher where Output == Global.State, Failure == Never {
             response: HTTPURLResponse
         ) -> Result<[Action]?, AppError> {
             switch auth {
-            case let .password(code):
-                return (code == response.statusCode).if(
-                    true: .failure(.invalidUsernameOrPassword),
+            case let .password(codes):
+                return (codes.contains(response.statusCode)).if(
+                    true: .failure(.authenticationFailure),
                     false: .success(nil)
                 )
             case let .token(token):

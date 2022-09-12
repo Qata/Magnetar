@@ -12,6 +12,8 @@ import MonadicJSON
 import CasePaths
 
 struct APIDescriptor: Codable, Hashable {
+    var name: String
+    var endpoint: EndpointDescriptor = .init(path: [])
     var authentication: [Authentication]
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
@@ -38,7 +40,10 @@ enum QueryItemValue: Codable, Hashable {
 
 enum Request: Codable, Hashable {
     enum JSONRPC: Codable, Hashable {
-        case post(endpoint: EndpointDescriptor, payload: RequestJSON)
+        case post(
+            relativeEndpoint: EndpointDescriptor = .init(path: []),
+            payload: RequestJSON
+        )
     }
     case jsonrpc(JSONRPC)
     
@@ -55,7 +60,8 @@ enum Request: Codable, Hashable {
         switch self {
         case let .jsonrpc(jsonrpc):
             switch jsonrpc {
-            case let .post(endpoint, payload):
+            case let .post(relativeEndpoint, payload):
+                let endpoint = server.api.endpoint.appending(relativeEndpoint)
                 var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
                 components?.queryItems = endpoint.queryItems.map {
                     $0.map {
@@ -80,7 +86,7 @@ enum Request: Codable, Hashable {
                         .encodable()
                 )
                 request.httpMethod = method
-                request.timeoutInterval
+                request.timeoutInterval = server.timeoutInterval
 //                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
                 return request
             }
@@ -92,7 +98,7 @@ enum Authentication: Codable, Hashable {
     enum Token: Codable, Hashable {
         case header(field: String, code: Int, request: Request)
     }
-    case password(invalidCode: Int)
+    case password(invalidCodes: [Int])
     case token(Token)
     
     var headerField: String? {
@@ -108,6 +114,15 @@ enum Authentication: Codable, Hashable {
 struct EndpointDescriptor: Codable, Hashable {
     var path: [String]
     var queryItems: [QueryItem]?
+    
+    func appending(_ descriptor: Self) -> Self {
+        .init(
+            path: path + descriptor.path,
+            queryItems: queryItems.map {
+                $0 + (descriptor.queryItems ?? [])
+            } ?? descriptor.queryItems
+        )
+    }
 }
 
 enum SizeDescription: Codable, Hashable {

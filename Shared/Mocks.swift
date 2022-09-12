@@ -9,15 +9,47 @@ import Foundation
 
 let transmissionEndpoint = EndpointDescriptor(path: ["transmission", "rpc"])
 
-let transmissionAPI = APIDescriptor(
+let qBittorrentAPI = APIDescriptor(
+    name: "qBittorrent v2.8.3",
+    endpoint: .init(path: ["api", "v2"]),
     authentication: [
-        .password(invalidCode: 401),
+        .password(invalidCodes: [403])
+    ],
+    jobs: .init(
+        status: [
+            .seedQueued: ["queuedUP", "stalledUP"],
+            .paused: ["pausedDL", "pausedUP"],
+            .downloading: ["downloading", ""],
+            .downloadQueued: ["queuedDL", "allocating", "metaDL", "stalledDL"],
+            .checkingFiles: ["checkingDL", "checkingUP", "checkingResumeData"],
+            .unknown: ["unknown", "moving"],
+        ]
+    ),
+    commands: [
+        .fetch: .init(
+            expected: .json(
+                .array([])
+            ),
+            request: .jsonrpc(
+                .post(
+                    relativeEndpoint: .init(path: ["torrents", "info"]),
+                    payload: .object([:])
+                )
+            )
+        )
+    ]
+)
+
+let transmissionAPI = APIDescriptor(
+    name: "Transmission v17",
+    endpoint: .init(path: ["transmission", "rpc"]),
+    authentication: [
+        .password(invalidCodes: [401]),
         .token(
             .header(
                 field: "X-Transmission-Session-Id",
                 code: 409,
                 request: .jsonrpc(.post(
-                    endpoint: transmissionEndpoint,
                     payload: .object(["method": .string("port-test")])
                 ))
             )
@@ -40,7 +72,6 @@ let transmissionAPI = APIDescriptor(
                 "arguments": .object([:])
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-start-now"),
                     "arguments": .object([
@@ -54,7 +85,6 @@ let transmissionAPI = APIDescriptor(
                 "arguments": .object([:])
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-stop"),
                     "arguments": .object([
@@ -68,7 +98,6 @@ let transmissionAPI = APIDescriptor(
                 "arguments": .object([:])
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-remove"),
                     "arguments": .object([
@@ -82,7 +111,6 @@ let transmissionAPI = APIDescriptor(
                 "arguments": .object([:])
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-remove"),
                     "arguments": .object([
@@ -118,7 +146,6 @@ let transmissionAPI = APIDescriptor(
                 ])
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-get"),
                     "arguments": .object([
@@ -150,7 +177,6 @@ let transmissionAPI = APIDescriptor(
                 "result": .string("success")
             ])),
             request: .jsonrpc(.post(
-                endpoint: transmissionEndpoint,
                 payload: .object([
                     "method": .string("torrent-add"),
                     "arguments": .object([

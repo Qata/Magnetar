@@ -18,8 +18,7 @@ enum Global {
                 queries: [],
                 servers: [transmissionServer, transmissionServer2],
                 apis: [transmissionAPI],
-                selectedServer: transmissionServer,
-                refreshInterval: 2
+                selectedServer: transmissionServer
             )
         ),
         reducer: Reducer.main.debugActions(actionFormat: .labelsOnly),

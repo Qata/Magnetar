@@ -10,12 +10,10 @@ import Foundation
 extension Global {
     struct State: Codable, Hashable {
         struct PersistentState: Codable, Hashable {
-            var queries: [Query]
-            var servers: [Server]
+            var queries: [Query] = []
+            var servers: [Server] = []
             var apis: [APIDescriptor]
             var selectedServer: Server?
-            var refreshInterval: TimeInterval
-            var filter: Set<Status> = []
         }
         var persistent: PersistentState
         var errors: RingBuffer<String> = .init(count: 100)

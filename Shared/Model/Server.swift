@@ -18,7 +18,10 @@ struct Server: Hashable, Codable {
     var name: String
     var downloadDirectories: [String] = []
     var api: APIDescriptor
+    var refreshInterval: TimeInterval = 2
+    var timeoutInterval: TimeInterval = 2
     var lastSeen: Unhashed<Date?>
 
     var sorting: Sorting = .init()
+    var filter: Set<Status> = []
 }

@@ -9,8 +9,22 @@ import SwiftUI
 
 struct ServerList: View {
     var body: some View {
-        List {
-            
+        StoreView(\.persistent.servers) { servers, _ in
+            List {
+                ForEach(servers, id: \.self) {
+                    Text($0.name)
+                }
+            }
+            .navigationTitle("Servers")
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    NavigationLink {
+                        AddServerForm()
+                    } label: {
+                        SystemImage.plus
+                    }
+                }
+            }
         }
     }
 }

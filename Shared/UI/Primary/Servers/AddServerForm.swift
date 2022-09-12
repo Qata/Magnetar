@@ -21,13 +21,12 @@ extension Optional where Wrapped == NSTextContentType {
 #endif
 
 struct AddServerForm: View {
-    @State var server: Server? = nil
-    @State var type: String = "Transmission"
     @State var name: String = ""
     @State var address: String = ""
     @State var port: String = ""
     @State var username: String = ""
     @State var password: String = ""
+    @State var api: APIDescriptor?
     
     var body: some View {
         Form {
@@ -53,8 +52,16 @@ struct AddServerForm: View {
                 }
                 HLabelled("API") {
                     Spacer()
-                    Menu("None Selected") {
-                        Text("Transmission v2")
+                    StoreView(\.persistent.apis) { apis, _ in
+                        Picker("Select an API", selection: $api) {
+                            Text("None")
+                                .tag(Optional<APIDescriptor>.none)
+                            ForEach(apis.sorted(keyPath: \.name), id: \.self) {
+                                Text($0.name)
+                                    .tag(Optional($0))
+                            }
+                        }
+                        .pickerStyle(.menu)
                     }
                 }
             }

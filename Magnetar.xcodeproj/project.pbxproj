@@ -139,6 +139,14 @@
 		CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E8327BCC52E00CA93E6 /* CasePaths */; };
 		CB9F9E8627BCD7FE00CA93E6 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */; };
 		CB9F9E8727BCD7FE00CA93E6 /* Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */; };
+		CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61828C8730400B0C6EA /* CommandsGroup.swift */; };
+		CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61828C8730400B0C6EA /* CommandsGroup.swift */; };
+		CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */; };
+		CBADD61D28C8C51200B0C6EA /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */; };
+		CBADD61F28C8C5AD00B0C6EA /* SortingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */; };
+		CBADD62028C8C5AD00B0C6EA /* SortingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */; };
+		CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */; };
+		CBADD62328C9641600B0C6EA /* JobsListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
@@ -240,6 +248,10 @@
 		CB9F9E7C27BC877900CA93E6 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		CB9F9E7F27BC89A500CA93E6 /* NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLink.swift; sourceTree = "<group>"; };
 		CB9F9E8527BCD7FE00CA93E6 /* Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publisher.swift; sourceTree = "<group>"; };
+		CBADD61828C8730400B0C6EA /* CommandsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsGroup.swift; sourceTree = "<group>"; };
+		CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
+		CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingMenu.swift; sourceTree = "<group>"; };
+		CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsListTopBar.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
 		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
@@ -296,6 +308,7 @@
 			children = (
 				CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */,
 				CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */,
+				CBADD62428C9657C00B0C6EA /* TopBar */,
 			);
 			path = Jobs;
 			sourceTree = "<group>";
@@ -554,6 +567,17 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		CBADD62428C9657C00B0C6EA /* TopBar */ = {
+			isa = PBXGroup;
+			children = (
+				CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */,
+				CBADD61828C8730400B0C6EA /* CommandsGroup.swift */,
+				CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */,
+				CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */,
+			);
+			path = TopBar;
+			sourceTree = "<group>";
+		};
 		CBBF93B727B3C3F90060CB06 /* Job */ = {
 			isa = PBXGroup;
 			children = (
@@ -787,6 +811,7 @@
 				CB66B87A27BF2B5800C2A62F /* UIApplication.swift in Sources */,
 				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
+				CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB9F9E8027BC89A500CA93E6 /* NavigationLink.swift in Sources */,
 				CB577E0E27C4968600F59AB3 /* Button.swift in Sources */,
@@ -820,11 +845,14 @@
 				CB6B0F6727B253DC009CE0B5 /* Bool.swift in Sources */,
 				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
 				CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */,
+				CBADD61F28C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
 				CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */,
 				CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
 				CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */,
+				CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */,
+				CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
@@ -870,6 +898,7 @@
 				CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
 				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
+				CBADD62328C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
@@ -895,6 +924,7 @@
 				CB9F9E7E27BC877900CA93E6 /* Label.swift in Sources */,
 				CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
+				CBADD61D28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
 				CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
@@ -902,6 +932,7 @@
 				CB6B0F6C27B253DC009CE0B5 /* Optional.swift in Sources */,
 				CB0F3B6F2884D9CE009D5AAB /* RingBuffer.swift in Sources */,
 				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CBADD62028C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
 				CB9F9E8727BCD7FE00CA93E6 /* Publisher.swift in Sources */,
 				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
 				CB66B88127BF47CF00C2A62F /* StringProtocol.swift in Sources */,
@@ -916,6 +947,7 @@
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
 				CB9F9E8127BC89A500CA93E6 /* NavigationLink.swift in Sources */,
+				CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,

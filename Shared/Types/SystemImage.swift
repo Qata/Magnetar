@@ -33,6 +33,7 @@ public enum SystemImage: String, View {
     case pauseFill
     case play
     case playFill
+    case playpause
     case plus
     case plusCircle
     case serverRack
@@ -42,11 +43,11 @@ public enum SystemImage: String, View {
     case xmark
     case xmarkBin
     case xmarkCircleFill
-    
+
     static var filter: Self {
         .line3HorizontalDecreaseCircle
     }
-    
+
     static var filterFilled: Self {
         .line3HorizontalDecreaseCircleFill
     }

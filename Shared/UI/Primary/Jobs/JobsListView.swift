@@ -100,20 +100,30 @@ struct JobListView: View {
             }
         }
     }
+    
+    func jobCells(jobs: [JobViewModel]) -> some View {
+        ForEach(jobs, id: \.id) { job in
+            ZStack(alignment: .leading) {
+                NavigationLink(destination: JobDetailView(viewModel: job)) {
+                    EmptyView()
+                }
+                .opacity(0)
+                JobRowView(viewModel: job)
+            }
+            .swipeActions(edge: .leading) {
+                leadingSwipeActions(job: job)
+            }
+        }
+    }
 
     var body: some View {
-        StoreView(\.persistent.filter) { filter, _ in
+        OptionalStoreView(\.persistent.selectedServer?.filter) { filter, _ in
             StoreView(\.jobs) { jobs, _ in
                 OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
                     let sortedJobs = sorted(jobs: jobs, server: server)
                     let filteredJobs = filtered(jobs: sortedJobs, statuses: filter)
                     List {
-                        Section(
-                            header: ServerStatusHeader(
-                                status: .online,
-                                ids: filteredJobs.map(\.id)
-                            )
-                        ) {
+                        Section {
                             if filteredJobs.isEmpty, !jobs.isEmpty, searchText.isEmpty {
                                 HStack {
                                     Spacer()
@@ -123,16 +133,16 @@ struct JobListView: View {
                                     }
                                 }
                             }
-                            ForEach(filteredJobs, id: \.id) { job in
-                                ZStack(alignment: .leading) {
-                                    NavigationLink(destination: JobDetailView(viewModel: job)) {
-                                        EmptyView()
+                            jobCells(jobs: filteredJobs)
+                        } header: {
+                            if !searchText.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    HStack {
+                                        SortingMenu()
+                                        CommandsMenu(jobs: filteredJobs)
+                                        FilterMenu()
                                     }
-                                    .opacity(0)
-                                    JobRowView(viewModel: job)
-                                }
-                                .swipeActions(edge: .leading) {
-                                    leadingSwipeActions(job: job)
                                 }
                             }
                         }
@@ -141,182 +151,10 @@ struct JobListView: View {
                     .disableAutocorrection(true)
                     .refreshable(action: { dispatch(async: .command(.fetch(.all))) })
                     .listStyle(.plain)
-                    .modifier(TopBar(jobs: filteredJobs))
+                    .modifier(JobsListTopBar(jobs: filteredJobs))
                 }
             }
         }
-    }
-}
-
-private struct TopBar: ViewModifier {
-    let jobs: [JobViewModel]
-    
-    func buttons(
-        for servers: [Server],
-        selected: Server,
-        dispatch: @escaping (Server) -> Void
-    ) -> some View {
-        ForEach(servers.sorted(keyPath: \.name), id: \.self) { server in
-            Button {
-                dispatch(server)
-            } label: {
-                HStack {
-                    Text(server.name)
-                    Spacer()
-                    if server.name == selected.name {
-                        SystemImage.checkmark
-                    }
-                }
-            }
-            .disabled(server.name == selected.name)
-        }
-    }
-    
-    var title: some View {
-        OptionalStoreView(\.persistent.selectedServer) { selectedServer, _ in
-            Menu {
-                StoreView(\.persistent.servers) { servers, dispatch in
-                    buttons(
-                        for: servers,
-                        selected: selectedServer,
-                        dispatch: { dispatch(sync: .set(.selectedServer($0))) }
-                    )
-                }
-            } label: {
-                VStack {
-                    Text(selectedServer.name)
-                        .font(.headline)
-                    Text("Online")
-                        .font(.subheadline)
-                }
-            }
-        }
-    }
-    
-    var filter: some View {
-        StoreView(\.persistent.filter) { filter, dispatch in
-            Menu {
-                if !filter.isEmpty {
-                    Button {
-                        dispatch(sync: .delete(.filter))
-                    } label: {
-                        HStack {
-                            Text("Clear Selection")
-                            Spacer()
-                            SystemImage.xmark
-                        }
-                    }
-                }
-                ForEach(Status.allCases, id: \.self) { status in
-                    Button {
-                        let transform = filter.contains(status).if(
-                            true: SyncAction.Update.Status.remove,
-                            false: SyncAction.Update.Status.add
-                        )
-                        dispatch(sync: .update(.filter(transform(status))))
-                    } label: {
-                        HStack {
-                            Text(status.description)
-                            Spacer()
-                            if filter.contains(status) {
-                                SystemImage.checkmark
-                            }
-                        }
-                    }
-                }
-            } label: {
-                filter.isEmpty.if(
-                    true: SystemImage.filter,
-                    false: SystemImage.filterFilled
-                )
-            }
-        }
-    }
-    
-    func sortingButton(order: Sorting.Order) -> some View {
-        OptionalStoreView(\.persistent.selectedServer?.sorting.order) { sorting, dispatch in
-            Button {
-                dispatch(sync: .update(.sorting(.order(order))))
-            } label: {
-                HStack {
-                    Text(order.description)
-                    Spacer()
-                    if sorting == order {
-                        SystemImage.checkmark
-                    }
-                }
-            }
-        }
-    }
-    
-    func sortingButton(field: Job.Field.Descriptor) -> some View {
-        OptionalStoreView(\.persistent.selectedServer?.sorting.value) { sorting, dispatch in
-            Button {
-                dispatch(sync: .update(.sorting(.value(field))))
-            } label: {
-                HStack {
-                    Text(field.description)
-                    Spacer()
-                    if sorting == field {
-                        SystemImage.checkmark
-                    }
-                }
-            }
-        }
-    }
-    
-    var sorting: some View {
-        OptionalStoreView {
-            $0.persistent.selectedServer?
-                .api.commands[.fetch]?.expected
-                .adHocFields
-                .map(Job.Field.Descriptor.adHoc)
-        } content: { fields, _ in
-            Menu {
-                Section {
-                    ForEach(
-                        Sorting.Order.allCases,
-                        id: \.self,
-                        content: sortingButton(order:)
-                    )
-                }
-                Section {
-                    ForEach(
-                        chain(
-                            Job.Field.Descriptor.PresetField
-                                .allCases
-                                .map(Job.Field.Descriptor.preset),
-                            fields
-                        ),
-                        id: \.self,
-                        content: sortingButton(field:)
-                    )
-                }
-            } label: {
-                SystemImage.listNumber
-            }
-        }
-    }
-    
-    func body(content: Content) -> some View {
-        #if os(iOS)
-        content
-            .navigationBarItems(
-                leading: TransferTotals(jobs: jobs),
-                trailing: HStack {
-                    sorting
-                    filter
-                }
-            )
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItemGroup(placement: .principal) {
-                    title
-                }
-            }
-        #else
-        return content
-        #endif
     }
 }
 
