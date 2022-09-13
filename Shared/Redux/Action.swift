@@ -16,6 +16,7 @@ enum AsyncAction {
 enum SyncAction {
     enum Create {
         case query(Query)
+        case error(AppError)
     }
     enum Set {
         case sorting(Sorting)
@@ -42,8 +43,8 @@ enum SyncAction {
     enum Delete {
         case jobs([String])
         case filter
+        case errors
     }
-    case error(AppError)
     case create(Create)
     case set(Set)
     case update(Update)

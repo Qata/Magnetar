@@ -9,41 +9,35 @@
 import SwiftUI
 
 struct MainView: View {
+    func tabItem<Content: View>(image: SystemImage, name: String, @ViewBuilder content: @escaping () -> Content) -> some View {
+        NavigationView {
+            content()
+        }
+        .tabItem {
+            image
+            Text(name)
+        }
+    }
+
     var body: some View {
         TabView {
-            NavigationView {
+            tabItem(
+                image: .arrowUpArrowDown,
+                name: "Transfers"
+            ) {
                 JobListView()
-            }.tabItem {
-                SystemImage.arrowUpArrowDown
-                Text("Transfers")
             }
-            NavigationView {
+            tabItem(
+                image: .magnifyingglass,
+                name: "Queries"
+            ) {
                 MainQueryView()
-            }.tabItem {
-                SystemImage.magnifyingglass
-                Text("Queries")
             }
-            NavigationView {
-                List {
-                    NavigationLink(
-                        destination: EmptyView(),
-                        label: Label("APIs", icon: .cloudFill)
-                    )
-                    NavigationLink(
-                        destination: ServerList(),
-                        label: Label("Servers", icon: .serverRack)
-                    )
-                    NavigationLink(
-                        destination: List {
-                            Text("Created by Charles Maria Tor.")
-                            Text("If you find this app useful, please consider supporting its continued development over on Patreon.")
-                        },
-                        label: Label("Info", icon: .infoCircle)
-                    )
-                }
-            }.tabItem {
-                SystemImage.gear
-                Text("Settings")
+            tabItem(
+                image: .gear,
+                name: "Settings"
+            ) {
+                SettingsView()
             }
         }
     }

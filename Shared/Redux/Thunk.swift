@@ -12,7 +12,7 @@ import MonadicJSON
 import CoreMedia
 import CasePaths
 
-enum AppError: Error {
+enum AppError: Error, CustomStringConvertible {
     case urlError(URLError)
     case jsonDecoding(JSONParser.Error)
     case jsonParsing(JSONParseError)
@@ -22,6 +22,29 @@ enum AppError: Error {
     case commandMissing
     case tokenRequestFailed
     case unableToConvertTypeLosslessly
+    
+    var description: String {
+        switch self {
+        case let .urlError(error):
+            return error.localizedDescription
+        case let .jsonDecoding(error):
+            return error.localizedDescription
+        case let .jsonParsing(error):
+            return error.localizedDescription
+        case let .finalParsing(error):
+            return error.localizedDescription
+        case .authenticationFailure:
+            return "Authentication Failure"
+        case .invalidTokenWithoutRecourse:
+            return "Invalid Token"
+        case .commandMissing:
+            return "Command missing from config"
+        case .tokenRequestFailed:
+            return "Failed to request token"
+        case .unableToConvertTypeLosslessly:
+            return "Unable to losslessly convert type"
+        }
+    }
 }
 
 extension AppError {
@@ -134,7 +157,7 @@ extension Global {
 extension Publisher where Output == Action, Failure == AppError {
     func liftError() -> AnyPublisher<Action, Never> {
         `catch` {
-            Just(.sync(.error($0)))
+            Just(.sync(.create(.error($0))))
         }
         .eraseToAnyPublisher()
     }

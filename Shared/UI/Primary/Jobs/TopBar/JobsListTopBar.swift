@@ -71,7 +71,10 @@ struct JobsListTopBar: ViewModifier {
         #if os(iOS)
         content
             .navigationBarItems(
-                leading: TransferTotals(jobs: jobs),
+                leading: HStack {
+                    TransferTotals(jobs: jobs)
+                    ErrorView()
+                },
                 trailing: HStack {
                     sorting
                     commands

@@ -28,6 +28,24 @@ struct AddServerForm: View {
     @State var password: String = ""
     @State var api: APIDescriptor?
     
+    var apiPicker: some View {
+        StoreView(\.persistent.apis) { apis, _ in
+            HLabelled("API") {
+                Spacer()
+                Picker("Select an API", selection: $api) {
+                    ForEach(apis.sorted(keyPath: \.name), id: \.self) {
+                        Text($0.name)
+                            .tag(Optional($0))
+                    }
+                }
+                .pickerStyle(.menu)
+                .onAppear {
+                    api = apis.first
+                }
+            }
+        }
+    }
+    
     var body: some View {
         Form {
             Section {
@@ -50,20 +68,7 @@ struct AddServerForm: View {
                     SecureField(String(repeating: "*", count: 16), text: $password)
                         .textContentType(.password)
                 }
-                HLabelled("API") {
-                    Spacer()
-                    StoreView(\.persistent.apis) { apis, _ in
-                        Picker("Select an API", selection: $api) {
-                            Text("None")
-                                .tag(Optional<APIDescriptor>.none)
-                            ForEach(apis.sorted(keyPath: \.name), id: \.self) {
-                                Text($0.name)
-                                    .tag(Optional($0))
-                            }
-                        }
-                        .pickerStyle(.menu)
-                    }
-                }
+                apiPicker
             }
             Section {
                 Button("Save", action: save)
@@ -78,7 +83,8 @@ struct AddServerForm: View {
         username.isEmpty ||
         password.isEmpty ||
         URL(string: address) == nil ||
-        !isPortValid
+        !isPortValid ||
+        api == nil
     }
 
     var isPortValid: Bool {

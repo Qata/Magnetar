@@ -147,6 +147,12 @@
 		CBADD62028C8C5AD00B0C6EA /* SortingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */; };
 		CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */; };
 		CBADD62328C9641600B0C6EA /* JobsListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */; };
+		CBADD62728CEEB1000B0C6EA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62628CEEB1000B0C6EA /* SettingsView.swift */; };
+		CBADD62828CEEB1000B0C6EA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62628CEEB1000B0C6EA /* SettingsView.swift */; };
+		CBADD62A28CEEC5300B0C6EA /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62928CEEC5300B0C6EA /* ErrorView.swift */; };
+		CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62928CEEC5300B0C6EA /* ErrorView.swift */; };
+		CBADD62D28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
+		CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
@@ -252,6 +258,9 @@
 		CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
 		CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingMenu.swift; sourceTree = "<group>"; };
 		CBADD62128C9641600B0C6EA /* JobsListTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsListTopBar.swift; sourceTree = "<group>"; };
+		CBADD62628CEEB1000B0C6EA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CBADD62928CEEC5300B0C6EA /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
 		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
@@ -439,7 +448,7 @@
 				CB6B0F2A27B252FC009CE0B5 /* SortingView.swift */,
 				CB66B88527C323DD00C2A62F /* Jobs */,
 				CB66B88627C323EB00C2A62F /* Query */,
-				CBE69F8628BF236A00BCECF7 /* Servers */,
+				CBADD62528CEEB0400B0C6EA /* Settings */,
 			);
 			path = Primary;
 			sourceTree = "<group>";
@@ -463,6 +472,7 @@
 				CB9F9E7B27BC86D400CA93E6 /* Extensions */,
 				CB6B0F4B27B253DC009CE0B5 /* Yield.swift */,
 				CB6B0F4C27B253DC009CE0B5 /* Either.swift */,
+				CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */,
 				CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */,
 				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
 				CB6B0F5227B253DC009CE0B5 /* Atomic.swift */,
@@ -574,8 +584,18 @@
 				CBADD61828C8730400B0C6EA /* CommandsGroup.swift */,
 				CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */,
 				CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */,
+				CBADD62928CEEC5300B0C6EA /* ErrorView.swift */,
 			);
 			path = TopBar;
+			sourceTree = "<group>";
+		};
+		CBADD62528CEEB0400B0C6EA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CBE69F8628BF236A00BCECF7 /* Servers */,
+				CBADD62628CEEB1000B0C6EA /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		CBBF93B727B3C3F90060CB06 /* Job */ = {
@@ -815,6 +835,8 @@
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB9F9E8027BC89A500CA93E6 /* NavigationLink.swift in Sources */,
 				CB577E0E27C4968600F59AB3 /* Button.swift in Sources */,
+				CBADD62D28CEF10800B0C6EA /* ErrorModel.swift in Sources */,
+				CBADD62A28CEEC5300B0C6EA /* ErrorView.swift in Sources */,
 				CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */,
 				CB6B0F6127B253DC009CE0B5 /* Sequence.swift in Sources */,
 				CB6B0F3227B252FC009CE0B5 /* AddServerForm.swift in Sources */,
@@ -873,6 +895,7 @@
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
 				CB9F9E8627BCD7FE00CA93E6 /* Publisher.swift in Sources */,
+				CBADD62728CEEB1000B0C6EA /* SettingsView.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB673482287FE38400F9F35F /* AsyncServerQuerying.swift in Sources */,
@@ -903,6 +926,7 @@
 				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
+				CBADD62828CEEB1000B0C6EA /* SettingsView.swift in Sources */,
 				CB6B0F5E27B253DC009CE0B5 /* Collection.swift in Sources */,
 				CB6B0F7C27B253E2009CE0B5 /* State.swift in Sources */,
 				CB6B0F7E27B253E2009CE0B5 /* Action.swift in Sources */,
@@ -938,7 +962,9 @@
 				CB66B88127BF47CF00C2A62F /* StringProtocol.swift in Sources */,
 				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
+				CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
+				CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */,
 				CB66B89327C3397400C2A62F /* Query.swift in Sources */,
 				CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */,

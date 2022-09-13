@@ -5,7 +5,7 @@
 //  Created by Charles Maria Tor on 18/7/22.
 //
 
-public struct RingBuffer<T: Codable & Hashable> {
+public struct RingBuffer<T: Hashable> {
     var array: [T?]
     var readIndex = 0
     var writeIndex = 0
@@ -52,7 +52,7 @@ public struct RingBuffer<T: Codable & Hashable> {
     }
 }
 
-extension RingBuffer: Codable {
+extension RingBuffer: Codable where T: Codable {
 }
 
 extension RingBuffer: Hashable {

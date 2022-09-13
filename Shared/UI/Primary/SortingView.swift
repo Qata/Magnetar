@@ -24,10 +24,13 @@ extension SortingView {
 
         var body: some View {
             OptionalStoreView(store) { sorting, dispatch in
-                Picker("Field Order", selection: store.binding(
-                    get: \.!.order,
-                    send: { .update(.sorting(.order($0))) }
-                )) {
+                Picker(
+                    "Field Order",
+                    selection: store.binding(
+                        get: \.!.order,
+                        send: { .update(.sorting(.order($0))) }
+                    )
+                ) {
                     ForEach(Sorting.Order.allCases, id: \.self) { order in
                         Text(order.description)
                             .tag(order)

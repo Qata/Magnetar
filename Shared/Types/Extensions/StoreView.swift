@@ -16,14 +16,39 @@ struct StoreView<State: Equatable, AsyncAction, SyncAction, Content: View>: View
         self._store = .init(wrappedValue: lens)
         self.content = content
     }
+    
+    init(_ lens: @escaping (Global.State) -> State, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self._store = .init(wrappedValue: Global.store.lensing(state: { lens($0) }))
+        self.content = content
+    }
 
     init(_ keyPath: KeyPath<Global.State, State>, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
         self._store = .init(wrappedValue: Global.store.lensing(state: { $0[keyPath: keyPath]}))
         self.content = content
     }
-    
+
     var body: some View {
         content(store.state, store.writeOnly())
+    }
+}
+
+extension StoreView {
+    init(_ lens: LensedStore<State, AsyncAction, SyncAction>, @ViewBuilder content: @escaping (State) -> Content) {
+        self.init(lens) { state, _ in
+            content(state)
+        }
+    }
+    
+    init(_ lens: @escaping (Global.State) -> State, @ViewBuilder content: @escaping (State) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self.init(lens) { state, _ in
+            content(state)
+        }
+    }
+
+    init(_ keyPath: KeyPath<Global.State, State>, @ViewBuilder content: @escaping (State) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self.init(keyPath) { state, _ in
+            content(state)
+        }
     }
 }
 
@@ -39,17 +64,31 @@ struct OptionalStoreView<State: Equatable, AsyncAction, SyncAction, Content: Vie
         self.content = content
     }
     
-    init(_ keyPath: KeyPath<Global.State, State?>, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
-        self._store = .init(wrappedValue: Global.store.lensing(state: { $0[keyPath: keyPath]}))
-        self.content = content
-    }
-    
     init(_ lens: @escaping (Global.State) -> State?, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
         self._store = .init(wrappedValue: Global.store.lensing(state: { lens($0) }))
         self.content = content
     }
     
+    init(_ keyPath: KeyPath<Global.State, State?>, @ViewBuilder content: @escaping (State, ActionLens<AsyncAction, SyncAction>) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self._store = .init(wrappedValue: Global.store.lensing(state: { $0[keyPath: keyPath]}))
+        self.content = content
+    }
+    
     var body: some View {
         store.state.map { content($0, store.writeOnly()) }
+    }
+}
+
+extension OptionalStoreView {
+    init(_ lens: @escaping (Global.State) -> State?, @ViewBuilder content: @escaping (State) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self.init(lens) { state, _ in
+            content(state)
+        }
+    }
+
+    init(_ keyPath: KeyPath<Global.State, State?>, @ViewBuilder content: @escaping (State) -> Content) where AsyncAction == Action.Async, SyncAction == Action.Sync {
+        self.init(keyPath) { state, _ in
+            content(state)
+        }
     }
 }

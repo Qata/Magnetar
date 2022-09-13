@@ -16,7 +16,7 @@ extension Global {
             var selectedServer: Server?
         }
         var persistent: PersistentState
-        var errors: RingBuffer<String> = .init(count: 100)
+        var errors: RingBuffer<ErrorModel> = .init(count: 100)
         var jobs: [String: JobViewModel] = [:]
     }
 }

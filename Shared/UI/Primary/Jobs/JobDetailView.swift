@@ -200,22 +200,26 @@ struct JobDetailView: View {
             .disabled(![.remove, .deleteData].contains(where: api.available))
         }
     }
+    
+    func hLabel(_ label: String, text: CustomStringConvertible) -> some View {
+        HLabel(label, text: text.description, detail: $detailViewText)
+    }
 
     var body: some View {
         List {
             Section {
-                HLabel("Name", text: viewModel.name, detail: $detailViewText)
-                HLabel("Status", text: viewModel.status.description, detail: $detailViewText)
-                HLabel("Size", text: viewModel.size.description, detail: $detailViewText)
-                HLabel("Downloaded", text: viewModel.downloaded.description, detail: $detailViewText)
-                HLabel("Uploaded", text: viewModel.uploaded.description, detail: $detailViewText)
+                hLabel("Name", text: viewModel.name)
+                hLabel("Status", text: viewModel.status)
+                hLabel("Size", text: viewModel.size)
+                hLabel("Downloaded", text: viewModel.downloaded)
+                hLabel("Uploaded", text: viewModel.uploaded)
             }
             Section {
-                HLabel("ID", text: viewModel.id, detail: $detailViewText)
-                HLabel("Upload Speed", text: viewModel.uploadSpeed.description, detail: $detailViewText)
-                HLabel("Download Speed", text: viewModel.downloadSpeed.description, detail: $detailViewText)
-                HLabel("Ratio", text: viewModel.ratio.description, detail: $detailViewText)
-                HLabel("ETA", text: viewModel.eta.description, detail: $detailViewText)
+                hLabel("ID", text: viewModel.id)
+                hLabel("Upload Speed", text: viewModel.uploadSpeed)
+                hLabel("Download Speed", text: viewModel.downloadSpeed)
+                hLabel("Ratio", text: viewModel.ratio)
+                hLabel("ETA", text: viewModel.eta)
             }
 
             Section {

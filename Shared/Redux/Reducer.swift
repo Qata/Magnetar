@@ -7,26 +7,27 @@
 
 import Recombine
 import Algorithms
+import Foundation
 
 extension Global {
     enum Reducer {
         static let main = Recombine.Reducer<Global.State, SyncAction, Global.Environment> { state, action, _ in
             switch action {
-            case let .error(error):
-                state.errors.write(String(describing: error))
-                switch error {
-                case let .urlError(error):
-                    switch error.code {
-                    case .timedOut:
-                        print(":::Timed out")
+            case let .create(action):
+                switch action {
+                case let .error(error):
+                    state.errors.write(.init(date: Date(), error: String(describing: error)))
+                    switch error {
+                    case let .urlError(error):
+                        switch error.code {
+                        case .timedOut:
+                            print(":::Timed out")
+                        default:
+                            break
+                        }
                     default:
                         break
                     }
-                default:
-                    break
-                }
-            case let .create(action):
-                switch action {
                 case let .query(query):
                     state.persistent.queries.append(query)
                 }
@@ -70,6 +71,8 @@ extension Global {
                     }
                 case .filter:
                     state.persistent.selectedServer?.filter.removeAll()
+                case .errors:
+                    state.errors = .init(count: 100)
                 }
             }
         }

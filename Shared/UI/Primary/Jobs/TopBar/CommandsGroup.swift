@@ -29,7 +29,11 @@ struct CommandsGroup: View {
         self.ids = jobs.map(\.id)
     }
 
-    func button(for command: Command, image: SystemImage, invalidStatuses: Set<Status>) -> some View {
+    func button(
+        for command: Command,
+        image: SystemImage,
+        invalidStatuses: Set<Status>
+    ) -> some View {
         OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
             if api.available(command: command.discriminator) {
                 Button {
@@ -54,20 +58,18 @@ struct CommandsGroup: View {
                         Button {
                             dispatch(async: .command(.remove(ids)))
                         } label: {
-                            Label("Remove \(ids.count) Jobs", icon: .xmark)
+                            Label("Remove Jobs", icon: .xmark)
                         }
                     }
                     if api.available(command: .deleteData) {
-                        Button {
+                        Button(role: .destructive) {
                             dispatch(async: .command(.deleteData(ids)))
                         } label: {
-                            Label("Delete Data For \(ids.count) Jobs", icon: .xmarkBin)
+                            Label("Remove Jobs and Delete Data", icon: .xmarkBin)
                         }
                     }
                 } label: {
-                    Button {
-                    } label: {
-                        Label("Remove", icon: .xmark)
+                    Button("Remove") {
                     }
                 }
             }
@@ -101,6 +103,7 @@ struct CommandsGroup: View {
     
     var body: some View {
         Group {
+            Text("Affecting \(ids.count) Jobs")
             startButton
             pauseButton
             stopButton
