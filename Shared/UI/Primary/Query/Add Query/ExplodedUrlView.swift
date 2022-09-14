@@ -48,7 +48,14 @@ struct ExplodedUrlView: View {
                 Picker(selection: $selectedParameter) {
                     ForEach(components, id: \.offset) { component in
                         Text(component.element.description)
-                            .tag(Optional(Query.Parameter.init(location: .queryItem, index: component.offset)))
+                            .tag(
+                                Optional(
+                                    Query.Parameter(
+                                        location: .queryItem,
+                                        index: component.offset
+                                    )
+                                )
+                            )
                     }
                 } label: {
                     EmptyView()
@@ -62,7 +69,10 @@ struct ExplodedUrlView: View {
         dispatch(
             sync: .create(
                 .query(
-                    query.updated(name: queryName, parameter: selectedParameter)
+                    query.updated(
+                        name: queryName,
+                        parameter: selectedParameter
+                    )
                 )
             )
         )
@@ -72,7 +82,7 @@ struct ExplodedUrlView: View {
         List {
             Picker(selection: $selectedParameter) {
                 Text("No query parameter")
-                    .tag(Optional<Query.Parameter>.none)
+                    .tag(Optional(Query.Parameter.none))
             } label: {
                 EmptyView()
             }
@@ -81,11 +91,23 @@ struct ExplodedUrlView: View {
             queryView
             Section {
                 TextField("Query name", text: $queryName)
-                Button("Save") {
-                    save()
-                    showModal = false
+                    .disableAutocorrection(true)
+                StoreView(\.persistent.queries) { queries in
+                    let nameInUse = queries.contains { $0.name == queryName }
+                    Button("Save") {
+                        save()
+                        queryName.removeAll()
+                        showModal = false
+                    }
+                    .disabled(selectedParameter == nil)
+                    .disabled(queryName.isEmpty)
+                    .disabled(nameInUse)
+
+                    if nameInUse {
+                        Text("Name must be unique")
+                            .foregroundColor(.red)
+                    }
                 }
-                .disabled(queryName.isEmpty)
             }
         }
         .navigationBarTitle(Text("Please select the query"))

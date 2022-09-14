@@ -14,12 +14,21 @@ import CasePaths
 struct APIDescriptor: Codable, Hashable {
     var name: String
     var endpoint: EndpointDescriptor = .init(path: [])
+    var supportedURIs: [URI] = []
+    var supportedPathExtensions: [String] = []
     var authentication: [Authentication]
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
-    
+
     func available(command: Command.Discriminator) -> Bool {
         return commands.keys.contains(command)
+    }
+}
+
+extension APIDescriptor {
+    enum URI: Codable, Hashable {
+        case pathExtension(String)
+        case scheme(String)
     }
 }
 

@@ -19,6 +19,8 @@ public enum SystemImage: String, View {
     case cloudFill
     case docBadgePlus
     case docFillBadgePlus
+    case docOnDoc
+    case docOnDocFill
     case exclamationmarkSquareFill
     case line3HorizontalDecreaseCircle
     case line3HorizontalDecreaseCircleFill
@@ -34,6 +36,7 @@ public enum SystemImage: String, View {
     case play
     case playFill
     case playpause
+    case playpauseFill
     case plus
     case plusCircle
     case serverRack

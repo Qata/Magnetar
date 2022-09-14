@@ -49,7 +49,7 @@ enum Command: Hashable {
     case deleteData([String])
     case addURI(String, location: String?)
     case addFile(Data, location: String?)
-    
+
     var ids: [String] {
         switch self {
         case let .start(ids):
@@ -71,7 +71,7 @@ enum Command: Hashable {
             }
         case let .startNow(ids):
             return ids
-        case .addURI, .requestToken, .addFile:
+        case .requestToken, .addURI, .addFile:
             return []
         }
     }

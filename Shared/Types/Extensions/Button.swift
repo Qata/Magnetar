@@ -8,15 +8,31 @@
 import SwiftUI
 
 extension Button {
-    init(image: SystemImage, action: @escaping () -> Void) where Label == SystemImage {
-        self.init(action: action, label: { image })
+    init(
+        role: ButtonRole? = nil,
+        image: SystemImage,
+        action: @escaping () -> Void
+    ) where Label == SystemImage {
+        self.init(role: role, action: action, label: { image })
     }
 
-    init(image: SystemImage, binding: Binding<Bool>) where Label == SystemImage {
-        self.init {
+    init(
+        role: ButtonRole? = nil,
+        image: SystemImage,
+        binding: Binding<Bool>
+    ) where Label == SystemImage {
+        self.init(role: role) {
             binding.wrappedValue.toggle()
         } label: {
             image
         }
+    }
+    
+    init(
+        role: ButtonRole? = nil,
+        label: Label,
+        action: @escaping () -> Void
+    ) where Label == SwiftUI.Label<Text, SystemImage> {
+        self.init(role: role, action: action, label: { label })
     }
 }

@@ -9,12 +9,13 @@ import SwiftUI
 
 struct CommandsMenu: View {
     let jobs: [JobViewModel]
+    var image: SystemImage = .playpause
     
     var body: some View {
         Menu {
             CommandsGroup(jobs: jobs)
         } label: {
-            SystemImage.playpause
+            image
         }
     }
 }
@@ -35,17 +36,19 @@ struct CommandsGroup: View {
         invalidStatuses: Set<Status>
     ) -> some View {
         OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
-            if api.available(command: command.discriminator) {
+            if api.available(command: command.discriminator),
+               !jobs.allSatisfy({ invalidStatuses.contains($0.status) })
+            {
                 Button {
                     dispatch(async: .command(command))
                 } label: {
                     Label(command.discriminator.description, icon: image)
                 }
-                .disabled(
-                    jobs.allSatisfy {
-                        invalidStatuses.contains($0.status)
-                    }
-                )
+//                .disabled(
+//                    jobs.allSatisfy {
+//                        invalidStatuses.contains($0.status)
+//                    }
+//                )
             }
         }
     }
@@ -58,24 +61,24 @@ struct CommandsGroup: View {
                         Button {
                             dispatch(async: .command(.remove(ids)))
                         } label: {
-                            Label("Remove Jobs", icon: .xmark)
+                            Label("Remove", icon: .xmark)
                         }
                     }
                     if api.available(command: .deleteData) {
                         Button(role: .destructive) {
                             dispatch(async: .command(.deleteData(ids)))
                         } label: {
-                            Label("Remove Jobs and Delete Data", icon: .xmarkBin)
+                            Label("Remove and Delete Data", icon: .xmarkBin)
                         }
                     }
                 } label: {
-                    Button("Remove") {
+                    Button("Delete") {
                     }
                 }
             }
         }
     }
-    
+
     var startButton: some View {
         button(
             for: .start(ids),
@@ -103,7 +106,9 @@ struct CommandsGroup: View {
     
     var body: some View {
         Group {
-            Text("Affecting \(ids.count) Jobs")
+            if ids.count > 1 {
+                Text("Affecting \(ids.count) Jobs")
+            }
             startButton
             pauseButton
             stopButton

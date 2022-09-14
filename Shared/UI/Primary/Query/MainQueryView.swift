@@ -9,29 +9,45 @@ import SwiftUI
 import Algorithms
 
 struct MainQueryView: View {
-    @StateObject var store = Global.store.lensing(state: \.persistent.queries)
+    let dispatch = Global.store.writeOnly(sync: { $0 })
     @State var showAddQuery = false
     @State var query: Query?
     @State var urlString: String?
     @State var searchString = ""
     
+    func delete(query named: String) {
+        dispatch(sync: .delete(.query(name: named)))
+    }
+    
     var body: some View {
         List {
-            Section("Actions") {
+            Section {
                 Button("Browser") {
-                    urlString = "google.com"
+                    urlString = ""
                 }
             }
-            Section("Queries") {
-                ForEach(store.state, id: \.self) { query in
-                    Button {
-                        if query.parameter == nil {
-                            urlString = query.url(for: "")?.absoluteString
-                        } else {
-                            self.query = query
+            StoreView(\.persistent.queries) { queries, dispatch in
+                Section("Queries") {
+                    ForEach(queries, id: \.self) { query in
+                        Button {
+                            if query.parameter == nil {
+                                urlString = query.url(for: "")?.absoluteString
+                            } else {
+                                self.query = query
+                            }
+                        } label: {
+                            Text(query.name)
                         }
-                    } label: {
-                        Text(query.name)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                delete(query: query.name)
+                            } label: {
+                                Label("Delete", icon: .xmarkBin)
+                            }
+                        }
+                        .accessibilityAction(named: "Delete") {
+                            delete(query: query.name)
+                        }
                     }
                 }
             }
@@ -43,13 +59,16 @@ struct MainQueryView: View {
                     TextField("Query", text: $searchString)
                     let query = query
                     Button("Search") {
-                        urlString = query?.url(for: searchString)?.absoluteString
+                        urlString = query?
+                            .url(for: searchString)?
+                            .absoluteString
                     }
                     Button("Cancel", role: .cancel) {
                     }
-                }) {
-                    Text("Please enter the search terms")
                 }
+            ) {
+                Text("Please enter the search terms")
+            }
         }
         .navigationBarItems(
             leading: NavigationLink(
@@ -59,7 +78,12 @@ struct MainQueryView: View {
             },
             trailing: Button(image: .plus, binding: $showAddQuery)
         )
-        .navigationBarTitle("Query Central")
+        .navigationTitle("")
+        .toolbar {
+            ToolbarItemGroup(placement: .principal) {
+                Text("Query Central").bold()
+            }
+        }
         .sheet(isPresented: $showAddQuery) {
             NavigationView {
                 AddQueryView(
@@ -68,8 +92,16 @@ struct MainQueryView: View {
                 )
             }
         }
-        .sheet(isPresented: .init(get: { urlString != nil }, set: { _ in urlString = nil })) {
-            WebViewSheet(url: urlString ?? "")
+        .overlay {
+            NavigationLink(
+                destination: WebViewSheet(url: urlString ?? ""),
+                isActive: .init(
+                    get: { urlString != nil },
+                    set: { _ in urlString = nil }
+                )
+            ) {
+                EmptyView()
+            }
         }
     }
 }

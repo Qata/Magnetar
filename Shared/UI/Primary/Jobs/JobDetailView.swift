@@ -66,21 +66,74 @@ struct CommandButton<Content: View>: View {
 }
 
 struct JobDetailView: View {
+    let viewModel: JobViewModel
+
+    var firstSection: some View {
+        Section {
+            HLabel("Name", text: viewModel.name)
+            HLabel("Status", text: viewModel.status)
+            HLabel("Size", text: viewModel.size)
+            HLabel("Downloaded", text: viewModel.downloaded)
+            HLabel("Uploaded", text: viewModel.uploaded)
+        }
+    }
+
+    var secondSection: some View {
+        Section {
+            HLabel("ID", text: viewModel.id)
+            HLabel("Upload Speed", text: viewModel.uploadSpeed)
+            HLabel("Download Speed", text: viewModel.downloadSpeed)
+            HLabel("Ratio", text: viewModel.ratio)
+            HLabel("ETA", text: viewModel.eta)
+        }
+    }
+
+    var additionalSection: some View {
+        Section {
+            ForEach(viewModel.additional.sorted(keyPath: \.name), id: \.name) { field in
+                field.isValid.if(
+                    true: HLabel(
+                        field.name,
+                        text: field.description,
+                        type: .adHoc
+                    )
+                )
+            }
+        }
+    }
+
+    var body: some View {
+        List {
+            firstSection
+            secondSection
+            additionalSection
+        }
+        .navigationTitle(viewModel.name)
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                CommandsMenu(jobs: [viewModel], image: .playpause)
+                    .font(.system(.title))
+                    .padding(.bottom, 10)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }
+    }
+}
+
+private extension JobDetailView {
     struct HLabel: View {
         enum LabelType {
             case preset
             case adHoc
         }
-        
+
         let label: String
         let text: String
-        let binding: Binding<String>
         let type: LabelType
 
-        init(_ label: String, text: String, detail: Binding<String>, type: LabelType = .preset) {
+        init(_ label: String, text: CustomStringConvertible, type: LabelType = .preset) {
             self.label = label
-            self.text = text
-            self.binding = detail
+            self.text = text.description
             self.type = type
         }
 
@@ -89,7 +142,6 @@ struct JobDetailView: View {
                 Menu {
                     Text(text)
                     Button("Copy", action: copy)
-                    Button("View", action: view)
                     if type == .adHoc {
                         Button("Rename", action: rename)
                     }
@@ -104,169 +156,13 @@ struct JobDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
-        
+
         func copy() {
             UIPasteboard.general.string = text
         }
-        
+
         func rename() {
             
-        }
-        
-        func view() {
-            binding.wrappedValue = text
-        }
-    }
-
-    @State var detailViewText = ""
-    let viewModel: JobViewModel
-
-    @ViewBuilder
-    func button(disabledIf invalidStatuses: [Status] = [], command: @escaping ([String]) -> Command) -> some View {
-        OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
-            CommandButton(
-                title: false,
-                command: command,
-                viewModel: viewModel,
-                invalidStatuses: invalidStatuses,
-                api: api
-            ) { title, image, action in
-                Button(action: action) {
-                    Label {
-                        title
-                    } icon: {
-                        image
-                    }
-                }
-                .buttonStyle(.bordered)
-            }
-        }
-    }
-
-    func button(image: SystemImage, text: String? = nil, action: @escaping () -> Void) -> AnyView {
-        .init(
-            Button(action: action) {
-                HStack {
-                    image
-                    text.map(Text.init)
-                }
-            }
-            .buttonStyle(.bordered)
-        )
-    }
-
-    @ViewBuilder
-    var buttons: some View {
-        OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
-            button(
-                image: .playFill,
-                action: { dispatch(async: .command(.start([viewModel.id]))) }
-            ).disabled(
-                !api.available(command: .start)
-                || [.downloading, .seeding].contains(viewModel.status)
-            )
-            Spacer()
-            if api.jobs.status[.paused] != nil {
-                button(
-                    image: .pauseFill,
-                    action: { dispatch(async: .command(.pause([viewModel.id]))) }
-                ).disabled(
-                    !api.available(command: .pause)
-                    || [.paused, .stopped].contains(viewModel.status)
-                )
-                Spacer()
-            }
-            button(
-                image: .stopFill,
-                action: { dispatch(async: .command(.stop([viewModel.id]))) }
-            )
-            .disabled(
-                !api.available(command: .stop)
-                || viewModel.status == .stopped
-            )
-            Spacer()
-            Menu {
-                Button("Remove") {
-                    dispatch(async: .command(.remove([viewModel.id])))
-                }
-                .disabled(!api.available(command: .remove))
-                Button("Delete Data") {
-                    dispatch(async: .command(.deleteData([viewModel.id])))
-                }
-                .disabled(!api.available(command: .deleteData))
-            } label: {
-                button(image: .xmark, action: {})
-            }
-            .disabled(![.remove, .deleteData].contains(where: api.available))
-        }
-    }
-    
-    func hLabel(_ label: String, text: CustomStringConvertible) -> some View {
-        HLabel(label, text: text.description, detail: $detailViewText)
-    }
-
-    var body: some View {
-        List {
-            Section {
-                hLabel("Name", text: viewModel.name)
-                hLabel("Status", text: viewModel.status)
-                hLabel("Size", text: viewModel.size)
-                hLabel("Downloaded", text: viewModel.downloaded)
-                hLabel("Uploaded", text: viewModel.uploaded)
-            }
-            Section {
-                hLabel("ID", text: viewModel.id)
-                hLabel("Upload Speed", text: viewModel.uploadSpeed)
-                hLabel("Download Speed", text: viewModel.downloadSpeed)
-                hLabel("Ratio", text: viewModel.ratio)
-                hLabel("ETA", text: viewModel.eta)
-            }
-
-            Section {
-                ForEach(viewModel.additional.sorted(keyPath: \.name), id: \.name) { field in
-                    field.isValid.if(
-                        true: HLabel(
-                            field.name,
-                            text: field.description,
-                            detail: $detailViewText,
-                            type: .adHoc
-                        )
-                    )
-                }
-            }
-        }
-        .navigationTitle(viewModel.name)
-        .overlay {
-            NavigationLink(
-                isActive: .init(
-                    get: {
-                        !detailViewText.isEmpty
-                    },
-                    set: { _ in
-                        detailViewText.removeAll()
-                    }
-                )
-            ) {
-                ScrollView(.vertical) {
-                    Text(detailViewText)
-                        .lineLimit(nil)
-                        .padding()
-                }
-                .toolbar {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        Button("Copy") {
-                            UIPasteboard.general.string = detailViewText
-                        }
-                    }
-                }
-            } label: {
-                EmptyView()
-            }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                buttons
-            }
         }
     }
 }

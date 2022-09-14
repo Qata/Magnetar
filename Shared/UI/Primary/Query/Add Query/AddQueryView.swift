@@ -32,6 +32,9 @@ struct AddQueryView: View {
                 } label: {
                     Button("Continue") {}
                 }
+            } else {
+                Button("Continue") {}
+                    .disabled(true)
             }
         }
         .navigationTitle("Enter The Query URL")

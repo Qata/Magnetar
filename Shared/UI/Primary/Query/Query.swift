@@ -10,11 +10,16 @@ import Foundation
 struct Query: Codable, Hashable {
     struct Parameter: Codable, Hashable {
         enum Location: String, Codable, Hashable {
+            case none
             case path
             case queryItem
         }
         let location: Location
         let index: Int
+        
+        static var none: Self {
+            .init(location: .none, index: .zero)
+        }
     }
 
     struct Indexed<Element: Codable & Hashable>: Codable, Hashable {

@@ -43,6 +43,12 @@ let qBittorrentAPI = APIDescriptor(
 let transmissionAPI = APIDescriptor(
     name: "Transmission v17",
     endpoint: .init(path: ["transmission", "rpc"]),
+    supportedURIs: [
+        .scheme("magnet"),
+    ],
+    supportedPathExtensions: [
+        "torrent",
+    ],
     authentication: [
         .password(invalidCodes: [401]),
         .token(
@@ -181,6 +187,20 @@ let transmissionAPI = APIDescriptor(
                     "method": .string("torrent-add"),
                     "arguments": .object([
                         "filename": .uri,
+                        "download-dir": .location
+                    ])
+                ])
+            ))
+        ),
+        .addFile: .init(
+            expected: .json(.object([
+                "result": .string("success")
+            ])),
+            request: .jsonrpc(.post(
+                payload: .object([
+                    "method": .string("torrent-add"),
+                    "arguments": .object([
+                        "metainfo": .file(.base64),
                         "download-dir": .location
                     ])
                 ])

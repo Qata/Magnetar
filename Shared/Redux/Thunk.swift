@@ -85,6 +85,17 @@ extension Global {
                         .first(matching: /Action.Async.start)
                 )
                 .eraseToAnyPublisher()
+        case let .reuploadFile(url, location):
+            return URLSession.shared
+                .dataTaskPublisher(
+                    for: URLRequest(url: url)
+                )
+                .map { data, response in
+                    .async(.command(.addFile(data, location: location)))
+                }
+                .mapError(AppError.urlError)
+                .liftError()
+                .eraseToAnyPublisher()
         case let .command(command):
             switch command {
             case let .requestToken(andThen: command):

@@ -153,6 +153,10 @@
 		CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62928CEEC5300B0C6EA /* ErrorView.swift */; };
 		CBADD62D28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
 		CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
+		CBADD63028D078AD00B0C6EA /* WebViewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* WebViewSheet.swift */; };
+		CBADD63128D078AD00B0C6EA /* WebViewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* WebViewSheet.swift */; };
+		CBADD63328D07E8C00B0C6EA /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* GeometryReader.swift */; };
+		CBADD63428D07E8C00B0C6EA /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* GeometryReader.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
@@ -261,6 +265,8 @@
 		CBADD62628CEEB1000B0C6EA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CBADD62928CEEC5300B0C6EA /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		CBADD62F28D078AD00B0C6EA /* WebViewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewSheet.swift; sourceTree = "<group>"; };
+		CBADD63228D07E8C00B0C6EA /* GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryReader.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
 		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
@@ -328,6 +334,7 @@
 				CB66B88727C332D300C2A62F /* Add Query */,
 				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
 				CB66B87627BDEAAE00C2A62F /* WebView.swift */,
+				CBADD62F28D078AD00B0C6EA /* WebViewSheet.swift */,
 				CB66B89127C3397400C2A62F /* Query.swift */,
 			);
 			path = Query;
@@ -573,6 +580,7 @@
 				CB66B87F27BF47CF00C2A62F /* StringProtocol.swift */,
 				CB577E0A27C4827D00F59AB3 /* StoreView.swift */,
 				CB577E0D27C4968600F59AB3 /* Button.swift */,
+				CBADD63228D07E8C00B0C6EA /* GeometryReader.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -853,6 +861,7 @@
 				CB8E9CAF28582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */,
+				CBADD63328D07E8C00B0C6EA /* GeometryReader.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
@@ -873,6 +882,7 @@
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
 				CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */,
+				CBADD63028D078AD00B0C6EA /* WebViewSheet.swift in Sources */,
 				CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
@@ -943,6 +953,7 @@
 				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
 				CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB8E9CB028582BE400089B4B /* EqualWidthHStack.swift in Sources */,
+				CBADD63428D07E8C00B0C6EA /* GeometryReader.swift in Sources */,
 				CBBF938F27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB9F9E7E27BC877900CA93E6 /* Label.swift in Sources */,
@@ -975,6 +986,7 @@
 				CB9F9E8127BC89A500CA93E6 /* NavigationLink.swift in Sources */,
 				CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
+				CBADD63128D078AD00B0C6EA /* WebViewSheet.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* TimeInterval.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 			);
@@ -1140,7 +1152,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1170,7 +1182,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

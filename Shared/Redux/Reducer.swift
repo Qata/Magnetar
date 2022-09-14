@@ -73,6 +73,10 @@ extension Global {
                     state.persistent.selectedServer?.filter.removeAll()
                 case .errors:
                     state.errors = .init(count: 100)
+                case let .query(name):
+                    state.persistent.queries.removeAll(where: { $0.name == name })
+                case let .queries(indices):
+                    state.persistent.queries.remove(atOffsets: indices)
                 }
             }
         }

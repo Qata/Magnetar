@@ -11,6 +11,7 @@ import Recombine
 typealias Action = EitherAction<AsyncAction, SyncAction>
 enum AsyncAction {
     case start
+    case reuploadFile(URL, location: String?)
     case command(Command)
 }
 enum SyncAction {
@@ -44,6 +45,8 @@ enum SyncAction {
         case jobs([String])
         case filter
         case errors
+        case query(name: String)
+        case queries(indices: IndexSet)
     }
     case create(Create)
     case set(Set)

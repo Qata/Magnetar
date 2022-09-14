@@ -15,27 +15,6 @@ struct JobRowView: View {
     @StateObject var api = Global.store.lensing(state: \.persistent.selectedServer?.api)
     
     var viewModel: JobViewModel
-    
-    @ViewBuilder
-    func menuItem(disabledIf invalidStatuses: [Status] = [], command: @escaping ([String]) -> Command) -> some View {
-        if let api = api.state {
-            CommandButton(
-                title: true,
-                command: command,
-                viewModel: viewModel,
-                invalidStatuses: invalidStatuses,
-                api: api
-            ) { title, image, action in
-                Button(action: action) {
-                    Label {
-                        title
-                    } icon: {
-                        image
-                    }
-                }
-            }
-        }
-    }
 
     var body: some View {
         VStack {
@@ -85,12 +64,7 @@ struct JobRowView: View {
         .accessibility(label: Text(verbatim: viewModel.name))
         .accessibility(value: Text(viewModel.accessibleDescription))
         .contextMenu {
-            menuItem(disabledIf: [.downloading, .seeding], command: Command.start)
-            menuItem(disabledIf: [.downloading, .seeding], command: Command.startNow)
-            menuItem(disabledIf: [.paused, .stopped], command: Command.pause)
-            menuItem(disabledIf: [.paused, .stopped], command: Command.stop)
-            menuItem(command: Command.remove)
-            menuItem(command: Command.deleteData)
+            CommandsGroup(jobs: [viewModel])
         }
     }
 }
