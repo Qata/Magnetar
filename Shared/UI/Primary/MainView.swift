@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     func tabItem<Content: View>(image: SystemImage, name: String, @ViewBuilder content: @escaping () -> Content) -> some View {
-        NavigationView {
+        NavigationStack {
             content()
         }
         .tabItem {

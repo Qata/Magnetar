@@ -12,6 +12,7 @@ struct ExplodedUrlView: View {
     @Environment(\.dismiss) var dismiss
     @State var queryName = ""
     @State var selectedParameter: Query.Parameter?
+    @FocusState var nameFocused: Bool
 
     let dispatch = Global.store.writeOnly()
     let query: Query
@@ -80,8 +81,17 @@ struct ExplodedUrlView: View {
 
     var body: some View {
         List {
+            Section("Example") {
+                Text(
+                    query
+                        .updated(name: "", parameter: selectedParameter)
+                        .url(for: "example search")?
+                        .absoluteString
+                    ?? ""
+                )
+            }
             Picker(selection: $selectedParameter) {
-                Text("No query parameter")
+                Text("None")
                     .tag(Optional(Query.Parameter.none))
             } label: {
                 EmptyView()
@@ -92,6 +102,7 @@ struct ExplodedUrlView: View {
             Section {
                 TextField("Query name", text: $queryName)
                     .disableAutocorrection(true)
+                    .focused($nameFocused)
                 StoreView(\.persistent.queries) { queries in
                     let nameInUse = queries.contains { $0.name == queryName }
                     Button("Save") {
@@ -110,12 +121,19 @@ struct ExplodedUrlView: View {
                 }
             }
         }
-        .navigationBarTitle(Text("Please select the query"))
+        .navigationBarTitle(Text("Add New Query"))
+        .navigationBarTitleDisplayMode(.inline)
         .interactiveDismissDisabled()
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("Cancel", role: .destructive) {
                     showModal = false
+                }
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Dismiss") {
+                    nameFocused = false
                 }
             }
         }

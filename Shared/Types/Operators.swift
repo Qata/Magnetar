@@ -12,6 +12,7 @@ prefix operator !=
 prefix operator <=
 prefix operator >
 prefix operator >=
+infix operator ?=
 
 //prefix func + (value: String) -> (String) -> String {
 //    { $0 + value }
@@ -47,4 +48,10 @@ prefix func >= <Value: Comparable>(value: Value) -> (Value) -> Bool {
 
 prefix func <= <Value: Comparable>(value: Value) -> (Value) -> Bool {
     { $0 <= value }
+}
+
+func ?= <Value>(lhs: inout Value, rhs: Value?) {
+    if let value = rhs {
+        lhs = value
+    }
 }

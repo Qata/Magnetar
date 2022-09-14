@@ -27,7 +27,7 @@ extension Button {
             image
         }
     }
-    
+
     init(
         role: ButtonRole? = nil,
         label: Label,

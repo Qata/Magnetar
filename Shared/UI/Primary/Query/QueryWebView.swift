@@ -1,5 +1,5 @@
 //
-//  WebViewSheet.swift
+//  QueryWebView.swift
 //  Magnetar
 //
 //  Created by Charles Maria Tor on 13/9/2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ShareSheetView
 
-struct WebViewSheet: View {
+struct QueryWebView: View {
     @StateObject var webViewStore = WebViewStore()
     
     @Environment(\.dismiss) var dismiss
@@ -19,9 +19,12 @@ struct WebViewSheet: View {
     @State private var isShareSheetViewPresented = false
     @FocusState private var urlFocused: Bool
     
+    init(url: URL?) {
+        initialUrl = url
+    }
+
     init(url: String) {
         initialUrl = URL(string: url)
-        urlString = url
     }
     
     func sanitiseURL() {
@@ -80,6 +83,15 @@ struct WebViewSheet: View {
         }
     }
     
+    func onAppear() {
+        if initialUrl != nil {
+            urlString ?= initialUrl?.absoluteString
+            webViewStore.tryLoad(url: initialUrl)
+        } else {
+            urlFocused = true
+        }
+    }
+    
     var urlTextField: some View {
         TextField("Enter website URL", text: $urlString)
             .focused($urlFocused)
@@ -96,13 +108,7 @@ struct WebViewSheet: View {
                     }
                 }
             }
-            .onAppear {
-                if initialUrl != nil {
-                    webViewStore.tryLoad(url: initialUrl)
-                } else {
-                    urlFocused = true
-                }
-            }
+            .onAppear(perform: onAppear)
     }
     
     var urlView: some View {
@@ -118,11 +124,16 @@ struct WebViewSheet: View {
                     }
                     .tint(.secondary)
                 } else {
-                    if URL(string: urlString) != nil {
-                        Button {
-                            showAddQuery = true
-                        } label: {
-                            SystemImage.plusCircle
+                    Button(
+                        image: webViewStore.isLoading.if(
+                            true: .xmark,
+                            false: .arrowClockwise
+                        )
+                    ) {
+                        if webViewStore.isLoading {
+                            webViewStore.webView.stopLoading()
+                        } else {
+                            webViewStore.webView.reload()
                         }
                     }
                 }
@@ -137,7 +148,7 @@ struct WebViewSheet: View {
         .padding(.horizontal, 10)
         .sheet(isPresented: $showAddQuery) {
             if let url = URL(string: urlString) {
-                NavigationView {
+                NavigationStack {
                     ExplodedUrlView(url: url, showModal: $showAddQuery)
                 }
             }
@@ -159,16 +170,33 @@ struct WebViewSheet: View {
                         height: 2
                     )
             }
-            
             WebView(webView: webViewStore.webView) {
-                urlString = $0?.absoluteString ?? ""
+                urlString ?= $0?.absoluteString
             }
+            Divider()
+            HStack {
+                toolbar
+                    .font(.title2)
+            }
+            .padding(.horizontal, 24)
+            .backgroundStyle(.secondary)
+            Divider()
         }
-        .navigationTitle(webViewStore.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                toolbar
+            ToolbarItemGroup(placement: .principal) {
+                Text(webViewStore.title ?? "")
+                    .bold()
+                    .lineLimit(1)
+            }
+            ToolbarItemGroup(placement: .primaryAction) {
+                if URL(string: urlString) != nil {
+                    Button {
+                        showAddQuery = true
+                    } label: {
+                        SystemImage.plus
+                    }
+                }
             }
         }
     }

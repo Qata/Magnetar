@@ -7,67 +7,82 @@
 
 import SwiftUI
 import Algorithms
+import SwiftUINavigation
 
 struct MainQueryView: View {
     let dispatch = Global.store.writeOnly(sync: { $0 })
     @State var showAddQuery = false
     @State var query: Query?
-    @State var urlString: String?
+    @State var url: URL??
     @State var searchString = ""
     
     func delete(query named: String) {
         dispatch(sync: .delete(.query(name: named)))
     }
     
+    var queries: some View {
+        StoreView(\.persistent.queries) { queries, dispatch in
+            Section("Queries") {
+                ForEach(queries, id: \.self) { query in
+                    Button {
+                        if query.parameter == nil {
+                            url = query.url(for: "")
+                        } else {
+                            self.query = query
+                        }
+                    } label: {
+                        Text(query.name)
+                    }
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            delete(query: query.name)
+                        } label: {
+                            Label("Delete", icon: .xmarkBin)
+                        }
+                    }
+                    .accessibilityAction(named: "Delete") {
+                        delete(query: query.name)
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var alertActions: some View {
+        TextField("Query", text: $searchString)
+            .autocapitalization(.none)
+        let query = query
+        Button("Search") {
+            url = query?
+                .url(for: searchString)
+        }
+        Button("Cancel", role: .cancel) {
+        }
+    }
+    
     var body: some View {
         List {
             Section {
                 Button("Browser") {
-                    urlString = ""
+                    url = .some(.none)
                 }
             }
-            StoreView(\.persistent.queries) { queries, dispatch in
-                Section("Queries") {
-                    ForEach(queries, id: \.self) { query in
-                        Button {
-                            if query.parameter == nil {
-                                urlString = query.url(for: "")?.absoluteString
-                            } else {
-                                self.query = query
-                            }
-                        } label: {
-                            Text(query.name)
-                        }
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                delete(query: query.name)
-                            } label: {
-                                Label("Delete", icon: .xmarkBin)
-                            }
-                        }
-                        .accessibilityAction(named: "Delete") {
-                            delete(query: query.name)
-                        }
+            
+            queries
+                .alert(
+                    query?.name ?? "",
+                    isPresented: $query.isPresent(),
+                    actions: {
+                        alertActions
                     }
+                ) {
+                    Text("Please enter the search terms")
                 }
-            }
-            .alert(
-                query?.name ?? "",
-                isPresented: .init(get: { query != nil }, set: { _ in query = nil }),
-                actions: {
-#warning("Requires iOS 16 for alert textfield support https://sarunw.com/posts/swiftui-alert-textfield/")
-                    TextField("Query", text: $searchString)
-                    let query = query
-                    Button("Search") {
-                        urlString = query?
-                            .url(for: searchString)?
-                            .absoluteString
-                    }
-                    Button("Cancel", role: .cancel) {
-                    }
-                }
-            ) {
-                Text("Please enter the search terms")
+        }
+        .navigationDestination(isPresented: $url.isPresent()) {
+            if let url = url {
+                QueryWebView(url: url)
             }
         }
         .navigationBarItems(
@@ -85,22 +100,11 @@ struct MainQueryView: View {
             }
         }
         .sheet(isPresented: $showAddQuery) {
-            NavigationView {
+            NavigationStack {
                 AddQueryView(
                     text: "",
                     showModal: $showAddQuery
                 )
-            }
-        }
-        .overlay {
-            NavigationLink(
-                destination: WebViewSheet(url: urlString ?? ""),
-                isActive: .init(
-                    get: { urlString != nil },
-                    set: { _ in urlString = nil }
-                )
-            ) {
-                EmptyView()
             }
         }
     }

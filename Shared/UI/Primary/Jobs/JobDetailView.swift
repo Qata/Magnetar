@@ -103,18 +103,17 @@ struct JobDetailView: View {
     }
 
     var body: some View {
-        List {
-            firstSection
-            secondSection
-            additionalSection
-        }
-        .navigationTitle(viewModel.name)
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                CommandsMenu(jobs: [viewModel], image: .playpause)
-                    .font(.system(.title))
-                    .padding(.bottom, 10)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+        VStack {
+            List {
+                firstSection
+                secondSection
+                additionalSection
+            }
+            .navigationTitle(viewModel.name)
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    CommandsMenu(jobs: [viewModel], image: .playpause)
+                }
             }
         }
     }
