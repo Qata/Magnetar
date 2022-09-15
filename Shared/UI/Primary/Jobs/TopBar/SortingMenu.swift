@@ -8,8 +8,16 @@
 import SwiftUI
 import Algorithms
 
+#warning("Fix refresh issue")
 struct SortingMenu: View {
     let dispatch = Global.store.writeOnly()
+    let sorting = Global.store.state.persistent.selectedServer?.sorting
+    let fields = Global.store.state.persistent.selectedServer?
+        .api
+        .commands[.fetch]?
+        .expected
+        .adHocFields
+        .map(Job.Field.Descriptor.adHoc)
     
     func sortingButton(order: Sorting.Order, sorting: Sorting) -> some View {
         Button {
@@ -42,10 +50,12 @@ struct SortingMenu: View {
     var body: some View {
         OptionalStoreView {
             $0.persistent.selectedServer?
-                .api.commands[.fetch]?.expected
+                .api
+                .commands[.fetch]?
+                .expected
                 .adHocFields
                 .map(Job.Field.Descriptor.adHoc)
-        } content: { fields, _ in
+        } content: { fields in
             Menu {
                 OptionalStoreView(\.persistent.selectedServer?.sorting) { sorting, _ in
                     Section {

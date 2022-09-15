@@ -15,7 +15,7 @@ struct APIDescriptor: Codable, Hashable {
     var name: String
     var endpoint: EndpointDescriptor = .init(path: [])
     var supportedURIs: [URI] = []
-    var supportedPathExtensions: [String] = []
+    var supportedPathExtensions: [PathExtension] = []
     var authentication: [Authentication]
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
@@ -27,8 +27,29 @@ struct APIDescriptor: Codable, Hashable {
 
 extension APIDescriptor {
     enum URI: Codable, Hashable {
-        case pathExtension(String)
-        case scheme(String)
+        case pathExtension(PathExtension)
+        case scheme(Scheme)
+    }
+    
+    enum NameLocation: Codable, Hashable {
+        case lastPathComponent
+        case queryItem(String)
+    }
+    
+    struct Scheme: Codable, Hashable {
+        var value: String
+        var nameLocation: NameLocation?
+    }
+
+    struct PathExtension: Codable, Hashable {
+        enum Encoding: Codable, Hashable {
+            case bencoding
+            case xml
+            case newLineSeparated
+        }
+        
+        var value: String
+        var encoding: Encoding?
     }
 }
 

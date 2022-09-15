@@ -40,14 +40,47 @@ let qBittorrentAPI = APIDescriptor(
     ]
 )
 
+let synologyAPI = APIDescriptor(
+    name: "Synology",
+    endpoint: .init(path: ["webapi", "v2"]),
+    supportedURIs: [
+        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
+        .scheme(.init(value: "ftp", nameLocation: .lastPathComponent)),
+        .scheme(.init(value: "thunder")),
+        .scheme(.init(value: "qqdl")),
+        .scheme(.init(value: "flashget")),
+        .scheme(.init(value: "ed2k"))
+    ],
+    supportedPathExtensions: [
+        .init(value: "torrent", encoding: .bencoding),
+        .init(value: "nzb", encoding: .xml),
+        .init(value: "txt", encoding: .newLineSeparated),
+    ],
+    authentication: [
+    ],
+    jobs: .init(
+        status: [
+            .seedQueued: [],
+            .paused: [],
+            .downloading: ["downloading"],
+            .downloadQueued: [],
+            .checkingFiles: [],
+            .unknown: [],
+        ]
+    ),
+    commands: [
+        :
+    ]
+)
+
 let transmissionAPI = APIDescriptor(
     name: "Transmission v17",
     endpoint: .init(path: ["transmission", "rpc"]),
     supportedURIs: [
-        .scheme("magnet"),
+        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
     ],
     supportedPathExtensions: [
-        "torrent",
+        .init(value: "torrent", encoding: .bencoding),
     ],
     authentication: [
         .password(invalidCodes: [401]),

@@ -97,7 +97,19 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
 
         for uri in api.supportedURIs {
             switch uri {
-            case .scheme(url.scheme), .pathExtension(url.pathExtension):
+            case let .scheme(scheme) where scheme.value == url.scheme:
+                action = .cancel
+                if let item = scheme.nameLocation {
+                    #warning("Add local notification support")
+//                    if let name = URLComponents(url: url, resolvingAgainstBaseURL: true)?
+//                        .queryItems?
+//                        .first(where: { $0.name == item })
+//                    {
+//                        print("::\(name.value)")
+//                    }
+                }
+                return addJob(.uri, url)
+            case let .pathExtension(pathExtension) where pathExtension.value == url.pathExtension:
                 action = .cancel
                 return addJob(.uri, url)
             default:
@@ -105,7 +117,7 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
             }
         }
         
-        if api.supportedPathExtensions.contains(url.pathExtension) {
+        if api.supportedPathExtensions.contains(where: { $0.value == url.pathExtension }) {
             action = .cancel
             return addJob(.file, url)
         }

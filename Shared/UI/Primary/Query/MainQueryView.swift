@@ -26,7 +26,7 @@ struct MainQueryView: View {
             Section("Queries") {
                 ForEach(queries, id: \.self) { query in
                     Button {
-                        if query.parameter == nil {
+                        if query.parameter == .some(.none) {
                             url = query.url(for: "")
                         } else {
                             self.query = query
@@ -70,7 +70,7 @@ struct MainQueryView: View {
                     url = .some(.none)
                 }
             }
-            
+
             queries.alert(
                 query?.name ?? "",
                 isPresented: $query.isPresent(),
