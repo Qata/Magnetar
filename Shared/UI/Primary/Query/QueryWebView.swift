@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import Recombine
 import ShareSheetView
+import Overture
 
 struct QueryWebView: View {
     enum PendingJob {
@@ -33,7 +35,7 @@ struct QueryWebView: View {
     @State var pendingJob: PendingJob?
     @State private var isShareSheetViewPresented = false
     @FocusState private var urlFocused: Bool
-    
+
     init(url: URL?) {
         initialUrl = url
     }
@@ -55,7 +57,7 @@ struct QueryWebView: View {
     }
     
     @ViewBuilder
-    var toolbar: some View {
+    var toolbarItems: some View {
         Button {
             webViewStore.webView.goBack()
         } label: {
@@ -94,6 +96,15 @@ struct QueryWebView: View {
                 ShareSheetView(activityItems: [url])
             }
         }
+    }
+    
+    var toolbar: some View {
+        HStack {
+            toolbarItems
+        }
+        .font(.title)
+        .padding(.horizontal, 24)
+        .backgroundStyle(.secondary)
     }
     
     func onAppear() {
@@ -172,85 +183,83 @@ struct QueryWebView: View {
         }
     }
     
-    func addURI(_ url: URL, location: String?) {
-        dispatch(
-            async: .command(.addURI(url.absoluteString, location: location))
+    var progressBar: some View {
+        ProgressBar(
+            value: .init(
+                0...1,
+                initialValue: modf(webViewStore.estimatedProgress).1
+            )
         )
+        .foregroundColor(.accentColor)
     }
     
-    func addFile(_ url: URL, location: String?) {
-        dispatch(
-            async: .reuploadFile(url, location: location)
+    @ViewBuilder
+    func alertActions(directories: [String]) -> some View {
+        if let pending = pendingJob {
+            ForEach(directories.sorted(), id: \.self) { directory in
+                Button(
+                    directory.split(
+                        separator: "/",
+                        omittingEmptySubsequences: false
+                    )
+                    .last!
+                ) {
+                    dispatch(async: pending.action(location: directory))
+                }
+            }
+            Button("Default") {
+                dispatch(async: pending.action(location: nil))
+            }
+            Button("Cancel", role: .cancel) {
+            }
+        }
+    }
+    
+    func addJob(directories: [String], type: WebView.AddJobType, url: URL) {
+        let pending: PendingJob
+        switch type {
+        case .uri:
+            pending = .uri(url)
+        case .file:
+            pending = .file(url)
+        }
+        if directories.count > 1 {
+            pendingJob = pending
+        } else {
+            dispatch(async: pending.action(location: directories.first))
+        }
+    }
+    
+    func webView(
+        for directories: [String],
+        dispatch: ActionLens<AsyncAction, SyncAction>
+    ) -> some View {
+        WebView(
+            webView: webViewStore.webView,
+            urlDidChange: {
+                urlString ?= $0?.absoluteString
+            },
+            addJob: uncurry(curry(addJob)(directories))
         )
+        .alert(
+            "Select Location",
+            isPresented: $pendingJob.isPresent()
+        ) {
+           alertActions(directories: directories)
+        }
     }
 
     var body: some View {
         VStack(spacing: .zero) {
-            StoreView({
+            StoreView {
                 $0.persistent.selectedServer?.downloadDirectories ?? []
-            }) { directories, dispatch in
-                WebView(webView: webViewStore.webView) {
-                    urlString ?= $0?.absoluteString
-                } addURI: {
-                    let pending = PendingJob.uri($0)
-                    if directories.count > 1 {
-                        pendingJob = pending
-                    } else {
-                        dispatch(async: pending.action(location: directories.first))
-                    }
-                } addFile: {
-                    let pending = PendingJob.file($0)
-                    if directories.count > 1 {
-                        pendingJob = pending
-                    } else {
-                        dispatch(async: pending.action(location: directories.first))
-                    }
-                }
-                .alert(
-                    "Select Location",
-                    isPresented: $pendingJob.isPresent()
-                ) {
-                    if let pending = pendingJob {
-                        ForEach(directories.sorted(), id: \.self) { directory in
-                            Button(
-                                directory.split(
-                                    separator: "/",
-                                    omittingEmptySubsequences: false
-                                )
-                                .last!
-                            ) {
-                                dispatch(async: pending.action(location: directory))
-                            }
-                        }
-                        Button("Default") {
-                            dispatch(async: pending.action(location: nil))
-                        }
-                        Button("Cancel", role: .cancel) {
-                        }
-                    }
-                }
+            } content: {
+                webView(for: $0, dispatch: $1)
             }
-
             VStack {
                 urlView
-                ZStack {
-                    Divider()
-                        .readSize {
-                            viewWidth = $0.width
-                        }
-                    Rectangle()
-                        .fill(Color.accentColor)
-                        .frame(
-                            width: modf(webViewStore.estimatedProgress).1 * viewWidth,
-                            height: 2
-                        )
-                }
-                HStack {
-                    toolbar
-                }
-                .font(.title)
-                .padding(.horizontal, 24)
-                .backgroundStyle(.secondary)
+                progressBar
+                toolbar
                 Divider()
             }
         }

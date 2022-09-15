@@ -78,6 +78,10 @@ struct ExplodedUrlView: View {
             )
         )
     }
+    
+    func onLoad() {
+        nameFocused = true
+    }
 
     var body: some View {
         List {
@@ -139,6 +143,7 @@ struct ExplodedUrlView: View {
                 }
             }
         }
+        .onLoad(perform: onLoad)
     }
 }
 

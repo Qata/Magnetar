@@ -75,7 +75,8 @@ struct JobsListTopBar: ViewModifier {
         content
             .navigationBarItems(
                 leading: HStack {
-                    TransferTotals(jobs: jobs)
+                    TransferTotalsView(jobs: jobs)
+                        .font(.footnote.bold())
                     ErrorView()
                 },
                 trailing: HStack {

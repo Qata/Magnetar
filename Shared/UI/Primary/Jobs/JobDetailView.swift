@@ -66,8 +66,19 @@ struct CommandButton<Content: View>: View {
 }
 
 struct JobDetailView: View {
+    let store: SubStore<JobViewModel?, AsyncAction, SyncAction>
     @Environment(\.dismiss) var dismiss
-    let viewModel: JobViewModel
+    @State var viewModel: JobViewModel
+    
+    init?(id: String) {
+        store = Global.store.lensing {
+            $0.jobs[id]
+        }
+        guard let viewModel = store.state else {
+            return nil
+        }
+        self._viewModel = .init(initialValue: viewModel)
+    }
 
     var firstSection: some View {
         Section {
@@ -118,6 +129,9 @@ struct JobDetailView: View {
                     }
                 }
             }
+        }
+        .onReceive(store.$state) {
+            viewModel ?= $0
         }
     }
 }

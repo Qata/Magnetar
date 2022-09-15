@@ -68,17 +68,14 @@ public class WebViewStore: ObservableObject {
 
 public class WebViewCoordinator: NSObject, WKNavigationDelegate {
     public let urlDidChange: (URL?) -> Void
-    public let addURI: (URL) -> Void
-    public let addFile: (URL) -> Void
+    public let addJob: (WebView.AddJobType, URL) -> Void
 
     public init(
         urlDidChange: @escaping (URL?) -> Void,
-        addURI: @escaping (URL) -> Void,
-        addFile: @escaping (URL) -> Void
+        addJob: @escaping (WebView.AddJobType, URL) -> Void
     ) {
         self.urlDidChange = urlDidChange
-        self.addURI = addURI
-        self.addFile = addFile
+        self.addJob = addJob
     }
 
     public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -102,7 +99,7 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
             switch uri {
             case .scheme(url.scheme), .pathExtension(url.pathExtension):
                 action = .cancel
-                return addURI(url)
+                return addJob(.uri, url)
             default:
                 break
             }
@@ -110,7 +107,7 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
         
         if api.supportedPathExtensions.contains(url.pathExtension) {
             action = .cancel
-            return addFile(url)
+            return addJob(.file, url)
         }
     }
 }
@@ -118,29 +115,30 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
 #if os(iOS)
 /// A container for using a WKWebView in SwiftUI
 public struct WebView: View, UIViewRepresentable {
+    public enum AddJobType {
+        case uri
+        case file
+    }
+    
     /// The WKWebView to display
     public let webView: WKWebView
     public let urlDidChange: (URL?) -> Void
-    public let addURI: (URL) -> Void
-    public let addFile: (URL) -> Void
+    public let addJob: (AddJobType, URL) -> Void
     
     public init(
         webView: WKWebView,
         urlDidChange: @escaping (URL?) -> Void,
-        addURI: @escaping (URL) -> Void,
-        addFile: @escaping (URL) -> Void
+        addJob: @escaping (AddJobType, URL) -> Void
     ) {
         self.webView = webView
         self.urlDidChange = urlDidChange
-        self.addURI = addURI
-        self.addFile = addFile
+        self.addJob = addJob
     }
     
     public func makeCoordinator() -> WebViewCoordinator {
         WebViewCoordinator(
             urlDidChange: urlDidChange,
-            addURI: addURI,
-            addFile: addFile
+            addJob: addJob
         )
     }
     

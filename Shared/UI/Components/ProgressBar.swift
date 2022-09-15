@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ProgressBar : View {
+    @ScaledMetric var height: CGFloat = 2
     @Clamping var value: CGFloat
     
     var body: some View {
@@ -20,7 +21,7 @@ struct ProgressBar : View {
             Rectangle()
                 .frame(width: self.value * geometry.size.width, alignment: .leading)
         }
-        .frame(height: 2)
+        .frame(height: height)
         .cornerRadius(2)
         .accessibility(value: Text("\(Int(value * 100))%"))
     }

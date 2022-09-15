@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ErrorView: View {
+    @State var latestError: ErrorModel?
+    
     var detailView: some View {
         StoreView(\.errors) { errors, dispatch in
             List {
@@ -34,13 +36,44 @@ struct ErrorView: View {
         }
     }
 
+    var scale: CGSize {
+        (latestError == nil).if(
+            true: CGSize(width: 1, height: 1),
+            false: CGSize(width: 1.3, height: 1.3)
+        )
+    }
+
     var body: some View {
         StoreView(\.errors) { errors in
-            if !errors.isEmpty {
-                NavigationLink(destination: detailView) {
-                    SystemImage.exclamationmarkSquareFill
+            Group {
+                if !errors.isEmpty {
+                    NavigationLink(destination: detailView) {
+                        SystemImage.exclamationmarkSquareFill
+                    }
+                    .foregroundColor(.red)
+                    .font(.body)
+                    .scaleEffect(scale, anchor: .leading)
                 }
-                .foregroundColor(.red)
+            }
+            .onChange(of: errors) { errors in
+                withAnimation(
+                    .interpolatingSpring(
+                        stiffness: 500,
+                        damping: 7,
+                        initialVelocity: 10
+                    )
+                ) {
+                    latestError = errors.first(where: { _ in true })
+                }
+            }
+            .onChange(of: latestError) {
+                if $0 != nil {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation(.easeOut) {
+                            latestError = nil
+                        }
+                    }
+                }
             }
         }
     }

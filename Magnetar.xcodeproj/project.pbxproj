@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
 		CB0F3B6F2884D9CE009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
+		CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = CB1B6F5628D2D2C7005758EA /* Overture */; };
 		CB577E0B27C4827D00F59AB3 /* Recombine.StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */; };
 		CB577E0C27C4827D00F59AB3 /* Recombine.StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */; };
 		CB577E0E27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */; };
@@ -51,8 +52,8 @@
 		CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */; };
 		CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2D27B252FC009CE0B5 /* MainView.swift */; };
 		CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F2D27B252FC009CE0B5 /* MainView.swift */; };
-		CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */; };
-		CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */; };
+		CB6B0F3C27B2534E009CE0B5 /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* JobRowView.swift */; };
+		CB6B0F3D27B2534E009CE0B5 /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3627B2534D009CE0B5 /* JobRowView.swift */; };
 		CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */; };
 		CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */; };
 		CB6B0F4027B2534E009CE0B5 /* TransferTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */; };
@@ -169,6 +170,8 @@
 		CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
 		CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
 		CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = CBDB1C1228D2B95100FCDF50 /* Tagged */; };
+		CBDB1C1528D2C55F00FCDF50 /* TextFieldSelectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C1428D2C55F00FCDF50 /* TextFieldSelectionModifier.swift */; };
+		CBDB1C1628D2C55F00FCDF50 /* TextFieldSelectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C1428D2C55F00FCDF50 /* TextFieldSelectionModifier.swift */; };
 		CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
 		CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
 		CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
@@ -219,7 +222,7 @@
 		CB6B0F2B27B252FC009CE0B5 /* JobsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobsListView.swift; sourceTree = "<group>"; };
 		CB6B0F2C27B252FC009CE0B5 /* AddServerForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddServerForm.swift; sourceTree = "<group>"; };
 		CB6B0F2D27B252FC009CE0B5 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
+		CB6B0F3627B2534D009CE0B5 /* JobRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
 		CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferTotalsView.swift; sourceTree = "<group>"; };
 		CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStatusHeader.swift; sourceTree = "<group>"; };
@@ -277,6 +280,7 @@
 		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
 		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
 		CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDidLoadModifier.swift; sourceTree = "<group>"; };
+		CBDB1C1428D2C55F00FCDF50 /* TextFieldSelectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSelectionModifier.swift; sourceTree = "<group>"; };
 		CBE69F8728BF237500BCECF7 /* ServerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerList.swift; sourceTree = "<group>"; };
 		CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unhashed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +294,7 @@
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 				CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */,
+				CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 				CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */,
 				CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */,
@@ -474,7 +479,7 @@
 				CB6B0F3B27B2534E009CE0B5 /* HLabelledView.swift */,
 				CB6B0F3727B2534D009CE0B5 /* ProgressBar.swift */,
 				CB6B0F3927B2534D009CE0B5 /* ServerStatusHeader.swift */,
-				CB6B0F3627B2534D009CE0B5 /* TorrentRow.swift */,
+				CB6B0F3627B2534D009CE0B5 /* JobRowView.swift */,
 				CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */,
 				CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */,
 			);
@@ -499,6 +504,7 @@
 				CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */,
 				CB6B0F4B27B253DC009CE0B5 /* Yield.swift */,
 				CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */,
+				CBDB1C1428D2C55F00FCDF50 /* TextFieldSelectionModifier.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				CB66B87D27BF327000C2A62F /* ShareSheetView */,
 				CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */,
 				CBDB1C1228D2B95100FCDF50 /* Tagged */,
+				CB1B6F5628D2D2C7005758EA /* Overture */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -776,6 +783,7 @@
 				CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */,
 				CBDB1C0B28D1DBA600FCDF50 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */,
+				CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -907,7 +915,7 @@
 				CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5B27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6B27B253DC009CE0B5 /* Swift.Optional.swift in Sources */,
-				CB6B0F3C27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0F3C27B2534E009CE0B5 /* JobRowView.swift in Sources */,
 				CB6B0FB727B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
 				CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */,
@@ -922,6 +930,7 @@
 				CB6B0F6D27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
 				CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB673482287FE38400F9F35F /* AsyncServerQuerying.swift in Sources */,
+				CBDB1C1528D2C55F00FCDF50 /* TextFieldSelectionModifier.swift in Sources */,
 				CB6B0FA727B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 				CB66B88027BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */,
 			);
@@ -932,6 +941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CBDB1C1628D2C55F00FCDF50 /* TextFieldSelectionModifier.swift in Sources */,
 				CBE69F8C28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CB577E0F27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */,
 				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
@@ -980,7 +990,7 @@
 				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6C27B253DC009CE0B5 /* Swift.Optional.swift in Sources */,
 				CB0F3B6F2884D9CE009D5AAB /* RingBuffer.swift in Sources */,
-				CB6B0F3D27B2534E009CE0B5 /* TorrentRow.swift in Sources */,
+				CB6B0F3D27B2534E009CE0B5 /* JobRowView.swift in Sources */,
 				CBADD62028C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
 				CB9F9E8727BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
 				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
@@ -1422,6 +1432,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-overture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
 		CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rebeloper/ShareSheetView.git";
@@ -1497,6 +1515,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CB1B6F5628D2D2C7005758EA /* Overture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */;
+			productName = Overture;
+		};
 		CB66B87D27BF327000C2A62F /* ShareSheetView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */;

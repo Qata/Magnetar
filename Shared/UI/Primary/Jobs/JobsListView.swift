@@ -104,7 +104,7 @@ struct JobListView: View {
     func jobCells(jobs: [JobViewModel]) -> some View {
         ForEach(jobs, id: \.id) { job in
             ZStack(alignment: .leading) {
-                NavigationLink(destination: JobDetailView(viewModel: job)) {
+                NavigationLink(destination: JobDetailView(id: job.id)) {
                     EmptyView()
                 }
                 .opacity(0)

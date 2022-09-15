@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import Algorithms
 import SwiftUINavigation
 
@@ -50,8 +51,9 @@ struct MainQueryView: View {
     
     @ViewBuilder
     var alertActions: some View {
-        TextField("Query", text: $searchString)
+        TextField("", text: $searchString)
             .autocapitalization(.none)
+            .selectAllWhenEditingBegins()
         let query = query
         Button("Search") {
             url = query?
@@ -69,16 +71,15 @@ struct MainQueryView: View {
                 }
             }
             
-            queries
-                .alert(
-                    query?.name ?? "",
-                    isPresented: $query.isPresent(),
-                    actions: {
-                        alertActions
-                    }
-                ) {
-                    Text("Searching for:")
+            queries.alert(
+                query?.name ?? "",
+                isPresented: $query.isPresent(),
+                actions: {
+                    alertActions
                 }
+            )
+            // A bug causes alert to seemingly randomly pick text casing
+            .textCase(.none)
         }
         .navigationDestination(isPresented: $url.isPresent()) {
             if let url = url {
