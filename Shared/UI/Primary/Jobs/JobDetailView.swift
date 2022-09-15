@@ -66,6 +66,7 @@ struct CommandButton<Content: View>: View {
 }
 
 struct JobDetailView: View {
+    @Environment(\.dismiss) var dismiss
     let viewModel: JobViewModel
 
     var firstSection: some View {
@@ -112,7 +113,9 @@ struct JobDetailView: View {
             .navigationTitle(viewModel.name)
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
-                    CommandsMenu(jobs: [viewModel], image: .playpause)
+                    CommandsMenu(jobs: [viewModel], image: .playpause) {
+                        dismiss()
+                    }
                 }
             }
         }

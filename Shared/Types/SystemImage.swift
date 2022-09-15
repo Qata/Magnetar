@@ -39,6 +39,7 @@ public enum SystemImage: String, View {
     case playpauseFill
     case plus
     case plusCircle
+    case plusMagnifyingglass
     case serverRack
     case squareAndArrowUp
     case stop

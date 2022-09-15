@@ -141,7 +141,10 @@ struct JobListView: View {
                                     HStack {
                                         SortingMenu()
                                         CommandsMenu(jobs: filteredJobs)
-                                        FilterMenu()
+                                        OptionalStoreView(
+                                            \.persistent.selectedServer?.filter,
+                                             content: FilterMenu.init
+                                        )
                                     }
                                 }
                             }
@@ -155,30 +158,5 @@ struct JobListView: View {
                 }
             }
         }
-    }
-}
-
-struct AddURIView: View {
-    @State var text = ""
-    
-    var body: some View {
-        VStack {
-            TextField("URI", text: $text)
-            Menu("Add") {
-                OptionalStoreView(
-                    \.persistent.selectedServer?.downloadDirectories
-                ) { directories, dispatch in
-                    ForEach(directories, id: \.self) { directory in
-                        Button(directory) {
-                            dispatch(async: .command(.addURI(text, location: directory)))
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func add() {
-        
     }
 }

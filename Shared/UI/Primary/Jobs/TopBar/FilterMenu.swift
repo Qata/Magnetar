@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FilterMenu: View {
     let dispatch = Global.store.writeOnly(sync: { $0 })
+    let filter: Set<Status>
     
     func button(
         for status: Status,
@@ -44,26 +45,27 @@ struct FilterMenu: View {
         }
     }
     
-    func showAllMenu<AllStatuses: Collection>(
-        activeStatuses: Set<Status>,
-        allStatuses: AllStatuses,
-        filter: Set<Status>
-    ) -> some View
-    where AllStatuses.Element == Status {
-        Menu("Show All") {
-            ForEach(Status.allCases, id: \.self) { status in
-                if !activeStatuses.contains(status), allStatuses.contains(status) {
-                    button(for: status, filter: filter) {
-                        dispatch(sync: .update(.filter($0)))
+    func showAllMenu(activeStatuses: Set<Status>) -> some View {
+        OptionalStoreView {
+            $0.persistent.selectedServer.map {
+                Set($0.api.jobs.status.keys)
+            }
+        } content: { allStatuses in
+            Menu("Show All") {
+                ForEach(Status.allCases, id: \.self) { status in
+                    if allStatuses.subtracting(activeStatuses).subtracting(filter).contains(status) {
+                        button(for: status, filter: filter) {
+                            dispatch(sync: .update(.filter($0)))
+                        }
                     }
                 }
             }
         }
     }
     
-    func menu(activeStatuses: Set<Status>, filter: Set<Status>) -> some View {
+    func menu(activeStatuses: Set<Status>) -> some View {
         ForEach(Status.allCases, id: \.self) { status in
-            if activeStatuses.contains(status) {
+            if activeStatuses.union(filter).contains(status) {
                 button(for: status, filter: filter) {
                     dispatch(sync: .update(.filter($0)))
                 }
@@ -72,30 +74,20 @@ struct FilterMenu: View {
     }
     
     var body: some View {
-        OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
-            let filter = server.filter
-            Menu {
-                Text("Filter")
-                if !filter.isEmpty {
-                    clearButton
-                }
-                StoreView({ Set($0.jobs.values.map(\.status)) }) { statuses in
-                    menu(
-                        activeStatuses: statuses,
-                        filter: filter
-                    )
-                    showAllMenu(
-                        activeStatuses: statuses,
-                        allStatuses: server.api.jobs.status.keys,
-                        filter: filter
-                    )
-                }
-            } label: {
-                filter.isEmpty.if(
-                    true: SystemImage.filter,
-                    false: .filterFilled
-                )
+        Menu {
+            Text("Filter")
+            if !filter.isEmpty {
+                clearButton
             }
+            StoreView({ Set($0.jobs.values.map(\.status)) }) { statuses in
+                menu(activeStatuses: statuses)
+                showAllMenu(activeStatuses: statuses)
+            }
+        } label: {
+            filter.isEmpty.if(
+                true: SystemImage.filter,
+                false: .filterFilled
+            )
         }
     }
 }

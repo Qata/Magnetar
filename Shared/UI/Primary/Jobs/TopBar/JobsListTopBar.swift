@@ -56,7 +56,10 @@ struct JobsListTopBar: ViewModifier {
     }
 
     var filter: some View {
-        FilterMenu()
+        OptionalStoreView(
+            \.persistent.selectedServer?.filter,
+             content: FilterMenu.init
+        )
     }
     
     var sorting: some View {

@@ -68,9 +68,17 @@ public class WebViewStore: ObservableObject {
 
 public class WebViewCoordinator: NSObject, WKNavigationDelegate {
     public let urlDidChange: (URL?) -> Void
+    public let addURI: (URL) -> Void
+    public let addFile: (URL) -> Void
 
-    public init(urlDidChange: @escaping (URL?) -> Void) {
+    public init(
+        urlDidChange: @escaping (URL?) -> Void,
+        addURI: @escaping (URL) -> Void,
+        addFile: @escaping (URL) -> Void
+    ) {
         self.urlDidChange = urlDidChange
+        self.addURI = addURI
+        self.addFile = addFile
     }
 
     public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -93,30 +101,16 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
         for uri in api.supportedURIs {
             switch uri {
             case .scheme(url.scheme), .pathExtension(url.pathExtension):
-                Global.store.dispatch(
-                    async: .command(
-                        .addURI(
-                            url.absoluteString,
-                            location: nil
-                        )
-                    )
-                )
                 action = .cancel
-                return
+                return addURI(url)
             default:
                 break
             }
         }
         
         if api.supportedPathExtensions.contains(url.pathExtension) {
-            Global.store.dispatch(
-                async: .reuploadFile(
-                    url,
-                    location: nil
-                )
-            )
             action = .cancel
-            return
+            return addFile(url)
         }
     }
 }
@@ -127,14 +121,27 @@ public struct WebView: View, UIViewRepresentable {
     /// The WKWebView to display
     public let webView: WKWebView
     public let urlDidChange: (URL?) -> Void
+    public let addURI: (URL) -> Void
+    public let addFile: (URL) -> Void
     
-    public init(webView: WKWebView, urlDidChange: @escaping (URL?) -> Void = { _ in }) {
+    public init(
+        webView: WKWebView,
+        urlDidChange: @escaping (URL?) -> Void,
+        addURI: @escaping (URL) -> Void,
+        addFile: @escaping (URL) -> Void
+    ) {
         self.webView = webView
         self.urlDidChange = urlDidChange
+        self.addURI = addURI
+        self.addFile = addFile
     }
     
     public func makeCoordinator() -> WebViewCoordinator {
-        WebViewCoordinator(urlDidChange: urlDidChange)
+        WebViewCoordinator(
+            urlDidChange: urlDidChange,
+            addURI: addURI,
+            addFile: addFile
+        )
     }
     
     public func makeUIView(context: UIViewRepresentableContext<WebView>) -> WKWebView {

@@ -166,6 +166,9 @@
 		CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */; };
 		CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93C127B3C4FF0060CB06 /* ETA.swift */; };
 		CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */; };
+		CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
+		CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
+		CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = CBDB1C1228D2B95100FCDF50 /* Tagged */; };
 		CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
 		CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
 		CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
@@ -273,6 +276,7 @@
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
 		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
+		CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDidLoadModifier.swift; sourceTree = "<group>"; };
 		CBE69F8728BF237500BCECF7 /* ServerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerList.swift; sourceTree = "<group>"; };
 		CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unhashed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +289,7 @@
 				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
+				CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 				CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */,
 				CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */,
@@ -493,6 +498,7 @@
 				CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */,
 				CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */,
 				CB6B0F4B27B253DC009CE0B5 /* Yield.swift */,
+				CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -661,6 +667,7 @@
 				CB9F9E8327BCC52E00CA93E6 /* CasePaths */,
 				CB66B87D27BF327000C2A62F /* ShareSheetView */,
 				CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */,
+				CBDB1C1228D2B95100FCDF50 /* Tagged */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -768,6 +775,7 @@
 				CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */,
 				CBDB1C0B28D1DBA600FCDF50 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
+				CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -879,6 +887,7 @@
 				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6727B253DC009CE0B5 /* Swift.Bool.swift in Sources */,
 				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
 				CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */,
 				CBADD61F28C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
 				CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */,
@@ -937,6 +946,7 @@
 				CB6B0F9827B253F2009CE0B5 /* ServerStatus.swift in Sources */,
 				CBADD62328C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
+				CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
 				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
@@ -1476,6 +1486,14 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-tagged";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1533,6 +1551,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBDB1C0B28D1DBA600FCDF50 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
 			productName = SwiftUINavigation;
+		};
+		CBDB1C1228D2B95100FCDF50 /* Tagged */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */;
+			productName = Tagged;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

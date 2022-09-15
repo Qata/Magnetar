@@ -9,13 +9,28 @@ import SwiftUI
 import ShareSheetView
 
 struct QueryWebView: View {
-    @StateObject var webViewStore = WebViewStore()
+    enum PendingJob {
+        case file(URL)
+        case uri(URL)
+
+        func action(location: String?) -> AsyncAction {
+            switch self {
+            case let .uri(url):
+                return .command(.addURI(url.absoluteString, location: location))
+            case let .file(url):
+                return .reuploadFile(url, location: location)
+            }
+        }
+    }
     
+    let dispatch = Global.store.writeOnly(async: { $0 })
+    @StateObject var webViewStore = WebViewStore()
     @Environment(\.dismiss) var dismiss
     let initialUrl: URL?
     @State var showAddQuery = false
     @State var viewWidth = CGFloat.zero
     @State var urlString = ""
+    @State var pendingJob: PendingJob?
     @State private var isShareSheetViewPresented = false
     @FocusState private var urlFocused: Bool
     
@@ -24,7 +39,7 @@ struct QueryWebView: View {
     }
 
     init(url: String) {
-        initialUrl = URL(string: url)
+        self.init(url: URL(string: url))
     }
     
     func sanitiseURL() {
@@ -58,18 +73,16 @@ struct QueryWebView: View {
         Spacer()
         Spacer()
         Button {
-            if webViewStore.isLoading {
-                webViewStore.webView.stopLoading()
-            } else {
-                webViewStore.webView.reload()
-            }
+            showAddQuery = true
         } label: {
-            if webViewStore.isLoading {
-                SystemImage.xmark
-            } else {
-                SystemImage.arrowClockwise
-            }
+            SystemImage.plusMagnifyingglass
         }
+        .opacity(
+            (URL(string: urlString) != nil).if(
+                true: 1,
+                false: 0
+            )
+        )
         Spacer()
         Button {
             isShareSheetViewPresented = true
@@ -84,14 +97,16 @@ struct QueryWebView: View {
     }
     
     func onAppear() {
-        if initialUrl != nil {
-            urlString ?= initialUrl?.absoluteString
-            webViewStore.tryLoad(url: initialUrl)
-        } else {
+        if urlString.isEmpty {
             urlFocused = true
         }
     }
-    
+
+    func onLoad() {
+        urlString ?= initialUrl?.absoluteString
+        webViewStore.tryLoad(url: initialUrl)
+    }
+
     var urlTextField: some View {
         TextField("Enter website URL", text: $urlString)
             .focused($urlFocused)
@@ -108,6 +123,7 @@ struct QueryWebView: View {
                     }
                 }
             }
+            .onLoad(perform: onLoad)
             .onAppear(perform: onAppear)
     }
     
@@ -142,8 +158,9 @@ struct QueryWebView: View {
         .padding(.vertical, 10)
         .padding(.horizontal, 16)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(.secondary)
+                .background(.regularMaterial)
         )
         .padding(.horizontal, 10)
         .sheet(isPresented: $showAddQuery) {
@@ -155,32 +172,87 @@ struct QueryWebView: View {
         }
     }
     
+    func addURI(_ url: URL, location: String?) {
+        dispatch(
+            async: .command(.addURI(url.absoluteString, location: location))
+        )
+    }
+    
+    func addFile(_ url: URL, location: String?) {
+        dispatch(
+            async: .reuploadFile(url, location: location)
+        )
+    }
+
     var body: some View {
-        VStack {
-            urlView
-            ZStack {
-                Divider()
-                    .readSize {
-                        viewWidth = $0.width
+        VStack(spacing: .zero) {
+            StoreView({
+                $0.persistent.selectedServer?.downloadDirectories ?? []
+            }) { directories, dispatch in
+                WebView(webView: webViewStore.webView) {
+                    urlString ?= $0?.absoluteString
+                } addURI: {
+                    let pending = PendingJob.uri($0)
+                    if directories.count > 1 {
+                        pendingJob = pending
+                    } else {
+                        dispatch(async: pending.action(location: directories.first))
                     }
-                Rectangle()
-                    .fill(Color.accentColor)
-                    .frame(
-                        width: modf(webViewStore.estimatedProgress).1 * viewWidth,
-                        height: 2
-                    )
+                } addFile: {
+                    let pending = PendingJob.file($0)
+                    if directories.count > 1 {
+                        pendingJob = pending
+                    } else {
+                        dispatch(async: pending.action(location: directories.first))
+                    }
+                }
+                .alert(
+                    "Select Location",
+                    isPresented: $pendingJob.isPresent()
+                ) {
+                    if let pending = pendingJob {
+                        ForEach(directories.sorted(), id: \.self) { directory in
+                            Button(
+                                directory.split(
+                                    separator: "/",
+                                    omittingEmptySubsequences: false
+                                )
+                                .last!
+                            ) {
+                                dispatch(async: pending.action(location: directory))
+                            }
+                        }
+                        Button("Default") {
+                            dispatch(async: pending.action(location: nil))
+                        }
+                        Button("Cancel", role: .cancel) {
+                        }
+                    }
+                }
             }
-            WebView(webView: webViewStore.webView) {
-                urlString ?= $0?.absoluteString
+
+            VStack {
+                urlView
+                ZStack {
+                    Divider()
+                        .readSize {
+                            viewWidth = $0.width
+                        }
+                    Rectangle()
+                        .fill(Color.accentColor)
+                        .frame(
+                            width: modf(webViewStore.estimatedProgress).1 * viewWidth,
+                            height: 2
+                        )
+                }
+                HStack {
+                    toolbar
+                }
+                .font(.title)
+                .padding(.horizontal, 24)
+                .backgroundStyle(.secondary)
+                Divider()
             }
-            Divider()
-            HStack {
-                toolbar
-                    .font(.title2)
-            }
-            .padding(.horizontal, 24)
-            .backgroundStyle(.secondary)
-            Divider()
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -188,15 +260,6 @@ struct QueryWebView: View {
                 Text(webViewStore.title ?? "")
                     .bold()
                     .lineLimit(1)
-            }
-            ToolbarItemGroup(placement: .primaryAction) {
-                if URL(string: urlString) != nil {
-                    Button {
-                        showAddQuery = true
-                    } label: {
-                        SystemImage.plus
-                    }
-                }
             }
         }
     }

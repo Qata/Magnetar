@@ -64,7 +64,7 @@ struct MainQueryView: View {
     var body: some View {
         List {
             Section {
-                Button("Browser") {
+                Button("Open Browser") {
                     url = .some(.none)
                 }
             }
@@ -77,26 +77,21 @@ struct MainQueryView: View {
                         alertActions
                     }
                 ) {
-                    Text("Please enter the search terms")
+                    Text("Searching for:")
                 }
         }
         .navigationDestination(isPresented: $url.isPresent()) {
             if let url = url {
-                QueryWebView(url: url)
+                QueryWebView(url: url.flatMap { $0 })
             }
         }
-        .navigationBarItems(
-            leading: NavigationLink(
-                destination: AddURIView()
-            ) {
-                Text("URI")
-            },
-            trailing: Button(image: .plus, binding: $showAddQuery)
-        )
         .navigationTitle("")
         .toolbar {
             ToolbarItemGroup(placement: .principal) {
                 Text("Query Central").bold()
+            }
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button(image: .plus, binding: $showAddQuery)
             }
         }
         .sheet(isPresented: $showAddQuery) {

@@ -89,6 +89,9 @@ struct ExplodedUrlView: View {
                         .absoluteString
                     ?? ""
                 )
+                TextField("Query name", text: $queryName)
+                    .disableAutocorrection(true)
+                    .focused($nameFocused)
             }
             Picker(selection: $selectedParameter) {
                 Text("None")
@@ -100,20 +103,19 @@ struct ExplodedUrlView: View {
             pathView
             queryView
             Section {
-                TextField("Query name", text: $queryName)
-                    .disableAutocorrection(true)
-                    .focused($nameFocused)
                 StoreView(\.persistent.queries) { queries in
                     let nameInUse = queries.contains { $0.name == queryName }
                     Button("Save") {
-                        save()
-                        queryName.removeAll()
-                        showModal = false
+                        if queryName.isEmpty {
+                            nameFocused = true
+                        } else {
+                            save()
+                            queryName.removeAll()
+                            showModal = false
+                        }
                     }
                     .disabled(selectedParameter == nil)
-                    .disabled(queryName.isEmpty)
                     .disabled(nameInUse)
-
                     if nameInUse {
                         Text("Name must be unique")
                             .foregroundColor(.red)

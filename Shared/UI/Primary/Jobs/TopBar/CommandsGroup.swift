@@ -10,10 +10,11 @@ import SwiftUI
 struct CommandsMenu: View {
     let jobs: [JobViewModel]
     var image: SystemImage = .playpause
+    var didRemove: () -> Void = {}
     
     var body: some View {
         Menu {
-            CommandsGroup(jobs: jobs)
+            CommandsGroup(jobs: jobs, didRemove: didRemove)
         } label: {
             image
         }
@@ -21,13 +22,16 @@ struct CommandsMenu: View {
 }
 
 struct CommandsGroup: View {
+    static let statuses = Set(Status.allCases)
+
     let ids: [String]
     let jobs: [JobViewModel]
-    static let statuses = Set(Status.allCases)
+    var didRemove: () -> Void = {}
     
-    init(jobs: [JobViewModel]) {
+    init(jobs: [JobViewModel], didRemove: @escaping () -> Void = {}) {
         self.jobs = jobs
         self.ids = jobs.map(\.id)
+        self.didRemove = didRemove
     }
 
     func button(
@@ -60,6 +64,7 @@ struct CommandsGroup: View {
                     if api.available(command: .remove) {
                         Button {
                             dispatch(async: .command(.remove(ids)))
+                            didRemove()
                         } label: {
                             Label("Remove", icon: .xmark)
                         }
@@ -67,6 +72,7 @@ struct CommandsGroup: View {
                     if api.available(command: .deleteData) {
                         Button(role: .destructive) {
                             dispatch(async: .command(.deleteData(ids)))
+                            didRemove()
                         } label: {
                             Label("Remove and Delete Data", icon: .xmarkBin)
                         }
