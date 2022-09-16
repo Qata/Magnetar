@@ -126,12 +126,24 @@
 		CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
 		CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
 		CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
-		CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Mocks.swift */; };
-		CB7AC3C127B3C8FC0087929C /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Mocks.swift */; };
+		CB7AC3C027B3C8FC0087929C /* Synology.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Synology.swift */; };
+		CB7AC3C127B3C8FC0087929C /* Synology.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Synology.swift */; };
 		CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
 		CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
 		CB8E9CAF28582BE400089B4B /* EqualWidthHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */; };
 		CB8E9CB028582BE400089B4B /* EqualWidthHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */; };
+		CB91360F28D4061F0034E67F /* RequestParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91360E28D4061F0034E67F /* RequestParameter.swift */; };
+		CB91361028D4061F0034E67F /* RequestParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91360E28D4061F0034E67F /* RequestParameter.swift */; };
+		CB91361528D409160034E67F /* RequestJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361428D409160034E67F /* RequestJSON.swift */; };
+		CB91361628D409160034E67F /* RequestJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361428D409160034E67F /* RequestJSON.swift */; };
+		CB91361828D409590034E67F /* RequestQueryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361728D409590034E67F /* RequestQueryItems.swift */; };
+		CB91361928D409590034E67F /* RequestQueryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361728D409590034E67F /* RequestQueryItems.swift */; };
+		CB91361B28D410ED0034E67F /* URLDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361A28D410ED0034E67F /* URLDescriptor.swift */; };
+		CB91361C28D410ED0034E67F /* URLDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361A28D410ED0034E67F /* URLDescriptor.swift */; };
+		CB91361F28D41B6A0034E67F /* Transmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361E28D41B6A0034E67F /* Transmission.swift */; };
+		CB91362028D41B6A0034E67F /* Transmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361E28D41B6A0034E67F /* Transmission.swift */; };
+		CB91362228D41B9D0034E67F /* qBittorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362128D41B9D0034E67F /* qBittorrent.swift */; };
+		CB91362328D41B9D0034E67F /* qBittorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362128D41B9D0034E67F /* qBittorrent.swift */; };
 		CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E7727B791D600CA93E6 /* KeychainAccess */; };
 		CB9F9E7D27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */; };
 		CB9F9E7E27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */; };
@@ -259,9 +271,15 @@
 		CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleCustomStringConvertible.swift; sourceTree = "<group>"; };
 		CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
 		CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitialisable.swift; sourceTree = "<group>"; };
-		CB7AC3BF27B3C8FC0087929C /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		CB7AC3BF27B3C8FC0087929C /* Synology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synology.swift; sourceTree = "<group>"; };
 		CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualWidthHStack.swift; sourceTree = "<group>"; };
+		CB91360E28D4061F0034E67F /* RequestParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParameter.swift; sourceTree = "<group>"; };
+		CB91361428D409160034E67F /* RequestJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestJSON.swift; sourceTree = "<group>"; };
+		CB91361728D409590034E67F /* RequestQueryItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueryItems.swift; sourceTree = "<group>"; };
+		CB91361A28D410ED0034E67F /* URLDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDescriptor.swift; sourceTree = "<group>"; };
+		CB91361E28D41B6A0034E67F /* Transmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transmission.swift; sourceTree = "<group>"; };
+		CB91362128D41B9D0034E67F /* qBittorrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qBittorrent.swift; sourceTree = "<group>"; };
 		CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.Label.swift; sourceTree = "<group>"; };
 		CB9F9E7F27BC89A500CA93E6 /* SwiftUI.NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.NavigationLink.swift; sourceTree = "<group>"; };
 		CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.Publisher.swift; sourceTree = "<group>"; };
@@ -395,7 +413,7 @@
 			children = (
 				CB67347F287FE33500F9F35F /* Logic */,
 				CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */,
-				CB7AC3BF27B3C8FC0087929C /* Mocks.swift */,
+				CB91361D28D41B5B0034E67F /* Mocks */,
 				CB6B0F8927B253F2009CE0B5 /* Model */,
 				CB6B0F6F27B253E2009CE0B5 /* Redux */,
 				CB6B0FAC27B27A8B009CE0B5 /* Sourcery */,
@@ -542,6 +560,7 @@
 				CB6B0F8C27B253F2009CE0B5 /* Payloads */,
 				CBBF93B727B3C3F90060CB06 /* Job */,
 				CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */,
+				CB91361128D4088C0034E67F /* Request */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -568,6 +587,43 @@
 			children = (
 			);
 			path = Secondary;
+			sourceTree = "<group>";
+		};
+		CB91361128D4088C0034E67F /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				CB91360E28D4061F0034E67F /* RequestParameter.swift */,
+				CB91361328D408980034E67F /* QueryItem */,
+				CB91361228D408930034E67F /* JSON */,
+				CB91361A28D410ED0034E67F /* URLDescriptor.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		CB91361228D408930034E67F /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				CB91361428D409160034E67F /* RequestJSON.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		CB91361328D408980034E67F /* QueryItem */ = {
+			isa = PBXGroup;
+			children = (
+				CB91361728D409590034E67F /* RequestQueryItems.swift */,
+			);
+			path = QueryItem;
+			sourceTree = "<group>";
+		};
+		CB91361D28D41B5B0034E67F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				CB7AC3BF27B3C8FC0087929C /* Synology.swift */,
+				CB91362128D41B9D0034E67F /* qBittorrent.swift */,
+				CB91361E28D41B6A0034E67F /* Transmission.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		CB9F9E6427B78BE200CA93E6 /* Resources */ = {
@@ -858,7 +914,10 @@
 			files = (
 				CB66B87A27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */,
 				CB6B0F4227B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
+				CB91362228D41B9D0034E67F /* qBittorrent.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
+				CB91361828D409590034E67F /* RequestQueryItems.swift in Sources */,
+				CB91361B28D410ED0034E67F /* URLDescriptor.swift in Sources */,
 				CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB9F9E8027BC89A500CA93E6 /* SwiftUI.NavigationLink.swift in Sources */,
@@ -880,10 +939,12 @@
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8E9CAF28582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
+				CB91361528D409160034E67F /* RequestJSON.swift in Sources */,
 				CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
+				CB91361F28D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Swift.Collection.swift in Sources */,
 				CB6B0F7B27B253E2009CE0B5 /* State.swift in Sources */,
@@ -895,10 +956,11 @@
 				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6727B253DC009CE0B5 /* Swift.Bool.swift in Sources */,
 				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
+				CB91360F28D4061F0034E67F /* RequestParameter.swift in Sources */,
 				CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
 				CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */,
 				CBADD61F28C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
-				CB7AC3C027B3C8FC0087929C /* Mocks.swift in Sources */,
+				CB7AC3C027B3C8FC0087929C /* Synology.swift in Sources */,
 				CB6B0F5727B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
@@ -957,7 +1019,9 @@
 				CBADD62328C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
+				CB91361C28D410ED0034E67F /* URLDescriptor.swift in Sources */,
 				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
+				CB91362028D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CBADD62828CEEB1000B0C6EA /* SettingsView.swift in Sources */,
@@ -971,7 +1035,7 @@
 				CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6827B253DC009CE0B5 /* Swift.Bool.swift in Sources */,
 				CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */,
-				CB7AC3C127B3C8FC0087929C /* Mocks.swift in Sources */,
+				CB7AC3C127B3C8FC0087929C /* Synology.swift in Sources */,
 				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
@@ -986,6 +1050,7 @@
 				CBADD61D28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9A27B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
+				CB91361628D409160034E67F /* RequestJSON.swift in Sources */,
 				CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
 				CB6B0F5C27B253DC009CE0B5 /* Clamping.swift in Sources */,
 				CB6B0F6C27B253DC009CE0B5 /* Swift.Optional.swift in Sources */,
@@ -995,8 +1060,10 @@
 				CB9F9E8727BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
 				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
 				CB66B88127BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */,
+				CB91361028D4061F0034E67F /* RequestParameter.swift in Sources */,
 				CB6B0FAB27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
+				CB91361928D409590034E67F /* RequestQueryItems.swift in Sources */,
 				CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */,
 				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
 				CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */,
@@ -1006,6 +1073,7 @@
 				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
 				CB66B87B27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */,
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
+				CB91362328D41B9D0034E67F /* qBittorrent.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
 				CB9F9E8127BC89A500CA93E6 /* SwiftUI.NavigationLink.swift in Sources */,
 				CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */,

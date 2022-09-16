@@ -117,7 +117,7 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
             }
         }
         
-        if api.supportedPathExtensions.contains(where: { $0.value == url.pathExtension }) {
+        if api.supportedFilePathExtensions.contains(where: { $0.value == url.pathExtension }) {
             action = .cancel
             return addJob(.file, url)
         }

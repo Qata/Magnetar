@@ -13,9 +13,9 @@ import CasePaths
 
 struct APIDescriptor: Codable, Hashable {
     var name: String
-    var endpoint: EndpointDescriptor = .init(path: [])
+    var endpoint: RequestEndpoint = .init(path: [])
     var supportedURIs: [URI] = []
-    var supportedPathExtensions: [PathExtension] = []
+    var supportedFilePathExtensions: [PathExtension] = []
     var authentication: [Authentication]
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
@@ -55,32 +55,32 @@ extension APIDescriptor {
 
 struct QueryItem: Codable, Hashable, CustomStringConvertible {
     var name: String
-    var value: String
+    var value: String?
     
     var description: String {
-        "\(name) = \(value)"
+        "\(name)=\(value ?? "")"
     }
-}
-
-enum QueryItemValue: Codable, Hashable {
-    case string(String)
-    case id
-    case token
 }
 
 enum Request: Codable, Hashable {
-    enum JSONRPC: Codable, Hashable {
-        case post(
-            relativeEndpoint: EndpointDescriptor = .init(path: []),
-            payload: RequestJSON
-        )
+    enum Payload: Codable, Hashable {
+        case jsonrpc(RequestJSON)
+//        case queryItems(RequestQueryItems)
     }
-    case jsonrpc(JSONRPC)
-    
+    case post(
+        relativeEndpoint: RequestEndpoint = .init(path: []),
+        payload: Payload
+    )
+    case get(
+        relativeEndpoint: RequestEndpoint = .init(path: [])
+    )
+
     var method: String {
         switch self {
-        case .jsonrpc:
+        case .post:
             return "POST"
+        case .get:
+            return "GET"
         }
     }
 
@@ -88,10 +88,40 @@ enum Request: Codable, Hashable {
         let url = server.url
         let port = server.port
         switch self {
-        case let .jsonrpc(jsonrpc):
-            switch jsonrpc {
-            case let .post(relativeEndpoint, payload):
-                let endpoint = server.api.endpoint.appending(relativeEndpoint)
+        case let .get(relativeEndpoint):
+            let endpoint = server.api.endpoint
+                .appending(relativeEndpoint)
+                .resolve(command: command)
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            components?.queryItems = endpoint.queryItems.map {
+                $0.map {
+                    URLQueryItem(name: $0.name, value: $0.value)
+                }
+            }
+            components?.user = server.user
+            components?.password = server.password
+            components?.port = numericCast(port)
+            var request = URLRequest(
+                url: endpoint.path.reduce(into: components!.url!) {
+                    $0.appendPathComponent($1)
+                },
+                cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
+            )
+            if server.token != nil, let field = server.api.authentication.firstNonNil(\.headerField) {
+                request.setValue(server.token, forHTTPHeaderField: field)
+            }
+            request.httpMethod = method
+            request.timeoutInterval = server.timeoutInterval
+//                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
+            return request
+        case let .post(relativeEndpoint, payload):
+            switch payload {
+//            case let .queryItems(queryItems):
+//
+            case let .jsonrpc(payload):
+                let endpoint = server.api.endpoint
+                    .appending(relativeEndpoint)
+                    .resolve(command: command)
                 var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
                 components?.queryItems = endpoint.queryItems.map {
                     $0.map {
@@ -127,6 +157,7 @@ enum Request: Codable, Hashable {
 enum Authentication: Codable, Hashable {
     enum Token: Codable, Hashable {
         case header(field: String, code: Int, request: Request)
+        case queryItem(name: String, request: Request)
     }
     case password(invalidCodes: [Int])
     case token(Token)
@@ -191,69 +222,4 @@ enum ETADescription: Codable, Hashable {
 struct JSONParseError: Error {
     let json: JSON
     let expected: Any
-}
-
-indirect enum RequestJSON: Hashable, Codable {
-    enum Field: Hashable, Codable {
-        case id
-    }
-    enum Encoding: Hashable, Codable {
-        case base64
-    }
-    case null
-    case string(String)
-    case number(String)
-    case bool(Bool)
-    case object([String: Self])
-    case array([Self])
-    case uri
-    case location
-    case file(Encoding)
-    case field(Field)
-    case forEach(Field)
-    
-    func resolve(command: Command) -> JSON {
-        var ids: [String] = command.ids.reversed()
-        func recurse(json: RequestJSON) -> JSON? {
-            switch json {
-            case let .object(json):
-                return .object(json.compactMapValues(recurse))
-            case let .array(json):
-                return .array(json.compactMap(recurse))
-            case let .string(value):
-                return .string(value)
-            case let .number(value):
-                return .number(value)
-            case let .bool(value):
-                return .bool(value)
-            case .null:
-                return .null
-            case .uri:
-                return command.uri.map(JSON.string)
-            case .location:
-                return command.location.map(JSON.string)
-            case let .file(encoding):
-                return command.file
-                    .map {
-                        switch encoding {
-                        case .base64:
-                            return $0.base64EncodedString()
-                        }
-                    }
-                    .map(JSON.string)
-            case let .field(value):
-                switch value {
-                case .id:
-                    return ids.popLast().map(JSON.string) ?? nil
-                }
-            case let .forEach(value):
-                switch value {
-                case .id:
-                    defer { ids = [] }
-                    return ids.isEmpty.if(false: .array(ids.map(JSON.string)))
-                }
-            }
-        }
-        return recurse(json: self) ?? .null
-    }
 }
