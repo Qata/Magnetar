@@ -13,7 +13,10 @@ enum RequestParameter: Hashable, Codable {
     }
     enum FileEncoding: Hashable, Codable {
         case base64
+        case data(fileName: RequestFileName)
     }
+    case bool(Bool)
+    case string(String)
     case username
     case password
     case token
@@ -21,7 +24,7 @@ enum RequestParameter: Hashable, Codable {
     case location
     case file(FileEncoding)
     case field(Field)
-    case forEach(Field)
+    case forEach(Field, separator: String? = nil)
 }
 
 protocol RequestParameterContainer {
@@ -30,12 +33,18 @@ protocol RequestParameterContainer {
 
     func promote(_ value: Value?) -> Resolved
     func resolve(string: String) -> Value
-    func resolve(array: [String]) -> Value
+    func resolve(array: [String], separator: String?) -> Value
+    func resolve(bool: Bool) -> Value
+    func resolve(data: Data, name: RequestFileName) -> Value
 }
 
 extension RequestParameterContainer {
     func resolve(parameter: RequestParameter, command: Command, server: Server, ids: inout [String]) -> Resolved {
         switch parameter {
+        case let .string(string):
+            return promote(resolve(string: string))
+        case let .bool(bool):
+            return promote(resolve(bool: bool))
         case .username:
             return promote(server.user.map(resolve(string:)))
         case .password:
@@ -52,10 +61,11 @@ extension RequestParameterContainer {
                     .map {
                         switch encoding {
                         case .base64:
-                            return $0.base64EncodedString()
+                            return resolve(string: $0.base64EncodedString())
+                        case let .data(fileName):
+                            return resolve(data: $0, name: fileName)
                         }
                     }
-                    .map(resolve(string:))
             )
         case let .field(value):
             switch value {
@@ -65,11 +75,18 @@ extension RequestParameterContainer {
                         .map(resolve(string:))
                 )
             }
-        case let .forEach(field):
+        case let .forEach(field, separator):
             switch field {
             case .id:
                 defer { ids = [] }
-                return promote(ids.isEmpty.if(false: resolve(array: ids)))
+                return promote(
+                    ids.isEmpty.if(
+                        false: resolve(
+                            array: ids,
+                            separator: separator
+                        )
+                    )
+                )
             }
         }
     }

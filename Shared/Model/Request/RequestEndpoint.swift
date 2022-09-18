@@ -8,15 +8,6 @@
 import Foundation
 
 struct RequestEndpoint: Codable, Hashable {
-    enum Path: Codable, Hashable, ExpressibleByStringLiteral {
-        case component(String)
-        case parameter(RequestParameter)
-        
-        init(stringLiteral value: StringLiteralType) {
-            self = .component(value)
-        }
-    }
-
     var path: [Path]
     var queryItems: RequestQueryItems?
 
@@ -58,37 +49,6 @@ struct RequestEndpoint: Codable, Hashable {
                     )
                 }
             }
-        )
-    }
-}
-
-extension RequestEndpoint.Path: RequestParameterContainer {
-    typealias Value = String
-    typealias Resolved = String
-    
-    func resolve(array: [String]) -> String {
-        array.joined(separator: ",")
-    }
-    
-    func resolve(string: String) -> String {
-        string
-    }
-
-    func promote(_ value: String?) -> String {
-        value ?? ""
-    }
-}
-
-struct URLDescriptor: Codable, Hashable {
-    var path: [String]
-    var queryItems: [QueryItem]?
-    
-    func appending(_ descriptor: Self) -> Self {
-        .init(
-            path: path + descriptor.path,
-            queryItems: queryItems.map {
-                $0 + (descriptor.queryItems ?? [])
-            } ?? descriptor.queryItems
         )
     }
 }

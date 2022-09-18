@@ -33,45 +33,37 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     let additionalDictionary: [String: Job.Field]
 
     init(from job: Job.Raw, context: APIDescriptor) throws {
-        guard let name = job.name else {
-            throw Error.missing(.name)
+        guard let id = job.id else {
+            throw Error.missing(.id)
         }
         let statusDescriptor = context.jobs.status.firstNonNil { key, value in
             value
                 .contains { $0.wrappedValue == job.status }
                 .if(true: key)
         } ?? .unknown
-        guard let id = job.id else {
-            throw Error.missing(.id)
-        }
-        guard let uploadSpeed = job.uploadSpeed else {
-            throw Error.missing(.uploadSpeed)
-        }
-        guard let downloadSpeed = job.downloadSpeed else {
-            throw Error.missing(.downloadSpeed)
-        }
-        guard let uploaded = job.uploaded else {
-            throw Error.missing(.uploaded)
-        }
-        guard let downloaded = job.downloaded else {
-            throw Error.missing(.downloaded)
-        }
-        guard let size = job.size else {
-            throw Error.missing(.size)
-        }
-        guard let eta = job.eta else {
-            throw Error.missing(.eta)
-        }
-        self.name = name
+        self.name = job.name ?? ""
         self.id = id
-        self.uploadSpeed = .init(bytes: uploadSpeed)
-        self.downloadSpeed = .init(bytes: downloadSpeed)
-        self.uploaded = .init(bytes: uploaded)
-        self.downloaded = .init(bytes: downloaded)
-        self.size = Size(bytes: size)
+        self.uploadSpeed = .init(
+            bytes: job.uploadSpeed ?? .zero
+        )
+        self.downloadSpeed = .init(
+            bytes: job.downloadSpeed ?? .zero
+        )
+        self.uploaded = .init(
+            bytes: job.uploaded ?? .zero
+        )
+        self.downloaded = .init(
+            bytes: job.downloaded ?? .zero
+        )
+        self.size = Size(bytes: job.size ?? .zero)
         self.status = statusDescriptor
-        self.eta = .init(eta)
-        self.ratio = .init(downloaded: downloaded, uploaded: uploaded)
+        self.eta = .init(
+            job.eta ?? -1
+        )
+        self.ratio = .init(
+            downloaded: downloaded.bytes,
+            uploaded: uploaded.bytes
+        )
         self.additional = job.fields
         self.additionalDictionary = Dictionary(job.fields.map { ($0.name, $0) }, uniquingKeysWith: { $1 })
     }

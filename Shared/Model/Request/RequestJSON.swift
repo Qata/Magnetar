@@ -6,6 +6,7 @@
 //
 
 import MonadicJSON
+import Foundation
 
 indirect enum RequestJSON: Hashable, Codable {
     enum Field: Hashable, Codable {
@@ -59,8 +60,16 @@ extension RequestJSON: RequestParameterContainer {
         .string(string)
     }
 
-    func resolve(array: [String]) -> Value {
+    func resolve(array: [String], separator _: String?) -> Value {
         .array(array.map(JSON.string))
+    }
+    
+    func resolve(bool: Bool) -> JSON {
+        .bool(bool)
+    }
+
+    func resolve(data: Data, name: RequestFileName) -> JSON {
+        fatalError("Bytes cannot be encoded to JSON")
     }
 
     func promote(_ value: Value?) -> Resolved {

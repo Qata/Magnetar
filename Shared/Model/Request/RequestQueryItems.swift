@@ -5,6 +5,8 @@
 //  Created by Charles Maria Tor on 16/9/2022.
 //
 
+import Foundation
+
 struct RequestQueryItems: Hashable, Codable {
     struct QueryItem: Hashable, Codable {
         enum QueryValue: Hashable, Codable, ExpressibleByStringLiteral, ExpressibleByNilLiteral {
@@ -58,15 +60,23 @@ extension RequestQueryItems.QueryItem: RequestParameterContainer {
     typealias Value = String
     typealias Resolved = QueryItem
 
-    func promote(_ value: String?) -> QueryItem {
+    func promote(_ value: String?) -> Resolved {
         QueryItem(name: name, value: value)
     }
 
     func resolve(string: String) -> Value {
         string
     }
+    
+    func resolve(bool: Bool) -> String {
+        bool.description
+    }
+    
+    func resolve(data: Data, name: RequestFileName) -> Value {
+        fatalError("Bytes cannot be encoded to a query item")
+    }
 
-    func resolve(array: [String]) -> String {
-        array.joined(separator: ",")
+    func resolve(array: [String], separator: String?) -> Value {
+        array.joined(separator: separator ?? ",")
     }
 }

@@ -53,41 +53,11 @@ extension APIDescriptor {
     }
 }
 
-struct RequestMultipartFormData: Codable, Hashable {
-    struct Field: Codable, Hashable {
-        var name: String
-        var value: RequestParameter
-        var mimeType: String?
-    }
-    var fields: [Field]
-
-    func resolve(command: Command, server: Server, request: inout URLRequest) {
-        fields.reduce(into: MultipartFormData()) { formData, field in
-            
-        }
-    }
-}
-
-//extension RequestMultipartFormData.Field: RequestParameterContainer {
-//    enum Value: Codable, Hashable {
-//        case data(Data)
-//        case string(String)
-//    }
-//
-//    func promote(_ value: Value?) -> Resolved {
-//        .init(name: name, value: value)
-//    }
-//
-//    func resolve(string: String) -> Value {
-//        .string(string)
-//    }
-//}
-
 struct Request: Codable, Hashable {
     enum Payload: Codable, Hashable {
         case jsonrpc(RequestJSON)
         case queryItems([RequestQueryItems.QueryItem])
-        case multipartForm(RequestMultipartFormData)
+        case multipartFormData(RequestMultipartFormData)
     }
     enum Method: Codable, Hashable {
         case get
@@ -136,8 +106,9 @@ struct Request: Codable, Hashable {
             return request
         case let .post(payload):
             switch payload {
-            case let .multipartForm(multipartFormData):
-                fatalError()
+            case let .multipartFormData(multipartFormData):
+                multipartFormData
+                    .resolve(command: command, server: server, request: &request)
             case let .queryItems(queryItems):
                 request.httpBody = RequestQueryItems(queryItems: queryItems)
                     .resolve(command: command, server: server)

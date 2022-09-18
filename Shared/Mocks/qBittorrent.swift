@@ -10,6 +10,12 @@ import Foundation
 let qBittorrentAPI = APIDescriptor(
     name: "qBittorrent v2.8.3",
     endpoint: .init(path: ["api", "v2"]),
+    supportedURIs: [
+        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
+    ],
+    supportedFilePathExtensions: [
+        .init(value: "torrent", encoding: .bencoding),
+    ],
     authentication: [
         .password(invalidCodes: [403])
     ],
@@ -25,6 +31,129 @@ let qBittorrentAPI = APIDescriptor(
         ]
     ),
     commands: [
+        .start: .init(
+            request: .init(
+                method: .post(
+                    payload: .queryItems([
+                        .init(
+                            name: "hashes",
+                            value: .parameter(
+                                .forEach(.id, separator: "|")
+                            )
+                        )
+                    ])
+                ),
+                relativeEndpoint: .init(
+                    path: ["torrents", "resume"]
+                )
+            )
+        ),
+        .pause: .init(
+            request: .init(
+                method: .post(
+                    payload: .queryItems([
+                        .init(
+                            name: "hashes",
+                            value: .parameter(
+                                .forEach(.id, separator: "|")
+                            )
+                        )
+                    ])
+                ),
+                relativeEndpoint: .init(
+                    path: ["torrents", "pause"]
+                )
+            )
+        ),
+        .remove: .init(
+            request: .init(
+                method: .post(
+                    payload: .queryItems([
+                        .init(
+                            name: "hashes",
+                            value: .parameter(
+                                .forEach(.id, separator: "|")
+                            )
+                        ),
+                        .init(
+                            name: "deleteFiles",
+                            value: .parameter(
+                                .bool(false)
+                            )
+                        )
+                    ])
+                ),
+                relativeEndpoint: .init(path: ["torrents", "delete"])
+            )
+        ),
+        .deleteData: .init(
+            request: .init(
+                method: .post(
+                    payload: .queryItems([
+                        .init(
+                            name: "hashes",
+                            value: .parameter(
+                                .forEach(.id, separator: "|")
+                            )
+                        ),
+                        .init(
+                            name: "deleteFiles",
+                            value: .parameter(
+                                .bool(true)
+                            )
+                        )
+                    ])
+                ),
+                relativeEndpoint: .init(path: ["torrents", "delete"])
+            )
+        ),
+        .addURI: .init(
+            request: .init(
+                method: .post(
+                    payload: .multipartFormData(
+                        .init(
+                            fields: [
+                                .init(
+                                    name: "savepath",
+                                    value: .location
+                                ),
+                                .init(
+                                    name: "urls",
+                                    value: .uri
+                                ),
+                            ]
+                        )
+                    )
+                ),
+                relativeEndpoint: .init(path: ["torrents", "add"])
+            )
+        ),
+        .addFile: .init(
+            request: .init(
+                method: .post(
+                    payload: .multipartFormData(
+                        .init(
+                            fields: [
+                                .init(
+                                    name: "savepath",
+                                    value: .location
+                                ),
+                                .init(
+                                    name: "torrents",
+                                    value: .file(
+                                        .data(
+                                            fileName: .random(extension: "torrent")
+                                        )
+                                    ),
+                                    mimeType: "application/x-bittorrent"
+                                ),
+                            ]
+                        )
+                    )
+                ),
+                relativeEndpoint: .init(path: ["torrents", "add"])
+            )
+        ),
         .requestToken: .init(
             request: .init(
                 method: .post(
@@ -46,8 +175,9 @@ let qBittorrentAPI = APIDescriptor(
                         "eta": .field(.preset(.eta)),
                         "hash": .field(.preset(.id)),
                         "name": .field(.preset(.name)),
+                        "save_path": .field(.adHoc(.init(name: "Location", type: .string))),
                         "state": .field(.preset(.status)),
-                        "total_size": .field(.preset(.size)),
+                        "size": .field(.preset(.size)),
                         "uploaded": .field(.preset(.uploaded)),
                         "upspeed": .field(.preset(.uploadSpeed)),
                     ])
@@ -70,6 +200,7 @@ let qBittorrentServer = Server(
     password: "adminadmin",
     port: 8080,
     name: "qBit",
+    downloadDirectories: ["/Users/charlie/Videos"],
     api: qBittorrentAPI,
     lastSeen: .init(underlying: nil)
 )

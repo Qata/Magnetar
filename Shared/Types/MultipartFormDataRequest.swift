@@ -26,18 +26,19 @@ struct MultipartFormData {
         ].joined()
     }
 
-    mutating func add(field name: String, data: Data, mimeType: String) {
-        httpBody.append(dataFormField(named: name, data: data, mimeType: mimeType))
+    mutating func add(field name: String, data: Data, mimeType: String, fileName: String?) {
+        httpBody.append(dataFormField(named: name, data: data, mimeType: mimeType, fileName: fileName))
     }
 
     private func dataFormField(
         named name: String,
         data: Data,
-        mimeType: String
+        mimeType: String,
+        fileName: String?
     ) -> Data {
         var fieldData = Data()
         fieldData.append("--\(boundary)\r\n")
-        fieldData.append("Content-Disposition: form-data; name=\"\(name)\"\r\n")
+        fieldData.append("Content-Disposition: form-data; name=\"\(name)\"\(fileName.map { "; filename=\"\($0)\"" } ?? "")\r\n")
         fieldData.append("Content-Type: \(mimeType)\r\n")
         fieldData.append("\r\n")
         fieldData.append(data)
@@ -49,6 +50,7 @@ struct MultipartFormData {
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpBody = httpBody.appending("--\(boundary)--")
+        print("+++\(String(data: request.httpBody!, encoding: .ascii))")
     }
 }
 

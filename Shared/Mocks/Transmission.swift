@@ -19,7 +19,10 @@ let transmissionAPI = APIDescriptor(
     authentication: [
         .password(invalidCodes: [401]),
         .token(
-            .header(field: "X-Transmission-Session-Id", code: 409)
+            .header(
+                field: "X-Transmission-Session-Id",
+                code: 409
+            )
         )
     ],
     jobs: .init(
@@ -35,7 +38,6 @@ let transmissionAPI = APIDescriptor(
     ),
     commands: [
         .requestToken: .init(
-            expected: .json(.object([:])),
             request: .init(
                 method: .post(
                     payload: .jsonrpc(
@@ -45,11 +47,6 @@ let transmissionAPI = APIDescriptor(
             )
         ),
         .start: .init(
-            expected: .json(
-                .object([
-                    "arguments": .object([:])
-                ])
-            ),
             request: .init(
                 method: .post(
                     payload: .jsonrpc(
@@ -64,9 +61,6 @@ let transmissionAPI = APIDescriptor(
             )
         ),
         .stop: .init(
-            expected: .json(.object([
-                "arguments": .object([:])
-            ])),
             request: .init(
                 method: .post(
                     payload: .jsonrpc(
@@ -81,9 +75,6 @@ let transmissionAPI = APIDescriptor(
             )
         ),
         .remove: .init(
-            expected: .json(.object([
-                "arguments": .object([:])
-            ])),
             request: .init(
                 method: .post(
                     payload: .jsonrpc(
@@ -98,9 +89,6 @@ let transmissionAPI = APIDescriptor(
             )
         ),
         .deleteData: .init(
-            expected: .json(.object([
-                "arguments": .object([:])
-            ])),
             request: .init(
                 method: .post(
                     payload: .jsonrpc(
