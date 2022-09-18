@@ -144,6 +144,10 @@
 		CB91362028D41B6A0034E67F /* Transmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91361E28D41B6A0034E67F /* Transmission.swift */; };
 		CB91362228D41B9D0034E67F /* qBittorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362128D41B9D0034E67F /* qBittorrent.swift */; };
 		CB91362328D41B9D0034E67F /* qBittorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362128D41B9D0034E67F /* qBittorrent.swift */; };
+		CB91362628D6CE6A0034E67F /* QueryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362528D6CE6A0034E67F /* QueryItem.swift */; };
+		CB91362728D6CE6A0034E67F /* QueryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362528D6CE6A0034E67F /* QueryItem.swift */; };
+		CB91362928D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */; };
+		CB91362A28D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */; };
 		CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E7727B791D600CA93E6 /* KeychainAccess */; };
 		CB9F9E7D27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */; };
 		CB9F9E7E27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */; };
@@ -280,6 +284,8 @@
 		CB91361A28D410ED0034E67F /* URLDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDescriptor.swift; sourceTree = "<group>"; };
 		CB91361E28D41B6A0034E67F /* Transmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transmission.swift; sourceTree = "<group>"; };
 		CB91362128D41B9D0034E67F /* qBittorrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qBittorrent.swift; sourceTree = "<group>"; };
+		CB91362528D6CE6A0034E67F /* QueryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryItem.swift; sourceTree = "<group>"; };
+		CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataRequest.swift; sourceTree = "<group>"; };
 		CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.Label.swift; sourceTree = "<group>"; };
 		CB9F9E7F27BC89A500CA93E6 /* SwiftUI.NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.NavigationLink.swift; sourceTree = "<group>"; };
 		CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.Publisher.swift; sourceTree = "<group>"; };
@@ -514,6 +520,7 @@
 				CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */,
 				CB6B0F5427B253DC009CE0B5 /* Function.swift */,
 				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
+				CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */,
 				CBBF938D27B34A5A0060CB06 /* Operators.swift */,
 				CB66B88227BF7AA000C2A62F /* Regex.swift */,
 				CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */,
@@ -552,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */,
+				CB91362528D6CE6A0034E67F /* QueryItem.swift */,
 				CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */,
 				CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */,
 				CB6B0F9027B253F2009CE0B5 /* Server.swift */,
@@ -802,7 +810,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					CB6B0EE227B25225009CE0B5 = {
 						CreatedOnToolsVersion = 13.1;
@@ -943,6 +951,7 @@
 				CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
+				CB91362928D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
 				CB91361F28D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
@@ -987,6 +996,7 @@
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
+				CB91362628D6CE6A0034E67F /* QueryItem.swift in Sources */,
 				CB9F9E8627BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
 				CBADD62728CEEB1000B0C6EA /* SettingsView.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
@@ -1046,6 +1056,7 @@
 				CB6B0F6427B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB9F9E7E27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */,
 				CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */,
+				CB91362A28D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CBADD61D28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
@@ -1081,6 +1092,7 @@
 				CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
+				CB91362728D6CE6A0034E67F /* QueryItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1152,6 +1164,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1211,6 +1224,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1300,6 +1314,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1329,6 +1344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1406,6 +1422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1431,6 +1448,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -19,4 +19,10 @@ extension StringProtocol {
         .joined(separator: ".")
         .lowercased()
     }
+
+    var urlEncoded: String? {
+        addingPercentEncoding(
+            withAllowedCharacters: .alphanumerics.union(CharacterSet(charactersIn: "~-_."))
+        )
+    }
 }

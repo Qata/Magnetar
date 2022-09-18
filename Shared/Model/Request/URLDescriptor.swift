@@ -29,7 +29,7 @@ struct RequestEndpoint: Codable, Hashable {
         )
     }
     
-    func resolve(command: Command) -> EndpointDescriptor {
+    func resolve(command: Command, server: Server) -> EndpointDescriptor {
         var ids: [String] = command.ids.reversed()
         return .init(
             path: path.map {
@@ -37,7 +37,12 @@ struct RequestEndpoint: Codable, Hashable {
                 case let .component(component):
                     return component
                 case let .parameter(parameter):
-                    return $0.resolve(parameter: parameter, command: command, ids: &ids)
+                    return $0.resolve(
+                        parameter: parameter,
+                        command: command,
+                        server: server,
+                        ids: &ids
+                    )
                 }
             },
             queryItems: queryItems?.queryItems.map { item -> Magnetar.QueryItem in
@@ -45,7 +50,12 @@ struct RequestEndpoint: Codable, Hashable {
                 case let .value(value):
                     return .init(name: item.name, value: value)
                 case let .parameter(parameter):
-                    return item.resolve(parameter: parameter, command: command, ids: &ids)
+                    return item.resolve(
+                        parameter: parameter,
+                        command: command,
+                        server: server,
+                        ids: &ids
+                    )
                 }
             }
         )
@@ -58,6 +68,10 @@ extension RequestEndpoint.Path: RequestParameterContainer {
     
     func resolve(array: [String]) -> String {
         array.joined(separator: ",")
+    }
+    
+    func resolve(string: String) -> String {
+        string
     }
 
     func promote(_ value: String?) -> String {

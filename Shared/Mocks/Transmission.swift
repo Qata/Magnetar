@@ -19,15 +19,7 @@ let transmissionAPI = APIDescriptor(
     authentication: [
         .password(invalidCodes: [401]),
         .token(
-            .header(
-                field: "X-Transmission-Session-Id",
-                code: 409,
-                request: .post(
-                    payload: .jsonrpc(
-                        .object(["method": .string("port-test")])
-                    )
-                )
-            )
+            .header(field: "X-Transmission-Session-Id", code: 409)
         )
     ],
     jobs: .init(
@@ -42,20 +34,32 @@ let transmissionAPI = APIDescriptor(
         ]
     ),
     commands: [
+        .requestToken: .init(
+            expected: .json(.object([:])),
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object(["method": .string("port-test")])
+                    )
+                )
+            )
+        ),
         .start: .init(
             expected: .json(
                 .object([
                     "arguments": .object([:])
                 ])
             ),
-            request: .post(
-                payload: .jsonrpc(
-                    .object([
-                        "method": .string("torrent-start-now"),
-                        "arguments": .object([
-                            "ids": .parameter(.forEach(.id))
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object([
+                            "method": .string("torrent-start-now"),
+                            "arguments": .object([
+                                "ids": .parameter(.forEach(.id))
+                            ])
                         ])
-                    ])
+                    )
                 )
             )
         ),
@@ -63,14 +67,16 @@ let transmissionAPI = APIDescriptor(
             expected: .json(.object([
                 "arguments": .object([:])
             ])),
-            request: .post(
-                payload: .jsonrpc(
-                    .object([
-                        "method": .string("torrent-stop"),
-                        "arguments": .object([
-                            "ids": .parameter(.forEach(.id))
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object([
+                            "method": .string("torrent-stop"),
+                            "arguments": .object([
+                                "ids": .parameter(.forEach(.id))
+                            ])
                         ])
-                    ])
+                    )
                 )
             )
         ),
@@ -78,14 +84,16 @@ let transmissionAPI = APIDescriptor(
             expected: .json(.object([
                 "arguments": .object([:])
             ])),
-            request: .post(
-                payload: .jsonrpc(
-                    .object([
-                        "method": .string("torrent-remove"),
-                        "arguments": .object([
-                            "ids": .parameter(.forEach(.id))
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object([
+                            "method": .string("torrent-remove"),
+                            "arguments": .object([
+                                "ids": .parameter(.forEach(.id))
+                            ])
                         ])
-                    ])
+                    )
                 )
             )
         ),
@@ -93,15 +101,17 @@ let transmissionAPI = APIDescriptor(
             expected: .json(.object([
                 "arguments": .object([:])
             ])),
-            request: .post(
-                payload: .jsonrpc(
-                    .object([
-                        "method": .string("torrent-remove"),
-                        "arguments": .object([
-                            "ids": .parameter(.forEach(.id)),
-                            "delete-local-data": .bool(true)
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object([
+                            "method": .string("torrent-remove"),
+                            "arguments": .object([
+                                "ids": .parameter(.forEach(.id)),
+                                "delete-local-data": .bool(true)
+                            ])
                         ])
-                    ])
+                    )
                 )
             )
         ),
@@ -130,32 +140,34 @@ let transmissionAPI = APIDescriptor(
                     ])
                 ])
             ])),
-            request: .post(
-                payload: .jsonrpc(
-                    .object([
-                        "method": .string("torrent-get"),
-                        "arguments": .object([
-                            "ids": .parameter(.forEach(.id)),
-                            "fields": .array([
-                                .string("hashString"),
-                                .string("name"),
-                                .string("status"),
-                                .string("rateUpload"),
-                                .string("rateDownload"),
-                                .string("uploadedEver"),
-                                .string("downloadedEver"),
-                                .string("sizeWhenDone"),
-                                .string("eta"),
-                                .string("errorString"),
-                                .string("addedDate"),
-                                .string("doneDate"),
-                                .string("downloadDir"),
-                                .string("isStalled"),
-                                .string("queuePosition"),
-                                .string("comment"),
+            request: .init(
+                method: .post(
+                    payload: .jsonrpc(
+                        .object([
+                            "method": .string("torrent-get"),
+                            "arguments": .object([
+                                "ids": .parameter(.forEach(.id)),
+                                "fields": .array([
+                                    .string("hashString"),
+                                    .string("name"),
+                                    .string("status"),
+                                    .string("rateUpload"),
+                                    .string("rateDownload"),
+                                    .string("uploadedEver"),
+                                    .string("downloadedEver"),
+                                    .string("sizeWhenDone"),
+                                    .string("eta"),
+                                    .string("errorString"),
+                                    .string("addedDate"),
+                                    .string("doneDate"),
+                                    .string("downloadDir"),
+                                    .string("isStalled"),
+                                    .string("queuePosition"),
+                                    .string("comment"),
+                                ])
                             ])
                         ])
-                    ])
+                    )
                 )
             )
         ),
@@ -163,7 +175,7 @@ let transmissionAPI = APIDescriptor(
             expected: .json(.object([
                 "result": .string("success")
             ])),
-            request: .post(
+            request: .init(method: .post(
                 payload: .jsonrpc(
                     .object([
                         "method": .string("torrent-add"),
@@ -173,13 +185,13 @@ let transmissionAPI = APIDescriptor(
                         ])
                     ])
                 )
-            )
+            ))
         ),
         .addFile: .init(
             expected: .json(.object([
                 "result": .string("success")
             ])),
-            request: .post(
+            request: .init(method: .post(
                 payload: .jsonrpc(
                     .object([
                         "method": .string("torrent-add"),
@@ -189,7 +201,7 @@ let transmissionAPI = APIDescriptor(
                         ])
                     ])
                 )
-            )
+            ))
         )
     ]
 )

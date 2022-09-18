@@ -100,16 +100,21 @@ extension Publisher where Output == Global.State, Failure == Never {
                 )
             case let .token(token):
                 switch token {
-                case let .header(field, code, _):
+                case let .header(field, code):
+                    // The request was missing its header token.
                     return .success(
                         (response.statusCode == code).if(
-                            true: [
-                                response
-                                    .value(forHTTPHeaderField: field)
-                                    .map { .sync(.set(.token($0))) }
-                                ?? .async(.command(.requestToken(andThen: actionCommand))),
-                                .async(.command(actionCommand))
-                            ]
+                            true: response
+                                .value(forHTTPHeaderField: field)
+                                .map {
+                                    [
+                                        // If it was returned by the request, set the token and try again.
+                                        .sync(.set(.token($0))),
+                                        .async(.command(actionCommand))
+                                    ]
+                                }
+                            // Otherwise, request it and try again.
+                            ?? [.async(.command(.requestToken(andThen: actionCommand)))]
                         )
                     )
                 }
@@ -144,6 +149,9 @@ extension Publisher where Output == Global.State, Failure == Never {
                             .eraseToAnyPublisher()
                     case let .right(response):
                         switch response.command.expected {
+                        case nil:
+                            return Empty(outputType: Action.self, failureType: AppError.self)
+                                .eraseToAnyPublisher()
                         case let .json(payload):
                             return JSONParser.parse(data: response.data)
                                 .publisher

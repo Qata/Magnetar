@@ -12,7 +12,6 @@ import Foundation
 extension Global {
     enum Reducer {
         static let main = Recombine.Reducer<Global.State, SyncAction, Global.Environment> { state, action, environment in
-            state.persistent.selectedServer?.url = URL(string: "http://192.168.20.21")!
             switch action {
             case let .create(action):
                 create(state: &state, action: action, environment: environment)

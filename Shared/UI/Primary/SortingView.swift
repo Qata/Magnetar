@@ -49,7 +49,9 @@ extension SortingView {
         var body: some View {
             OptionalStoreView {
                 $0.persistent.selectedServer?
-                    .api.commands[.fetch]?.expected
+                    .api
+                    .commands[.fetch]?
+                    .expected?
                     .adHocFields
                     .map(Job.Field.Descriptor.adHoc)
             } content: { fields, _ in

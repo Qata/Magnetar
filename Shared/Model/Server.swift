@@ -14,7 +14,6 @@ struct Server: Hashable, Codable {
     var user: String?
     var password: String?
     var token: String?
-    var sessionName: String?
     var port: UInt16
     var name: String
     var downloadDirectories: [String] = []

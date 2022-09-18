@@ -10,8 +10,8 @@ import Combine
 
 enum Command: Hashable {
     struct Descriptor: Codable, Hashable {
-        let expected: Payload
-        let request: Request
+        var expected: Payload? = nil
+        var request: Request
     }
     
     enum Discriminator: String, Codable, Hashable, CustomStringConvertible {
@@ -135,14 +135,12 @@ extension Payload {
     var adHocFields: [Job.Field.Descriptor.AdHocField] {
         var fields = [Job.Field.Descriptor.AdHocField]()
         
-        func recurse(expected: Payload.Expected) {
+        func recurse(expected: Payload.JSON) {
             switch expected {
             case let .object(expected):
                 expected.values.forEach(recurse)
             case let .array(expected):
                 expected.forEach(recurse)
-            case .string:
-                break
             case let .field(field):
                 switch field {
                 case .preset:
@@ -154,6 +152,8 @@ extension Payload {
                 }
             case let .forEach(expected):
                 expected.forEach(recurse)
+            case .string, .bool, .token:
+                break
             }
         }
         switch self {

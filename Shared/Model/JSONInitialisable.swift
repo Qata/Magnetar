@@ -8,16 +8,16 @@
 import MonadicJSON
 
 protocol JSONInitialisable {
-    init(from json: JSON, against expected: Payload.Expected, context: APIDescriptor) throws
+    init(from json: JSON, against expected: Payload.JSON, context: APIDescriptor) throws
 }
 
 extension Array: JSONInitialisable where Element: JSONInitialisable {
-    init(from json: JSON, against expected: Payload.Expected, context: APIDescriptor) throws {
-        func recurse(json: JSON, against expected: Payload.Expected) throws -> [Element] {
+    init(from json: JSON, against expected: Payload.JSON, context: APIDescriptor) throws {
+        func recurse(json: JSON, against expected: Payload.JSON) throws -> [Element] {
             switch (json, expected) {
             case let (.object(json), .object(expected)):
                 return try expected
-                    .compactMap { key, value -> (JSON, Payload.Expected)? in
+                    .compactMap { key, value -> (JSON, Payload.JSON)? in
                         Optional.zip(json[key], value)
                     }
                     .flatMap(recurse(json:against:))

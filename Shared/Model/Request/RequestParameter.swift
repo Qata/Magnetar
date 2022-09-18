@@ -14,6 +14,9 @@ enum RequestParameter: Hashable, Codable {
     enum FileEncoding: Hashable, Codable {
         case base64
     }
+    case username
+    case password
+    case token
     case uri
     case location
     case file(FileEncoding)
@@ -24,27 +27,21 @@ enum RequestParameter: Hashable, Codable {
 protocol RequestParameterContainer {
     associatedtype Value
     associatedtype Resolved
-    
+
     func promote(_ value: Value?) -> Resolved
     func resolve(string: String) -> Value
     func resolve(array: [String]) -> Value
 }
 
-extension RequestParameterContainer where Value == String {
-    func resolve(string: String) -> Value {
-        string
-    }
-}
-
-extension RequestParameterContainer where Resolved == Value? {
-    func promote(_ value: Value?) -> Resolved {
-        value
-    }
-}
-
 extension RequestParameterContainer {
-    func resolve(parameter: RequestParameter, command: Command, ids: inout [String]) -> Resolved {
+    func resolve(parameter: RequestParameter, command: Command, server: Server, ids: inout [String]) -> Resolved {
         switch parameter {
+        case .username:
+            return promote(server.user.map(resolve(string:)))
+        case .password:
+            return promote(server.password.map(resolve(string:)))
+        case .token:
+            return promote(server.token.map(resolve(string:)))
         case .uri:
             return promote(command.uri.map(resolve(string:)))
         case .location:

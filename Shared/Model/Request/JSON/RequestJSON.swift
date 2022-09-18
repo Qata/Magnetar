@@ -22,7 +22,7 @@ indirect enum RequestJSON: Hashable, Codable {
     case array([Self])
     case parameter(RequestParameter)
 
-    func resolve(command: Command) -> JSON {
+    func resolve(command: Command, server: Server) -> JSON {
         var ids: [String] = command.ids.reversed()
         func recurse(json: RequestJSON) -> JSON? {
             switch json {
@@ -39,7 +39,12 @@ indirect enum RequestJSON: Hashable, Codable {
             case .null:
                 return .null
             case let .parameter(parameter):
-                return resolve(parameter: parameter, command: command, ids: &ids)
+                return resolve(
+                    parameter: parameter,
+                    command: command,
+                    server: server,
+                    ids: &ids
+                )
             }
         }
         return recurse(json: self) ?? .null
@@ -56,5 +61,9 @@ extension RequestJSON: RequestParameterContainer {
 
     func resolve(array: [String]) -> Value {
         .array(array.map(JSON.string))
+    }
+
+    func promote(_ value: Value?) -> Resolved {
+        value
     }
 }

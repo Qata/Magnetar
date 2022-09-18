@@ -111,7 +111,7 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
                 return addJob(.uri, url)
             case let .pathExtension(pathExtension) where pathExtension.value == url.pathExtension:
                 action = .cancel
-                return addJob(.uri, url)
+                return addJob(.file, url)
             default:
                 break
             }

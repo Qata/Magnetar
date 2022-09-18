@@ -152,7 +152,7 @@ struct JobListView: View {
                     }
                     .searchable(text: $searchText)
                     .disableAutocorrection(true)
-                    .refreshable(action: { dispatch(async: .command(.fetch(.all))) })
+                    .refreshable(action: { dispatch(async: .start) })
                     .listStyle(.plain)
                     .modifier(JobsListTopBar(jobs: filteredJobs))
                 }

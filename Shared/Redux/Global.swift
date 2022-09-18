@@ -12,12 +12,12 @@ enum Global {
     static let keychain = Keychain(service: "com.Qata.Magnetar")
     static let store = MainStore(
         state: .init(
-            persistent: Global.keychain[data: "persistent"].flatMap { try? JSONDecoder().decode(State.PersistentState.self, from: $0) } ??
+            persistent: //Global.keychain[data: "persistent"].flatMap { try? JSONDecoder().decode(State.PersistentState.self, from: $0) } ??
                 .init(
                     queries: [],
-                    servers: [transmissionServer, transmissionServer2],
-                    apis: [transmissionAPI],
-                    selectedServer: transmissionServer
+                    servers: [transmissionServer, qBittorrentServer],
+                    apis: [transmissionAPI, qBittorrentAPI],
+                    selectedServer: qBittorrentServer
                 )
         ),
         reducer: Reducer.main,//.debugActions(actionFormat: .labelsOnly),

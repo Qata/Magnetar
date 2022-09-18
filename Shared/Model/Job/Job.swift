@@ -240,16 +240,16 @@ extension Job.Field {
 }
 
 extension Job.Raw: JSONInitialisable {
-    init(from json: JSON, against expected: Payload.Expected, context: APIDescriptor) throws {
-        func recurseObjects(json: [String: JSON], expected: [String: Payload.Expected]) throws {
+    init(from json: JSON, against expected: Payload.JSON, context: APIDescriptor) throws {
+        func recurseObjects(json: [String: JSON], expected: [String: Payload.JSON]) throws {
             try expected
-                .compactMap { key, value -> (JSON, Payload.Expected)? in
+                .compactMap { key, value -> (JSON, Payload.JSON)? in
                     Optional.zip(json[key], value)
                 }
                 .forEach(recurse)
         }
-        
-        func recurse(json: JSON, expected: Payload.Expected) throws {
+
+        func recurse(json: JSON, expected: Payload.JSON) throws {
             switch expected {
             case let .object(expected):
                 switch json {
@@ -261,6 +261,13 @@ extension Job.Raw: JSONInitialisable {
             case let .string(expected):
                 switch json {
                 case .string(expected):
+                    break
+                default:
+                    throw JSONParseError(json: json, expected: expected)
+                }
+            case let .bool(expected):
+                switch json {
+                case .bool(expected):
                     break
                 default:
                     throw JSONParseError(json: json, expected: expected)
@@ -306,6 +313,8 @@ extension Job.Raw: JSONInitialisable {
                     }
                 }
             case .forEach:
+                break
+            case .token:
                 break
             }
         }

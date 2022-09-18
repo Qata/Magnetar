@@ -73,12 +73,12 @@ extension Global {
                         .map { _ in () }
                 }
                 .switchToLatest()
-//                .drop(
-//                    untilOutputFrom: store.actions.sync.middleware.post
-//                        .first(matching: /Action.Sync.set..Action.Sync.Set.token)
-//                )
-                .prepend(())
+                .drop(
+                    untilOutputFrom: store.actions.sync.middleware.post
+                        .first(matching: /Action.Sync.set..Action.Sync.Set.jobs)
+                )
                 .map { .async(.command(.fetch(.all))) }
+                .prepend(.async(.command(.requestToken(andThen: .fetch(.all)))))
                 .prefix(
                     // Cancel if `start` is run again.
                     untilOutputFrom: store.actions.async.all
@@ -98,10 +98,11 @@ extension Global {
                 .eraseToAnyPublisher()
         case let .command(command):
             switch command {
-            case let .requestToken(andThen: command):
+            case let .requestToken(andThen: nextCommand):
                 return state
                     .query(command: command)
                     .flatMap { $0.left.publisher.flatMap(\.actions.publisher) }
+                    .append(.async(.command(nextCommand)))
                     .liftError()
             case let .fetch(ids):
                 return state.server
@@ -150,7 +151,7 @@ extension Global {
                     .append(.async(.command(.fetch(.some(command.ids)))))
                     .append(
                         Just(.async(.command(.fetch(.some(command.ids)))))
-                            .delay(for: 0.5, scheduler: DispatchQueue.main)
+                            .delay(for: 0.5, scheduler: DispatchQueue.global())
                             .setFailureType(to: AppError.self)
                     )
                     .liftError()

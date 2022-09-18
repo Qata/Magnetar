@@ -47,59 +47,73 @@ extension APIDescriptor {
             case xml
             case newLineSeparated
         }
-        
+
         var value: String
         var encoding: Encoding?
     }
 }
 
-struct QueryItem: Codable, Hashable, CustomStringConvertible {
-    var name: String
-    var value: String?
-    
-    var description: String {
-        "\(name)=\(value ?? "")"
+struct RequestMultipartFormData: Codable, Hashable {
+    struct Field: Codable, Hashable {
+        var name: String
+        var value: RequestParameter
+        var mimeType: String?
+    }
+    var fields: [Field]
+
+    func resolve(command: Command, server: Server, request: inout URLRequest) {
+        fields.reduce(into: MultipartFormData()) { formData, field in
+            
+        }
     }
 }
 
-enum Request: Codable, Hashable {
+//extension RequestMultipartFormData.Field: RequestParameterContainer {
+//    enum Value: Codable, Hashable {
+//        case data(Data)
+//        case string(String)
+//    }
+//
+//    func promote(_ value: Value?) -> Resolved {
+//        .init(name: name, value: value)
+//    }
+//
+//    func resolve(string: String) -> Value {
+//        .string(string)
+//    }
+//}
+
+struct Request: Codable, Hashable {
     enum Payload: Codable, Hashable {
         case jsonrpc(RequestJSON)
-//        case queryItems(RequestQueryItems)
+        case queryItems([RequestQueryItems.QueryItem])
+        case multipartForm(RequestMultipartFormData)
     }
-    case post(
-        relativeEndpoint: RequestEndpoint = .init(path: []),
-        payload: Payload
-    )
-    case get(
-        relativeEndpoint: RequestEndpoint = .init(path: [])
-    )
-
-    var method: String {
-        switch self {
-        case .post:
-            return "POST"
-        case .get:
-            return "GET"
+    enum Method: Codable, Hashable {
+        case get
+        case post(payload: Payload)
+        
+        var method: String {
+            switch self {
+            case .post:
+                return "POST"
+            case .get:
+                return "GET"
+            }
         }
     }
+    var method: Method
+    var relativeEndpoint: RequestEndpoint = .init(path: [])
 
     func urlRequest(for server: Server, command: Command) -> URLRequest {
-        let url = server.url
-        let port = server.port
-        switch self {
-        case let .get(relativeEndpoint):
+        func constructRequest() -> URLRequest {
+            let url = server.url
+            let port = server.port
             let endpoint = server.api.endpoint
                 .appending(relativeEndpoint)
-                .resolve(command: command)
+                .resolve(command: command, server: server)
             var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-            components?.queryItems = endpoint.queryItems.map {
-                $0.map {
-                    URLQueryItem(name: $0.name, value: $0.value)
-                }
-            }
-            components?.user = server.user
-            components?.password = server.password
+            components?.queryItems = endpoint.queryItems?.asURLQueryItems()
             components?.port = numericCast(port)
             var request = URLRequest(
                 url: endpoint.path.reduce(into: components!.url!) {
@@ -107,64 +121,59 @@ enum Request: Codable, Hashable {
                 },
                 cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
             )
-            if server.token != nil, let field = server.api.authentication.firstNonNil(\.headerField) {
-                request.setValue(server.token, forHTTPHeaderField: field)
+            if let token = server.token,
+                let field = server.api.authentication.firstNonNil(\.headerField)
+            {
+                request.setValue(token, forHTTPHeaderField: field)
             }
-            request.httpMethod = method
+            request.httpMethod = method.method
             request.timeoutInterval = server.timeoutInterval
-//                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
             return request
-        case let .post(relativeEndpoint, payload):
+        }
+        var request = constructRequest()
+        switch method {
+        case .get:
+            return request
+        case let .post(payload):
             switch payload {
-//            case let .queryItems(queryItems):
-//
-            case let .jsonrpc(payload):
-                let endpoint = server.api.endpoint
-                    .appending(relativeEndpoint)
-                    .resolve(command: command)
-                var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-                components?.queryItems = endpoint.queryItems.map {
-                    $0.map {
-                        URLQueryItem(name: $0.name, value: $0.value)
+            case let .multipartForm(multipartFormData):
+                fatalError()
+            case let .queryItems(queryItems):
+                request.httpBody = RequestQueryItems(queryItems: queryItems)
+                    .resolve(command: command, server: server)
+                    .compactMap { item in
+                        item.name.urlEncoded.map {
+                            ($0, item.value?.urlEncoded)
+                        }
                     }
-                }
-                components?.user = server.user
-                components?.password = server.password
-                components?.port = numericCast(port)
-                var request = URLRequest(
-                    url: endpoint.path.reduce(into: components!.url!) {
-                        $0.appendPathComponent($1)
-                    },
-                    cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
-                )
-                if server.token != nil, let field = server.api.authentication.firstNonNil(\.headerField) {
-                    request.setValue(server.token, forHTTPHeaderField: field)
-                }
+                    .map { "\($0)=\($1 ?? "")" }
+                    .map(\.description)
+                    .joined(separator: "&")
+                    .data(using: .utf8)
+                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
+            case let .jsonrpc(payload):
                 request.httpBody = try! JSONEncoder().encode(
                     payload
-                        .resolve(command: command)
+                        .resolve(command: command, server: server)
                         .encodable()
                 )
-                request.httpMethod = method
-                request.timeoutInterval = server.timeoutInterval
 //                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
-                return request
             }
         }
+        return request
     }
 }
 
 enum Authentication: Codable, Hashable {
     enum Token: Codable, Hashable {
-        case header(field: String, code: Int, request: Request)
-        case queryItem(name: String, request: Request)
+        case header(field: String, code: Int)
     }
     case password(invalidCodes: [Int])
     case token(Token)
-    
+
     var headerField: String? {
         switch self {
-        case let .token(.header(field, _, _)):
+        case let .token(.header(field, _)):
             return field
         default:
             return nil

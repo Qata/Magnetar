@@ -15,7 +15,7 @@ struct SortingMenu: View {
     let fields = Global.store.state.persistent.selectedServer?
         .api
         .commands[.fetch]?
-        .expected
+        .expected?
         .adHocFields
         .map(Job.Field.Descriptor.adHoc)
     
@@ -52,7 +52,7 @@ struct SortingMenu: View {
             $0.persistent.selectedServer?
                 .api
                 .commands[.fetch]?
-                .expected
+                .expected?
                 .adHocFields
                 .map(Job.Field.Descriptor.adHoc)
         } content: { fields in
