@@ -62,17 +62,17 @@ extension Publisher where Output == Global.State, Failure == Never {
                     .replaceEmpty(with: .right(data))
                     .eraseToAnyPublisher()
             }
-            
+            let urlRequest = command.request.urlRequest(
+                for: server,
+                command: actionCommand
+            )
             return URLSession.shared
                 .dataTaskPublisher(
-                    for: command.request.urlRequest(
-                        for: server,
-                        command: actionCommand
-                    )
+                    for: urlRequest
                 )
-//                .handleEvents(receiveOutput: { data, _ in
-//                    Swift.print(":::\(String(data: data, encoding: .utf8)!)")
-//                })
+                .handleEvents(receiveOutput: { data, _ in
+                    Swift.print("+++\(urlRequest) \(String(data: data, encoding: .ascii)!)")
+                })
                 .mapError(AppError.urlError)
                 .flatMap { handleTask(data: $0, response: $1) }
                 .map {
@@ -148,6 +148,7 @@ extension Publisher where Output == Global.State, Failure == Never {
                             .setFailureType(to: AppError.self)
                             .eraseToAnyPublisher()
                     case let .right(response):
+                        Swift.print("+++\(actionCommand)\(String(data: response.data, encoding: .ascii)!)")
                         switch response.command.expected {
                         case nil:
                             return Empty(outputType: Action.self, failureType: AppError.self)

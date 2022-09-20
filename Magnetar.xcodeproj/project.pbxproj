@@ -307,6 +307,7 @@
 		CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryWebView.swift; sourceTree = "<group>"; };
 		CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.GeometryReader.swift; sourceTree = "<group>"; };
+		CBB8571B28D71BEA00B71D60 /* Magnetar--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Magnetar--iOS--Info.plist"; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
 		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
@@ -413,6 +414,7 @@
 		CB6B0ED627B25224009CE0B5 = {
 			isa = PBXGroup;
 			children = (
+				CBB8571B28D71BEA00B71D60 /* Magnetar--iOS--Info.plist */,
 				CB6B0EDB27B25224009CE0B5 /* Shared */,
 				CB6B0EEA27B25225009CE0B5 /* macOS */,
 				CB9F9E6427B78BE200CA93E6 /* Resources */,
@@ -1255,6 +1257,7 @@
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Magnetar--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1285,6 +1288,7 @@
 				DEVELOPMENT_TEAM = B52TY2Q6KY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Magnetar--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -31,6 +31,17 @@ let qBittorrentAPI = APIDescriptor(
         ]
     ),
     commands: [
+        .requestToken: .init(
+            request: .init(
+                method: .post(
+                    payload: .queryItems([
+                        .init(name: "username", value: .parameter(.username)),
+                        .init(name: "password", value: .parameter(.password)),
+                    ])
+                ),
+                relativeEndpoint: .init(path: ["auth", "login"])
+            )
+        ),
         .start: .init(
             request: .init(
                 method: .post(
@@ -113,14 +124,8 @@ let qBittorrentAPI = APIDescriptor(
                     payload: .multipartFormData(
                         .init(
                             fields: [
-                                .init(
-                                    name: "savepath",
-                                    value: .location
-                                ),
-                                .init(
-                                    name: "urls",
-                                    value: .uri
-                                ),
+                                .init(name: "savepath", value: .location),
+                                .init(name: "urls", value: .uri),
                             ]
                         )
                     )
@@ -134,17 +139,10 @@ let qBittorrentAPI = APIDescriptor(
                     payload: .multipartFormData(
                         .init(
                             fields: [
-                                .init(
-                                    name: "savepath",
-                                    value: .location
-                                ),
+                                .init(name: "savepath", value: .location),
                                 .init(
                                     name: "torrents",
-                                    value: .file(
-                                        .data(
-                                            fileName: .random(extension: "torrent")
-                                        )
-                                    ),
+                                    value: .file(.data(fileName: .random(extension: "torrent"))),
                                     mimeType: "application/x-bittorrent"
                                 ),
                             ]
@@ -152,17 +150,6 @@ let qBittorrentAPI = APIDescriptor(
                     )
                 ),
                 relativeEndpoint: .init(path: ["torrents", "add"])
-            )
-        ),
-        .requestToken: .init(
-            request: .init(
-                method: .post(
-                    payload: .queryItems([
-                        .init(name: "username", value: .parameter(.username)),
-                        .init(name: "password", value: .parameter(.password)),
-                    ])
-                ),
-                relativeEndpoint: .init(path: ["auth", "login"])
             )
         ),
         .fetch: .init(

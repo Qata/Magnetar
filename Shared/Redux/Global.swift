@@ -15,13 +15,13 @@ enum Global {
             persistent: //Global.keychain[data: "persistent"].flatMap { try? JSONDecoder().decode(State.PersistentState.self, from: $0) } ??
                 .init(
                     queries: [],
-                    servers: [transmissionServer, qBittorrentServer],
-                    apis: [transmissionAPI, qBittorrentAPI],
-                    selectedServer: qBittorrentServer
+                    servers: [transmissionServer, qBittorrentServer, synologyServer],
+                    apis: [transmissionAPI, qBittorrentAPI, synologyAPI],
+                    selectedServer: synologyServer
                 )
         ),
         reducer: Reducer.main,//.debugActions(actionFormat: .labelsOnly),
-        thunk: thunk.debug(actionFormat: .labelsOnly),
+        thunk: thunk.debug(actionFormat: .prettyPrint),
         environment: environment,
         publishOn: DispatchQueue.main
     )

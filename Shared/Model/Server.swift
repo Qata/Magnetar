@@ -20,7 +20,7 @@ struct Server: Hashable, Codable {
     var api: APIDescriptor
     var refreshInterval: TimeInterval = 2
     var timeoutInterval: TimeInterval = 2
-    var lastSeen: Unhashed<Date?>
+    var lastSeen: Unhashed<Date?> = .init(underlying: nil)
 
     var sorting: Sorting = .init()
     var filter: Set<Status> = []

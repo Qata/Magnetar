@@ -35,7 +35,6 @@ struct MagnetarApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-//                .environment(\.layoutDirection, .rightToLeft)
         }
     }
 }
