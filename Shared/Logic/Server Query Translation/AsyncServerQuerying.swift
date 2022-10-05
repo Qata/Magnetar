@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import MonadicJSON
+import Overture
 
 enum QueryResult {
     struct Success {
@@ -62,19 +63,24 @@ extension Publisher where Output == Global.State, Failure == Never {
                     .replaceEmpty(with: .right(data))
                     .eraseToAnyPublisher()
             }
+
             let urlRequest = command.request.urlRequest(
                 for: server,
                 command: actionCommand
             )
             return URLSession.shared
-                .dataTaskPublisher(
-                    for: urlRequest
-                )
+                .dataTaskPublisher(for: urlRequest)
                 .handleEvents(receiveOutput: { data, _ in
-                    Swift.print("+++\(urlRequest) \(String(data: data, encoding: .ascii)!)")
+                    Swift.print(
+                    """
+                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
+                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
+                    +++ Received
+                    """
+                    )
                 })
                 .mapError(AppError.urlError)
-                .flatMap { handleTask(data: $0, response: $1) }
+                .flatMap(handleTask(data:response:))
                 .map {
                     $0.mapRight {
                         QueryResult.Success(
@@ -114,7 +120,7 @@ extension Publisher where Output == Global.State, Failure == Never {
                                     ]
                                 }
                             // Otherwise, request it and try again.
-                            ?? [.async(.command(.requestToken(andThen: actionCommand)))]
+                            ?? [.async(.command(.login(andThen: actionCommand)))]
                         )
                     )
                 }
@@ -135,7 +141,8 @@ extension Publisher where Output == Global.State, Failure == Never {
         command actionCommand: Command,
         transform: @escaping (T) throws -> [Action]
     ) -> AnyPublisher<Action, AppError> {
-        if case .requestToken(andThen: .requestToken) = actionCommand {
+        if case .login(andThen: .login) = actionCommand {
+            // Prevents infinite looping by failing on a nested token request.
             return Fail(error: .tokenRequestFailed)
                 .eraseToAnyPublisher()
         } else {
@@ -148,7 +155,7 @@ extension Publisher where Output == Global.State, Failure == Never {
                             .setFailureType(to: AppError.self)
                             .eraseToAnyPublisher()
                     case let .right(response):
-                        Swift.print("+++\(actionCommand)\(String(data: response.data, encoding: .ascii)!)")
+//                        Swift.print("+++\(actionCommand)\(String(data: response.data, encoding: .ascii)!)")
                         switch response.command.expected {
                         case nil:
                             return Empty(outputType: Action.self, failureType: AppError.self)
@@ -156,13 +163,23 @@ extension Publisher where Output == Global.State, Failure == Never {
                         case let .json(payload):
                             return JSONParser.parse(data: response.data)
                                 .publisher
-                                .mapError(AppError.jsonDecoding)
+                                .mapError {
+                                    AppError.jsonDecoding(
+                                        $0,
+                                        command: actionCommand.discriminator
+                                    )
+                                }
                                 .flatMap { json in
                                     Result {
                                         try T(from: json, against: payload, context: response.context)
                                     }
                                     .publisher
-                                    .mapError { .jsonParsing($0 as! JSONParseError) }
+                                    .mapError {
+                                        .jsonParsing(
+                                            $0 as! JSONParseError,
+                                            command: actionCommand.discriminator
+                                        )
+                                    }
                                     .flatMap { value in
                                         Result {
                                             try transform(value)

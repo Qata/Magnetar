@@ -42,10 +42,10 @@ private func losslessStringCodable(from json: JSON) throws -> LosslessStringCoda
         case let (_, double?):
             return double
         default:
-            throw AppError.jsonParsing(.init(json: json, expected: "Int | Double"))
+            throw AppError.losslessStringEncoding(expectedOneOf: [.number])
         }
     case .object, .array, .null:
-        throw AppError.jsonParsing(.init(json: json, expected: "Int | Double | Bool | String"))
+        throw AppError.losslessStringEncoding(expectedOneOf: [.number, .bool, .string])
     }
 }
 

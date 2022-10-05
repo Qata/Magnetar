@@ -251,34 +251,32 @@ extension Job.Raw: JSONInitialisable {
 
         func recurse(json: JSON, expected: Payload.JSON) throws {
             switch expected {
-            case let .object(expected):
+            case let .object(expectedObject):
                 switch json {
                 case let .object(json):
-                    try recurseObjects(json: json, expected: expected)
+                    try recurseObjects(json: json, expected: expectedObject)
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .string(expected):
+            case let .string(expectedString):
                 switch json {
-                case .string(expected):
+                case .string(expectedString):
                     break
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .bool(expected):
+            case let .bool(expectedBool):
                 switch json {
-                case .bool(expected):
+                case .bool(expectedBool):
                     break
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .array(expected):
+            case let .array(expectedArray):
                 switch json {
                 case let .array(json):
-                    try zip(json, expected)
-                        .forEach { json, expected in
-                            try recurse(json: json, expected: expected)
-                        }
+                    try zip(json, expectedArray)
+                        .forEach(recurse)
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }

@@ -28,7 +28,7 @@ struct JSONValues: Codable, Hashable, JSONInitialisable {
     var values: [Payload.Parameter: [JSON]] = [:]
 
     init(from json: JSON, against expected: Payload.JSON, context: APIDescriptor) throws {
-        func recurseObjects(json: [String: JSON], expected: [String: Payload.JSON]) throws {
+        func recurseObject(json: [String: JSON], expected: [String: Payload.JSON]) throws {
             try expected
                 .compactMap { key, value -> (JSON, Payload.JSON)? in
                     Optional.zip(json[key], value)
@@ -42,33 +42,31 @@ struct JSONValues: Codable, Hashable, JSONInitialisable {
                 values[.field(field), default: []].append(json)
             case .token:
                 values[.token, default: []].append(json)
-            case let .object(expected):
+            case let .object(expectedObject):
                 switch json {
                 case let .object(json):
-                    try recurseObjects(json: json, expected: expected)
+                    try recurseObject(json: json, expected: expectedObject)
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .string(expected):
+            case let .string(expectedString):
                 switch json {
-                case .string(expected):
+                case .string(expectedString):
                     break
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .bool(expected):
+            case let .bool(expectedBool):
                 switch json {
-                case .bool(expected):
+                case .bool(expectedBool):
                     break
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }
-            case let .array(expected), let .forEach(expected):
+            case let .array(expectedArray), let .forEach(expectedArray):
                 switch json {
                 case let .array(json):
-                    try zip(json, expected).forEach { json, expected in
-                        try recurse(json: json, expected: expected)
-                    }
+                    try zip(json, expectedArray).forEach(recurse)
                 default:
                     throw JSONParseError(json: json, expected: expected)
                 }

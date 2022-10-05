@@ -39,8 +39,7 @@ struct JobsListTopBar: ViewModifier {
                         for: servers,
                         selected: selectedServer,
                         dispatch: {
-                            dispatch(sync: .set(.selectedServer($0)))
-                            dispatch(async: .command(.fetch(.all)))
+                            dispatch(sync: .set(.selectedServer($0)), .delete(.errors))
                         }
                     )
                 }

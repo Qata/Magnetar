@@ -39,7 +39,7 @@ let synologyAPI = APIDescriptor(
         ]
     ),
     commands: [
-//        .requestToken: .init(
+//        .login: .init(
 //            request: .init(
 //                method: .get,
 //                relativeEndpoint: .init(
@@ -56,7 +56,7 @@ let synologyAPI = APIDescriptor(
 //            )
 //        ),
         // https://github.com/Sonarr/Sonarr/issues/3943#issuecomment-706807653
-        .requestToken: .init(
+        .login: .init(
             expected: .json(
                 .object(["success": .bool(true)])
             ),

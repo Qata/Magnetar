@@ -31,7 +31,7 @@ let qBittorrentAPI = APIDescriptor(
         ]
     ),
     commands: [
-        .requestToken: .init(
+        .login: .init(
             request: .init(
                 method: .post(
                     payload: .queryItems([

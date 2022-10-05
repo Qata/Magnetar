@@ -13,35 +13,14 @@ enum Command: Hashable {
         var expected: Payload? = nil
         var request: Request
     }
-    
-    enum Discriminator: String, Codable, Hashable, CustomStringConvertible {
-        case requestToken
-        case fetch
-        case start
-        case startNow
-        case stop
-        case pause
-        case remove
-        case deleteData
-        case addURI
-        case addFile
-        
-        var description: String {
-            rawValue
-                .unCamelCased
-                .joined(separator: " ")
-                .capitalized
-        }
-    }
-    
+
     enum FetchType: Hashable {
         case all
         case some([String])
     }
 
-    indirect case requestToken(andThen: Self)
+    indirect case login(andThen: Self)
     case fetch(FetchType)
-    case startNow([String])
     case start([String])
     case stop([String])
     case pause([String])
@@ -52,15 +31,11 @@ enum Command: Hashable {
 
     var ids: [String] {
         switch self {
-        case let .start(ids):
-            return ids
-        case let .stop(ids):
-            return ids
-        case let .pause(ids):
-            return ids
-        case let .remove(ids):
-            return ids
-        case let .deleteData(ids):
+        case let .start(ids),
+            let .stop(ids),
+            let .pause(ids),
+            let .remove(ids),
+            let .deleteData(ids):
             return ids
         case let .fetch(ids):
             switch ids {
@@ -69,9 +44,9 @@ enum Command: Hashable {
             case .all:
                 return []
             }
-        case let .startNow(ids):
-            return ids
-        case .requestToken, .addURI, .addFile:
+        case .login,
+                .addURI,
+                .addFile:
             return []
         }
     }
@@ -104,17 +79,36 @@ enum Command: Hashable {
             return nil
         }
     }
+}
+
+extension Command {
+    enum Discriminator: String, Codable, Hashable, CustomStringConvertible {
+        case login
+        case fetch
+        case start
+        case stop
+        case pause
+        case remove
+        case deleteData
+        case addURI
+        case addFile
+        
+        var description: String {
+            rawValue
+                .unCamelCased
+                .joined(separator: " ")
+                .capitalizingFirstLetter()
+        }
+    }
 
     var discriminator: Discriminator {
         switch self {
-        case .requestToken:
-            return .requestToken
+        case .login:
+            return .login
         case .fetch:
             return .fetch
         case .start:
             return .start
-        case .startNow:
-            return .startNow
         case .stop:
             return .stop
         case .pause:

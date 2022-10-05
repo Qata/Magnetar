@@ -41,12 +41,10 @@ struct CommandButton<Content: View>: View {
     
     var image: SystemImage {
         switch command {
-        case .requestToken:
+        case .login:
             return .arrowClockwise
         case .fetch:
             return .arrowClockwise
-        case .startNow:
-            return .playFill
         case .start:
             return .playFill
         case .stop:

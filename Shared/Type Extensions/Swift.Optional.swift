@@ -20,11 +20,11 @@ extension Optional {
             }
         }
     }
-    
+
     func `default`(_ value: Wrapped) -> Wrapped {
         self ?? value
     }
-    
+
     func filter(_ isIncluded: (Wrapped) throws -> Bool) rethrows -> Optional {
         switch self {
         case let value? where try isIncluded(value):
@@ -33,7 +33,7 @@ extension Optional {
             return nil
         }
     }
-    
+
     func error(nil error: Error) throws -> Wrapped {
         switch self {
         case let value?:

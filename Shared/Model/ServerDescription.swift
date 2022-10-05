@@ -121,14 +121,12 @@ struct Request: Codable, Hashable {
                     .map(\.description)
                     .joined(separator: "&")
                     .data(using: .utf8)
-                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
             case let .jsonrpc(payload):
                 request.httpBody = try! JSONEncoder().encode(
                     payload
                         .resolve(command: command, server: server)
                         .encodable()
                 )
-//                print("+++\(String(data: request.httpBody!, encoding: .utf8)!)")
             }
         }
         return request
@@ -199,7 +197,11 @@ enum ETADescription: Codable, Hashable {
     }
 }
 
-struct JSONParseError: Error {
+struct JSONParseError: Error, CustomStringConvertible {
     let json: JSON
-    let expected: Any
+    let expected: Payload.JSON
+    
+    var description: String {
+        String("Expected \(expected) but encountered \(json)")
+    }
 }

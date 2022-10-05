@@ -50,7 +50,6 @@ struct MultipartFormData {
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpBody = httpBody.appending("--\(boundary)--")
-//        print("+++\(String(data: request.httpBody!, encoding: .ascii))")
     }
 }
 

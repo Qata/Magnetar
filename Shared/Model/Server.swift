@@ -19,7 +19,7 @@ struct Server: Hashable, Codable {
     var downloadDirectories: [String] = []
     var api: APIDescriptor
     var refreshInterval: TimeInterval = 2
-    var timeoutInterval: TimeInterval = 2
+    var timeoutInterval: TimeInterval = 10
     var lastSeen: Unhashed<Date?> = .init(underlying: nil)
 
     var sorting: Sorting = .init()

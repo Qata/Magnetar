@@ -9,9 +9,9 @@ import Foundation
 
 extension StringProtocol {
     var unCamelCased: [SubSequence] {
-        chunked(by: { $1.isUppercase.not })
+        chunked(by: { $1.isLowercase || ($0.isUppercase && $1.isUppercase) })
     }
-    
+
     var sfSymbolString: String {
         chunked {
             $0.isNumber.not && $1.isNumber.not && $1.isUppercase.not
@@ -24,5 +24,9 @@ extension StringProtocol {
         addingPercentEncoding(
             withAllowedCharacters: .alphanumerics.union(CharacterSet(charactersIn: "~-_."))
         )
+    }
+
+    func capitalizingFirstLetter() -> String {
+        prefix(1).capitalized + dropFirst()
     }
 }

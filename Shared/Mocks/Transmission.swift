@@ -37,7 +37,7 @@ let transmissionAPI = APIDescriptor(
         ]
     ),
     commands: [
-        .requestToken: .init(
+        .login: .init(
             request: .init(
                 method: .post(
                     payload: .jsonrpc(

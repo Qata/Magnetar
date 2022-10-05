@@ -80,8 +80,6 @@
 		CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5227B253DC009CE0B5 /* Atomic.swift */; };
 		CB6B0F6727B253DC009CE0B5 /* Swift.Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */; };
 		CB6B0F6827B253DC009CE0B5 /* Swift.Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */; };
-		CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5427B253DC009CE0B5 /* Function.swift */; };
-		CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5427B253DC009CE0B5 /* Function.swift */; };
 		CB6B0F6B27B253DC009CE0B5 /* Swift.Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5527B253DC009CE0B5 /* Swift.Optional.swift */; };
 		CB6B0F6C27B253DC009CE0B5 /* Swift.Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5527B253DC009CE0B5 /* Swift.Optional.swift */; };
 		CB6B0F6D27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0F5627B253DC009CE0B5 /* Foundation.TimeInterval.swift */; };
@@ -180,6 +178,8 @@
 		CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */; };
 		CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
 		CBADD63428D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
+		CBB8571D28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */; };
+		CBB8571E28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
 		CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938D27B34A5A0060CB06 /* Operators.swift */; };
@@ -258,7 +258,6 @@
 		CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LosslessValue.swift; sourceTree = "<group>"; };
 		CB6B0F5227B253DC009CE0B5 /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Bool.swift; sourceTree = "<group>"; };
-		CB6B0F5427B253DC009CE0B5 /* Function.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		CB6B0F5527B253DC009CE0B5 /* Swift.Optional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swift.Optional.swift; sourceTree = "<group>"; };
 		CB6B0F5627B253DC009CE0B5 /* Foundation.TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Foundation.TimeInterval.swift; sourceTree = "<group>"; };
 		CB6B0F7027B253E2009CE0B5 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -308,6 +307,7 @@
 		CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryWebView.swift; sourceTree = "<group>"; };
 		CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.GeometryReader.swift; sourceTree = "<group>"; };
 		CBB8571B28D71BEA00B71D60 /* Magnetar--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Magnetar--iOS--Info.plist"; sourceTree = "<group>"; };
+		CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadicJSON.JSON.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
 		CBBF938D27B34A5A0060CB06 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
@@ -529,7 +529,6 @@
 				CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */,
 				CB6B0F4C27B253DC009CE0B5 /* Either.swift */,
 				CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */,
-				CB6B0F5427B253DC009CE0B5 /* Function.swift */,
 				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
 				CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */,
 				CBBF938D27B34A5A0060CB06 /* Operators.swift */,
@@ -646,6 +645,7 @@
 				CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */,
 				CB6B0F4F27B253DC009CE0B5 /* Foundation.StringInterpolation.swift */,
 				CB6B0F5627B253DC009CE0B5 /* Foundation.TimeInterval.swift */,
+				CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */,
 				CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */,
 				CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */,
 				CB6B0F4E27B253DC009CE0B5 /* Swift.Collection.swift */,
@@ -943,6 +943,7 @@
 				CBBF93B927B3C4060060CB06 /* Job.swift in Sources */,
 				CB6B0FAE27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CB6B0F5927B253DC009CE0B5 /* Either.swift in Sources */,
+				CBB8571D28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */,
 				CB8E9CAF28582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
 				CB91361528D409160034E67F /* RequestJSON.swift in Sources */,
@@ -991,7 +992,6 @@
 				CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
-				CB6B0F6927B253DC009CE0B5 /* Function.swift in Sources */,
 				CB6B0FA127B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
@@ -1015,6 +1015,7 @@
 			files = (
 				CB6B0F4327B2534E009CE0B5 /* ServerStatusHeader.swift in Sources */,
 				CBDB1C1628D2C55F00FCDF50 /* TextFieldSelectionModifier.swift in Sources */,
+				CBB8571E28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */,
 				CBE69F8C28BF250F00BCECF7 /* Unhashed.swift in Sources */,
 				CB577E0F27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */,
 				CB6B0F3527B252FC009CE0B5 /* MainView.swift in Sources */,
@@ -1078,7 +1079,6 @@
 				CB6B0F3F27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB91361928D409590034E67F /* RequestQueryItems.swift in Sources */,
 				CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */,
-				CB6B0F6A27B253DC009CE0B5 /* Function.swift in Sources */,
 				CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */,
 				CB91363028D6FE160034E67F /* RequestEndpoint.Path.swift in Sources */,
 				CB66B89327C3397400C2A62F /* Query.swift in Sources */,
