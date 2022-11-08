@@ -8,28 +8,28 @@
 import Foundation
 import Combine
 
-enum Command: Hashable {
+enum Command: Codable, Hashable {
     struct Descriptor: Codable, Hashable {
         var expected: Payload? = nil
         var request: Request
     }
 
-    enum FetchType: Hashable {
+    enum FetchType: Codable, Hashable {
         case all
-        case some([String])
+        case some([Job.Id])
     }
 
     indirect case login(andThen: Self)
     case fetch(FetchType)
-    case start([String])
-    case stop([String])
-    case pause([String])
-    case remove([String])
-    case deleteData([String])
+    case start([Job.Id])
+    case stop([Job.Id])
+    case pause([Job.Id])
+    case remove([Job.Id])
+    case deleteData([Job.Id])
     case addURI(String, location: String?)
     case addFile(Data, location: String?)
 
-    var ids: [String] {
+    var ids: [Job.Id] {
         switch self {
         case let .start(ids),
             let .stop(ids),
@@ -99,6 +99,25 @@ extension Command {
                 .joined(separator: " ")
                 .capitalizingFirstLetter()
         }
+
+        func command(for ids: [Job.Id]) -> Command? {
+            switch self {
+            case .start:
+                return .start(ids)
+            case .stop:
+                return .stop(ids)
+            case .pause:
+                return .pause(ids)
+            case .remove:
+                return .remove(ids)
+            case .deleteData:
+                return .deleteData(ids)
+            case .fetch:
+                return .fetch(.some(ids))
+            case .login, .addURI, .addFile:
+                return nil
+            }
+        }
     }
 
     var discriminator: Discriminator {
@@ -128,7 +147,7 @@ extension Command {
 extension Payload {
     var adHocFields: [Job.Field.Descriptor.AdHocField] {
         var fields = [Job.Field.Descriptor.AdHocField]()
-        
+
         func recurse(expected: Payload.JSON) {
             switch expected {
             case let .object(expected):

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct JobsListTopBar: ViewModifier {
-    let jobs: [JobViewModel]
-
     func buttons(
         for servers: [Server],
         selected: Server,
@@ -20,7 +18,7 @@ struct JobsListTopBar: ViewModifier {
                 dispatch(server)
             } label: {
                 HStack {
-                    Text(server.name)
+                    Text(server.name.rawValue)
                     Spacer()
                     if server.name == selected.name {
                         SystemImage.checkmark
@@ -32,7 +30,7 @@ struct JobsListTopBar: ViewModifier {
     }
 
     var title: some View {
-        OptionalStoreView(\.persistent.selectedServer) { selectedServer, _ in
+        OptionalStoreView(\.persistent.selectedServer) { selectedServer in
             Menu {
                 StoreView(\.persistent.servers) { servers, dispatch in
                     buttons(
@@ -45,7 +43,7 @@ struct JobsListTopBar: ViewModifier {
                 }
             } label: {
                 VStack {
-                    Text(selectedServer.name)
+                    Text(selectedServer.name.rawValue)
                         .font(.headline)
                     Text("Online")
                         .font(.subheadline)
@@ -66,7 +64,9 @@ struct JobsListTopBar: ViewModifier {
     }
     
     var commands: some View {
-        CommandsMenu(jobs: jobs)
+        StoreView(\.jobs.filtered.ids) { ids in
+            CommandsMenu(ids: ids)
+        }
     }
     
     func body(content: Content) -> some View {
@@ -74,14 +74,21 @@ struct JobsListTopBar: ViewModifier {
         content
             .navigationBarItems(
                 leading: HStack {
-                    TransferTotalsView(jobs: jobs)
+                    StoreView(\.jobs.totals) {
+                        TransferTotalsView(
+                            downloadSpeed: $0.downloadSpeed,
+                            uploadSpeed: $0.uploadSpeed
+                        )
                         .font(.footnote.bold())
+                    }
                     ErrorView()
                 },
-                trailing: HStack {
+                trailing: Menu {
                     sorting
                     commands
                     filter
+                } label: {
+                    SystemImage.ellipsisCircle
                 }
             )
             .navigationBarTitleDisplayMode(.inline)

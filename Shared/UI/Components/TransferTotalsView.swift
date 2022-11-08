@@ -6,16 +6,6 @@ struct TransferTotalsView: View {
     let uploadSpeed: Speed
     @Environment(\.layoutDirection) var direction
 
-    init(job: JobViewModel) {
-        downloadSpeed = job.downloadSpeed
-        uploadSpeed = job.uploadSpeed
-    }
-    
-    init(jobs: [JobViewModel]) {
-        downloadSpeed = .init(bytes: jobs.reduce(0, { $0 + $1.downloadSpeed.bytes }))
-        uploadSpeed = .init(bytes: jobs.reduce(0, { $0 + $1.uploadSpeed.bytes }))
-    }
-
     var body: some View {
         VStack(alignment: .leading) {
             let upload = ["↑", uploadSpeed.description]
@@ -35,6 +25,7 @@ struct TransferTotalsView: View {
                 .accessibility(label: Text("Total download speed"))
                 .accessibility(value: Text(downloadSpeed.accessibleDescription))
         }
+        .monospacedDigit()
         .accessibilityElement(children: .combine)
     }
 }

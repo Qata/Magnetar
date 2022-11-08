@@ -24,7 +24,7 @@ extension Bool {
             return try falsity()
         }
     }
-    
+
     @inlinable
     func `if`<T>(true value: @autoclosure () throws -> T?) rethrows -> T? {
         switch self {

@@ -11,13 +11,6 @@ import Algorithms
 #warning("Fix refresh issue")
 struct SortingMenu: View {
     let dispatch = Global.store.writeOnly()
-    let sorting = Global.store.state.persistent.selectedServer?.sorting
-    let fields = Global.store.state.persistent.selectedServer?
-        .api
-        .commands[.fetch]?
-        .expected?
-        .adHocFields
-        .map(Job.Field.Descriptor.adHoc)
     
     func sortingButton(order: Sorting.Order, sorting: Sorting) -> some View {
         Button {
@@ -47,41 +40,51 @@ struct SortingMenu: View {
         }
     }
     
+    @ViewBuilder
+    func sections(fields: [Job.Field.Descriptor], sorting: Sorting) -> some View {
+        Section {
+            ForEach(
+                Sorting.Order.allCases,
+                id: \.self
+            ) {
+                sortingButton(order: $0, sorting: sorting)
+            }
+        }
+        .onChange(of: fields) { _ in
+            print("Fields changed")
+        }
+        .onChange(of: sorting) { _ in
+            print("Sorting changed")
+        }
+        Section {
+            ForEach(
+                chain(
+                    Job.Field.Descriptor.PresetField
+                        .allCases
+                        .map(Job.Field.Descriptor.preset),
+                    fields
+                ),
+                id: \.self
+            ) {
+                sortingButton(field: $0, sorting: sorting)
+            }
+        }
+    }
+
     var body: some View {
         OptionalStoreView {
-            $0.persistent.selectedServer?
-                .api
+            $0.persistent.selectedServer?.api
                 .commands[.fetch]?
                 .expected?
                 .adHocFields
                 .map(Job.Field.Descriptor.adHoc)
         } content: { fields in
             Menu {
-                OptionalStoreView(\.persistent.selectedServer?.sorting) { sorting, _ in
-                    Section {
-                        ForEach(
-                            Sorting.Order.allCases,
-                            id: \.self
-                        ) {
-                            sortingButton(order: $0, sorting: sorting)
-                        }
-                    }
-                    Section {
-                        ForEach(
-                            chain(
-                                Job.Field.Descriptor.PresetField
-                                    .allCases
-                                    .map(Job.Field.Descriptor.preset),
-                                fields
-                            ),
-                            id: \.self
-                        ) {
-                            sortingButton(field: $0, sorting: sorting)
-                        }
-                    }
+                OptionalStoreView(\.persistent.selectedServer?.sorting) { sorting in
+                    sections(fields: fields, sorting: sorting)
                 }
             } label: {
-                SystemImage.listNumber
+                Label("Sorting", icon: .listNumber)
             }
         }
     }

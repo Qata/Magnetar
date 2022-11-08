@@ -21,6 +21,7 @@ public enum SystemImage: String, View {
     case docFillBadgePlus
     case docOnDoc
     case docOnDocFill
+    case ellipsisCircle
     case exclamationmarkSquareFill
     case line3HorizontalDecreaseCircle
     case line3HorizontalDecreaseCircleFill

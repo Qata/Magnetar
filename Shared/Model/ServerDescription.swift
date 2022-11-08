@@ -17,6 +17,7 @@ struct APIDescriptor: Codable, Hashable {
     var supportedURIs: [URI] = []
     var supportedFilePathExtensions: [PathExtension] = []
     var authentication: [Authentication]
+    var errors: [Error]
     var jobs: Job.Descriptor
     var commands: [Command.Discriminator: Command.Descriptor]
 
@@ -51,6 +52,16 @@ extension APIDescriptor {
         var value: String
         var encoding: Encoding?
     }
+
+    struct Error: Codable, Hashable {
+        enum ErrorType: Codable, Hashable {
+            case password
+            case forbidden
+        }
+
+        let type: ErrorType
+        let codes: [Int]
+    }
 }
 
 struct Request: Codable, Hashable {
@@ -64,11 +75,13 @@ struct Request: Codable, Hashable {
         case post(payload: Payload)
         
         var method: String {
-            switch self {
-            case .post:
-                return "POST"
-            case .get:
-                return "GET"
+            expression {
+                switch self {
+                case .post:
+                    "POST"
+                case .get:
+                    "GET"
+                }
             }
         }
     }
@@ -91,10 +104,24 @@ struct Request: Codable, Hashable {
                 },
                 cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
             )
-            if let token = server.token,
-                let field = server.api.authentication.firstNonNil(\.headerField)
-            {
-                request.setValue(token, forHTTPHeaderField: field)
+            server.api.authentication.forEach { auth in
+                switch auth {
+                case .basic:
+                    Optional.zip(
+                        server.user,
+                        server.password
+                    )
+                    .flatMap {
+                        "\($0):\($1)".data(using: .utf8)?.base64EncodedString()
+                    }
+                    .map {
+                        request.setValue("Basic \($0)", forHTTPHeaderField: "Authorization")
+                    }
+                case let .token(.header(field, code: _)):
+                    if let token = server.token {
+                        request.setValue(token, forHTTPHeaderField: field)
+                    }
+                }
             }
             request.httpMethod = method.method
             request.timeoutInterval = server.timeoutInterval
@@ -137,8 +164,8 @@ enum Authentication: Codable, Hashable {
     enum Token: Codable, Hashable {
         case header(field: String, code: Int)
     }
-    case password(invalidCodes: [Int])
     case token(Token)
+    case basic
 
     var headerField: String? {
         switch self {
@@ -153,7 +180,7 @@ enum Authentication: Codable, Hashable {
 struct EndpointDescriptor: Codable, Hashable {
     var path: [String]
     var queryItems: [QueryItem]?
-    
+
     func appending(_ descriptor: Self) -> Self {
         .init(
             path: path + descriptor.path,
@@ -177,7 +204,7 @@ enum SizeDescription: Codable, Hashable {
 
 enum SpeedDescription: Codable, Hashable {
     case bytesPerSecond(UInt)
-    
+
     var value: UInt {
         switch self {
         case let .bytesPerSecond(value):
@@ -188,7 +215,7 @@ enum SpeedDescription: Codable, Hashable {
 
 enum ETADescription: Codable, Hashable {
     case seconds(UInt)
-    
+
     var value: UInt {
         switch self {
         case let .seconds(value):
@@ -200,7 +227,7 @@ enum ETADescription: Codable, Hashable {
 struct JSONParseError: Error, CustomStringConvertible {
     let json: JSON
     let expected: Payload.JSON
-    
+
     var description: String {
         String("Expected \(expected) but encountered \(json)")
     }

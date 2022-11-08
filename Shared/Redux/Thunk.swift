@@ -11,41 +11,72 @@ import UserNotifications
 import MonadicJSON
 import CoreMedia
 import CasePaths
+import OrderedCollections
 
-enum AppError: Error, CustomStringConvertible {
+enum AppError: Error {
     case urlError(URLError)
     case jsonDecoding(JSONParser.Error, command: Command.Discriminator)
     case jsonParsing(JSONParseError, command: Command.Discriminator)
     case losslessStringEncoding(expectedOneOf: [JSON.Discriminator])
     case finalParsing(Error)
-    case authenticationFailure
+    case authenticationFailure(html: AttributedString?)
+    case resourceForbidden(html: AttributedString?)
     case invalidTokenWithoutRecourse
     case commandMissing
     case tokenRequestFailed
     case unableToConvertTypeLosslessly
     
-    var description: String {
+    var title: String {
         switch self {
         case let .urlError(error):
-            return error.localizedDescription
-        case let .jsonDecoding(error, command):
-            return "\(String(describing: error)) for \(command.description) request"
-        case let .jsonParsing(error, command):
-            return "\(error.description) for \(command.description) request"
-        case let .finalParsing(error):
-            return error.localizedDescription
+            return "URL Error"
+        case .jsonDecoding:
+            return "JSON Decoding Error"
+        case .jsonParsing:
+            return "JSON Parsing Error"
+        case .finalParsing:
+            return "Parsing Error"
         case .authenticationFailure:
             return "Authentication Failure"
+        case .resourceForbidden:
+            return "Resource Forbidden"
         case .invalidTokenWithoutRecourse:
             return "Invalid Token"
         case .commandMissing:
-            return "Command missing from config"
+            return "Command Missing From Config"
+        case .tokenRequestFailed:
+            return "Token Request Failure"
+        case .unableToConvertTypeLosslessly:
+            return "Type Conversion Error"
+        case .losslessStringEncoding:
+            return "String Conversion Error"
+        }
+    }
+
+    var description: AttributedString? {
+        switch self {
+        case let .urlError(error):
+            return .init(error.localizedDescription)
+        case let .jsonDecoding(error, command):
+            return .init("\(String(describing: error)) for \(command.description) request")
+        case let .jsonParsing(error, command):
+            return .init("\(error.description) for \(command.description) request")
+        case let .finalParsing(error):
+            return .init(error.localizedDescription)
+        case let .authenticationFailure(html):
+            return html
+        case let .resourceForbidden(html):
+            return html
+        case .invalidTokenWithoutRecourse:
+            return nil
+        case .commandMissing:
+            return nil
         case .tokenRequestFailed:
             return "Failed to request token"
         case .unableToConvertTypeLosslessly:
             return "Unable to losslessly convert type"
         case let .losslessStringEncoding(expectedOneOf):
-            return "Expected \(expectedOneOf.map(\.rawValue).joined(separator: " or "))"
+            return .init("Expected \(expectedOneOf.map(\.rawValue).joined(separator: " or "))")
         }
     }
 }
@@ -62,19 +93,21 @@ extension Publisher where Output == Global.State {
 
 extension Global {
     static let thunk = Thunk<State, AsyncAction, SyncAction, Global.Environment> { store, action, _ -> AnyPublisher<Action, Never> in
-        switch action {
-        case .start:
-            return start(store: store)
-        case let .reuploadFile(url, location):
-            return reuploadFile(url: url, location: location)
-        case let .command(actionCommand):
-            return command(store: store, command: actionCommand)
-                .prefix(
-                    // Cancel if the server changes.
-                    untilOutputFrom: store.actions.sync.post
-                        .first(matching: /Action.Sync.set..Action.Sync.Set.selectedServer)
-                )
-                .eraseToAnyPublisher()
+        expression {
+            switch action {
+            case .start:
+                start(store: store)
+            case let .reuploadFile(url, location):
+                reuploadFile(url: url, location: location)
+            case let .command(actionCommand):
+                command(store: store, command: actionCommand)
+                    .prefix(
+                        // Cancel if the server changes.
+                        untilOutputFrom: store.actions.sync.post
+                            .first(matching: /Action.Sync.set..Action.Sync.Set.selectedServer)
+                    )
+                    .eraseToAnyPublisher()
+            }
         }
     }
     
@@ -114,7 +147,7 @@ extension Global {
                     state.query(
                         command: command,
                         transform: { (value: [Job.Raw]) in
-                            let jobs = try Dictionary(
+                            let jobs = try OrderedDictionary(
                                 value
                                     .map { try JobViewModel(from: $0, context: server.api) }
                                     .map { ($0.id, $0) },
@@ -136,16 +169,21 @@ extension Global {
                         }
                     )
                     .prefix(
-                        // Cancel then retry if the jobs are updated.
+                        // Cancel if the jobs are updated.
                         untilOutputFrom: store.actions.sync.post
                             .first(matching: /Action.Sync.update..Action.Sync.Update.jobs)
                     )
                     .prefix(
-                        // Cancel then retry if any jobs get removed.
+                        // Cancel if the jobs are set.
+                        untilOutputFrom: store.actions.sync.post
+                            .first(matching: /Action.Sync.set..Action.Sync.Set.jobs)
+                    )
+                    .prefix(
+                        // Cancel if any jobs get removed.
                         untilOutputFrom: store.actions.sync.post
                             .first(matching: /Action.Sync.delete..Action.Sync.Delete.jobs)
                     )
-                    .replaceEmpty(with: .async(.command(command)))
+//                    .replaceEmpty(with: .async(.command(command)))
                 }
                 .liftError()
         case .start, .pause, .stop, .addURI, .addFile:

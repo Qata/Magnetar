@@ -17,11 +17,17 @@ struct ErrorView: View {
                     Section {
                         VStack(alignment: .leading) {
                             Text(model.date.accessibleDescription)
-                            Divider()
-                            Text(model.error)
-                                .foregroundColor(.secondary)
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
+                            if model.error.description == nil {
+                                Divider()
+                            }
+                            Text(model.error.title)
+                            if let description = model.error.description {
+                                Divider()
+                                Text(description)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
                     }
                 }

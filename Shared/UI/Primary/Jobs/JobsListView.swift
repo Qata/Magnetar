@@ -9,154 +9,154 @@
 import SwiftUI
 import Recombine
 import Algorithms
+import OrderedCollections
+import SwiftUINavigation
 
 struct JobListView: View {
     @State var searchText: String = ""
+    @State var presentedJob: Job.Id?
+    @State var detailPresentation = JobDetailView.Presentation.push
     let dispatch = Global.store.writeOnly()
 
-    func sorted(jobs: [String: JobViewModel], server: Server) -> [JobViewModel] {
-        jobs.values
-            .sorted(keyPath: \.name)
-            .sorted { lhs, rhs in
-                let order = server.sorting.order
-                switch server.sorting.value {
-                case let .preset(field):
-                    switch field {
-                    case .name:
-                        return order.comparator()(lhs.name, rhs.name)
-                    case .status:
-                        return order.comparator()(lhs.status, rhs.status)
-                    case .id:
-                        return order.comparator()(lhs.id, rhs.id)
-                    case .uploadSpeed:
-                        return order.comparator()(lhs.uploadSpeed, rhs.uploadSpeed)
-                    case .downloadSpeed:
-                        return order.comparator()(lhs.downloadSpeed, rhs.downloadSpeed)
-                    case .uploaded:
-                        return order.comparator()(lhs.uploaded, rhs.uploaded)
-                    case .downloaded:
-                        return order.comparator()(lhs.downloaded, rhs.downloaded)
-                    case .size:
-                        return order.comparator()(lhs.size, rhs.size)
-                    case .eta:
-                        return order.comparator()(lhs.eta, rhs.eta)
-                    }
-                case let .adHoc(field):
-                    return Optional.zip(
-                        lhs.additionalDictionary[field.name],
-                        rhs.additionalDictionary[field.name]
-                    )
-                    .map {
-                        if $0.value != $1.value {
-                            return order.comparator()($0.value, $1.value)
-                        } else {
-                            return lhs.name < rhs.name
-                        }
-                    }
-                    ?? (lhs.name < rhs.name)
-                }
+    @ViewBuilder
+    func button(
+        for command: Command,
+        api: APIDescriptor,
+        icon: SystemImage,
+        role: ButtonRole? = nil
+    ) -> some View {
+        if api.available(command: command.discriminator) {
+            Button(role: role) {
+                dispatch(async: .command(command))
+            } label: {
+                Label(command.discriminator.description, icon: icon)
             }
+        }
     }
     
-    func filtered(jobs: [JobViewModel], statuses filter: Set<Status>) -> [JobViewModel] {
-        jobs.filter {
-            filter.isEmpty || filter.contains($0.status)
-        }
-        .filter { job -> Bool in
-            guard searchText.isEmpty.not else { return true }
-            return [\JobViewModel.name, \.id]
-                .map { job[keyPath: $0].lowercased() }
-                .contains { $0.contains(searchText.lowercased()) }
+    @ViewBuilder
+    func leadingSwipeActions(job: JobViewModel, api: APIDescriptor) -> some View {
+        switch job.status {
+        case .stopped, .paused:
+            button(
+                for: .start([job.id]),
+                api: api,
+                icon: .playFill
+            )
+            .tint(.green)
+        default:
+            button(
+                for: .pause([job.id]),
+                api: api,
+                icon: .pauseFill
+            )
+            button(
+                for: .stop([job.id]),
+                api: api,
+                icon: .stopFill
+            )
         }
     }
 
     @ViewBuilder
-    func leadingSwipeActions(job: JobViewModel) -> some View {
-        OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
-            switch job.status {
-            case .stopped, .paused:
-                Button {
-                    dispatch(async: .command(.start([job.id])))
-                } label: {
-                    Label("Plus", icon: .playFill)
-                }
-                .tint(.green)
-            default:
-                if server.api.available(command: .pause) {
-                    Button {
-                        dispatch(async: .command(.pause([job.id])))
-                    } label: {
-                        Label("Pause", icon: .pauseFill)
-                    }
-                    .tint(.gray)
-                } else {
-                    Button {
-                        dispatch(async: .command(.stop([job.id])))
-                    } label: {
-                        Label("Stop", icon: .stopFill)
-                    }
-                    .tint(.gray)
-                }
-            }
-        }
+    func trailingSwipeActions(id: Job.Id, api: APIDescriptor) -> some View {
+        button(
+            for: .deleteData([id]),
+            api: api,
+            icon: .xmarkBin,
+            role: .destructive
+        )
+        button(
+            for: .remove([id]),
+            api: api,
+            icon: .xmark
+        )
     }
-    
+
     func jobCells(jobs: [JobViewModel]) -> some View {
-        ForEach(jobs, id: \.id) { job in
-            ZStack(alignment: .leading) {
-                NavigationLink(destination: JobDetailView(id: job.id)) {
-                    EmptyView()
+        OptionalStoreView(\.persistent.selectedServer) { server in
+            ForEach(jobs, id: \.id) { job in
+                ZStack(alignment: .leading) {
+                    if detailPresentation == .push {
+                        NavigationLink(
+                            destination: LazyView(
+                                JobDetailView(
+                                    id: job.id,
+                                    presentation: detailPresentation
+                                )
+                            )
+                        ) {
+                            EmptyView()
+                        }
+                        .opacity(0)
+                    }
+                    JobRowView(viewModel: job)
+                        .if(detailPresentation == .sheet) {
+                            $0.sheet(unwrapping: $presentedJob) {
+                                JobDetailView(
+                                    id: $0.wrappedValue,
+                                    presentation: detailPresentation
+                                )?.presentationDetents([
+                                    .medium,
+                                    .large
+                                ])
+                            }
+                            .onTapGesture {
+                                presentedJob = job.id
+                            }
+                        }
                 }
-                .opacity(0)
-                JobRowView(viewModel: job)
-            }
-            .swipeActions(edge: .leading) {
-                leadingSwipeActions(job: job)
+                .swipeActions(edge: .leading) {
+                    leadingSwipeActions(job: job, api: server.api)
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    trailingSwipeActions(id: job.id, api: server.api)
+                }
             }
         }
     }
 
     var body: some View {
-        OptionalStoreView(\.persistent.selectedServer?.filter) { filter, _ in
-            StoreView(\.jobs) { jobs, _ in
-                OptionalStoreView(\.persistent.selectedServer) { server, dispatch in
-                    let sortedJobs = sorted(jobs: jobs, server: server)
-                    let filteredJobs = filtered(jobs: sortedJobs, statuses: filter)
-                    List {
-                        Section {
-                            if filteredJobs.isEmpty, !jobs.isEmpty, searchText.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    Group {
-                                        Text(SystemImage.filterFilled.body)
-                                        Text(SystemImage.arrowUp.body)
-                                    }
-                                }
-                            }
-                            jobCells(jobs: filteredJobs)
-                        } header: {
-                            if !searchText.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    HStack {
-                                        SortingMenu()
-                                        CommandsMenu(jobs: filteredJobs)
-                                        OptionalStoreView(
-                                            \.persistent.selectedServer?.filter,
-                                             content: FilterMenu.init
-                                        )
-                                    }
-                                }
+        List {
+            Section {
+                StoreView(\.jobs) { jobs in
+                    if jobs.filtered.all.isEmpty, !jobs.all.isEmpty, searchText.isEmpty {
+                        HStack {
+                            Spacer()
+                            Group {
+                                Text(SystemImage.filterFilled.body)
+                                Text(SystemImage.arrowUp.body)
                             }
                         }
                     }
-                    .searchable(text: $searchText)
-                    .disableAutocorrection(true)
-                    .refreshable(action: { dispatch(async: .start) })
-                    .listStyle(.plain)
-                    .modifier(JobsListTopBar(jobs: filteredJobs))
+                    jobCells(jobs: jobs.filtered.viewModels)
+                }
+            } header: {
+                if !searchText.isEmpty {
+                    HStack {
+                        Spacer()
+                        HStack {
+                            SortingMenu()
+                            StoreView(\.jobs.filtered.ids) {
+                                CommandsMenu(ids: $0)
+                            }
+                            OptionalStoreView(\.persistent.selectedServer?.filter) {
+                                FilterMenu(filter: $0)
+                            }
+                        }
+                    }
                 }
             }
         }
+        // Prevents row diffing, which happens on the main thread.
+        .id(UUID())
+        .searchable(text: $searchText)
+        .onChange(of: searchText) {
+            dispatch(sync: .set(.searchText($0)))
+        }
+        .disableAutocorrection(true)
+        .refreshable(action: { dispatch(async: .start) })
+        .listStyle(.plain)
+        .modifier(JobsListTopBar())
     }
 }

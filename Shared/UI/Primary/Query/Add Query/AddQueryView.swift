@@ -23,7 +23,7 @@ struct AddQueryView: View {
                 .onSubmit {
                     pushed = true
                 }
-            if text.matches(regex: .url),
+            if let match = try? Regex.url.wholeMatch(in: text),
                let url = URL(string: text),
                !url.pathComponents.filter({ $0 != "/" }).isEmpty || url.query?.isEmpty == false
             {

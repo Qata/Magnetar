@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import Combine
 import MonadicJSON
 import Overture
@@ -16,7 +17,7 @@ enum QueryResult {
         let command: Command.Descriptor
         let context: APIDescriptor
     }
-    
+
     struct Retry {
         let actions: [Action]
     }
@@ -50,18 +51,28 @@ extension Publisher where Output == Global.State, Failure == Never {
                     return Fail(error: .urlError(.init(.badServerResponse)))
                         .eraseToAnyPublisher()
                 }
-                return server.api
-                    .authentication
-                    .publisher
-                    .flatMap {
-                        handleAuthentication($0, server: server, response: httpResponse)
-                            .publisher
-                            .compactMap { $0 }
-                            .map { .left(.init(actions: $0)) }
-                    }
-                    .first()
-                    .replaceEmpty(with: .right(data))
-                    .eraseToAnyPublisher()
+                return Publishers.Concatenate(
+                    prefix: server.api
+                        .errors
+                        .publisher
+                        .flatMap {
+                            handleError($0, code: httpResponse.statusCode, data: data)
+                                .publisher
+                                .flatMap { Fail(error: $0) }
+                        },
+                    suffix: server.api
+                        .authentication
+                        .publisher
+                        .flatMap {
+                            handleAuthentication($0, server: server, response: httpResponse)
+                                .publisher
+                                .flatMap(\.publisher)
+                                .map { .left(.init(actions: $0)) }
+                        }
+                )
+                .first()
+                .replaceEmpty(with: .right(data))
+                .eraseToAnyPublisher()
             }
 
             let urlRequest = command.request.urlRequest(
@@ -71,13 +82,13 @@ extension Publisher where Output == Global.State, Failure == Never {
             return URLSession.shared
                 .dataTaskPublisher(for: urlRequest)
                 .handleEvents(receiveOutput: { data, _ in
-                    Swift.print(
-                    """
-                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
-                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
-                    +++ Received
-                    """
-                    )
+//                    Swift.print(
+//                    """
+//                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
+//                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
+//                    +++ Received \(String(describing: String(data: data, encoding: .ascii)))
+//                    """
+//                    )
                 })
                 .mapError(AppError.urlError)
                 .flatMap(handleTask(data:response:))
@@ -93,17 +104,32 @@ extension Publisher where Output == Global.State, Failure == Never {
                 .eraseToAnyPublisher()
         }
 
+        func handleError(
+            _ error: APIDescriptor.Error,
+            code: Int,
+            data: Data
+        ) -> AppError? {
+            guard error.codes.contains(code) else {
+                return nil
+            }
+            let html = try? AttributedString(html: data)
+
+            switch error.type {
+            case .password:
+                return .authenticationFailure(html: html)
+            case .forbidden:
+                return .resourceForbidden(html: html)
+            }
+        }
+
         func handleAuthentication(
             _ auth: Authentication,
             server: Server,
             response: HTTPURLResponse
         ) -> Result<[Action]?, AppError> {
             switch auth {
-            case let .password(codes):
-                return (codes.contains(response.statusCode)).if(
-                    true: .failure(.authenticationFailure),
-                    false: .success(nil)
-                )
+            case .basic:
+                return .success(nil)
             case let .token(token):
                 switch token {
                 case let .header(field, code):

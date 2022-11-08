@@ -17,7 +17,9 @@ let qBittorrentAPI = APIDescriptor(
         .init(value: "torrent", encoding: .bencoding),
     ],
     authentication: [
-        .password(invalidCodes: [403])
+    ],
+    errors: [
+        .init(type: .password, codes: [403])
     ],
     jobs: .init(
         status: [

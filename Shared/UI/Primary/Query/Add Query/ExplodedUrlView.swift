@@ -11,14 +11,14 @@ struct ExplodedUrlView: View {
     @Binding var showModal: Bool
     @Environment(\.dismiss) var dismiss
     @State var queryName = ""
-    @State var selectedParameter: Query.Parameter?
+    @State var selectedParameter: WebQuery.Parameter?
     @FocusState var nameFocused: Bool
 
     let dispatch = Global.store.writeOnly()
-    let query: Query
+    let query: WebQuery
 
     init?(url: URL, showModal: Binding<Bool>) {
-        guard let query = Query(url: url) else {
+        guard let query = WebQuery(url: url) else {
             return nil
         }
         self.query = query
@@ -32,7 +32,7 @@ struct ExplodedUrlView: View {
                 Picker(selection: $selectedParameter) {
                     ForEach(components, id: \.self) { component in
                         Text(component.element.description)
-                            .tag(Optional(Query.Parameter(location: .path, index: component.offset)))
+                            .tag(Optional(WebQuery.Parameter(location: .path, index: component.offset)))
                     }
                 } label: {
                     EmptyView()
@@ -51,7 +51,7 @@ struct ExplodedUrlView: View {
                         Text(component.element.description)
                             .tag(
                                 Optional(
-                                    Query.Parameter(
+                                    WebQuery.Parameter(
                                         location: .queryItem,
                                         index: component.offset
                                     )
@@ -99,7 +99,7 @@ struct ExplodedUrlView: View {
             }
             Picker(selection: $selectedParameter) {
                 Text("None")
-                    .tag(Optional(Query.Parameter.none))
+                    .tag(Optional(WebQuery.Parameter.none))
             } label: {
                 EmptyView()
             }
@@ -108,7 +108,7 @@ struct ExplodedUrlView: View {
             queryView
             Section {
                 StoreView(\.persistent.queries) { queries in
-                    let nameInUse = queries.contains { $0.name == queryName }
+                    let nameInUse = queries.contains { $0.name.rawValue == queryName }
                     Button("Save") {
                         if queryName.isEmpty {
                             nameFocused = true

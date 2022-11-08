@@ -15,7 +15,12 @@ struct JobRowView: View {
     let viewModel: JobViewModel
     
     var compactStats: some View {
-        ZStack {
+        VStack {
+            HStack {
+                Text("↓ \(viewModel.downloadSpeed.description)")
+                Spacer()
+                Text("\(viewModel.uploadSpeed.description) ↑")
+            }
             HStack {
                 HStack {
                     Text(viewModel.status.description)
@@ -29,22 +34,15 @@ struct JobRowView: View {
                     }
                 }
             }
-            HStack {
-                HStack {
-                    Spacer()
-                    Text("\(viewModel.downloadSpeed.description) ↓")
-                }
-                HStack {
-                    Text("↑ \(viewModel.uploadSpeed.description)")
-                    Spacer()
-                }
-            }
         }
     }
     
     var accessibileStats: some View {
         Group {
-            TransferTotalsView(job: viewModel)
+            TransferTotalsView(
+                downloadSpeed: viewModel.downloadSpeed,
+                uploadSpeed: viewModel.uploadSpeed
+            )
             if !sizeCategory.isAccessibilityCategory {
                 Spacer()
             }
@@ -86,6 +84,7 @@ struct JobRowView: View {
     }
 
     var body: some View {
+        #warning("Fix CommandsMenu")
         VStack {
             Text(viewModel.name)
                 .font(.body.bold())
@@ -114,7 +113,7 @@ struct JobRowView: View {
         .accessibility(label: Text(verbatim: viewModel.name))
         .accessibility(value: Text(viewModel.accessibleDescription))
         .contextMenu {
-            CommandsGroup(jobs: [viewModel])
+            CommandsGroup(ids: [viewModel.id])
         }
     }
 }

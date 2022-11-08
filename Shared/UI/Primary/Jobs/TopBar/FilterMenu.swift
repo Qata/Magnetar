@@ -75,18 +75,20 @@ struct FilterMenu: View {
     
     var body: some View {
         Menu {
-            Text("Filter")
             if !filter.isEmpty {
                 clearButton
             }
-            StoreView({ Set($0.jobs.values.map(\.status)) }) { statuses in
+            StoreView(\.jobs.statuses) { statuses in
                 menu(activeStatuses: statuses)
                 showAllMenu(activeStatuses: statuses)
             }
         } label: {
-            filter.isEmpty.if(
-                true: SystemImage.filter,
-                false: .filterFilled
+            Label(
+                "Filter",
+                icon: filter.isEmpty.if(
+                    true: SystemImage.filter,
+                    false: .filterFilled
+                )
             )
         }
     }

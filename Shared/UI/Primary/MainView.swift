@@ -7,8 +7,11 @@
 //
 
 import SwiftUI
+import CasePaths
 
 struct MainView: View {
+    let store = Global.store
+
     func tabItem<Content: View>(image: SystemImage, name: String, @ViewBuilder content: @escaping () -> Content) -> some View {
         NavigationStack {
             content()
@@ -20,25 +23,33 @@ struct MainView: View {
     }
 
     var body: some View {
-        TabView {
+        TabView(
+            selection: store.binding(
+                get: \.navigation,
+                send: { .navigate(.tab($0)) }
+            )
+        ) {
             tabItem(
                 image: .arrowUpArrowDown,
                 name: "Transfers"
             ) {
                 JobListView()
             }
+            .tag(Global.State.Navigation.jobs)
             tabItem(
                 image: .magnifyingglass,
                 name: "Queries"
             ) {
                 MainQueryView()
             }
+            .tag(Global.State.Navigation.queries)
             tabItem(
                 image: .gear,
                 name: "Settings"
             ) {
                 SettingsView()
             }
+            .tag(Global.State.Navigation.settings)
         }
     }
 }

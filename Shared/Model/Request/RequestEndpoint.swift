@@ -21,7 +21,7 @@ struct RequestEndpoint: Codable, Hashable {
     }
     
     func resolve(command: Command, server: Server) -> EndpointDescriptor {
-        var ids: [String] = command.ids.reversed()
+        var ids: [Job.Id] = command.ids.reversed()
         return .init(
             path: path.map {
                 switch $0 {

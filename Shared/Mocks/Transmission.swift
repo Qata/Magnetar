@@ -17,12 +17,22 @@ let transmissionAPI = APIDescriptor(
         .init(value: "torrent", encoding: .bencoding),
     ],
     authentication: [
-        .password(invalidCodes: [401]),
+        .basic,
         .token(
             .header(
                 field: "X-Transmission-Session-Id",
                 code: 409
             )
+        )
+    ],
+    errors: [
+        .init(
+            type: .password,
+            codes: [401]
+        ),
+        .init(
+            type: .forbidden,
+            codes: [403]
         )
     ],
     jobs: .init(

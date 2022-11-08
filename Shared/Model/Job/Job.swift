@@ -7,8 +7,11 @@
 
 import MonadicJSON
 import Foundation
+import Tagged
 
 enum Job {
+    typealias Id = Tagged<Job, String>
+
     struct Descriptor: Codable, Hashable {
         var status: [Status: [LosslessValue<String>]]
     }
@@ -55,7 +58,8 @@ enum Job {
         @LosslessValue var downloaded: UInt?
         @LosslessValue var size: UInt?
         @LosslessValue var eta: Int?
-        var fields: [Field] = []
+        var fields: [Job.Field.Descriptor.PresetField: Field] = [:]
+        var adHocFields: [Field] = []
     }
 }
 
@@ -104,6 +108,10 @@ extension Job.Field {
                         .map { .init(name: name, value: .seconds($0)) }
                 case let (.string, .string(value)):
                     return .init(name: name, value: .string(value))
+                case let (.string, .bool(value)):
+                    return .init(name: name, value: .string(value.description))
+                case let (.string, .number(value)):
+                    return .init(name: name, value: .string(value.description))
                 case let (.bool, .bool(value)):
                     return .init(name: name, value: .bool(value))
                 default:
@@ -133,6 +141,29 @@ extension Job.Field {
                         .unCamelCased
                         .joined(separator: " ")
                         .capitalized
+                }
+            }
+
+            var type: FieldType {
+                switch self {
+                case .name:
+                    return .string
+                case .status:
+                    return .string
+                case .id:
+                    return .string
+                case .uploadSpeed:
+                    return .speed
+                case .downloadSpeed:
+                    return .speed
+                case .uploaded:
+                    return .size
+                case .downloaded:
+                    return .size
+                case .size:
+                    return .size
+                case .eta:
+                    return .seconds
                 }
             }
         }
@@ -283,6 +314,9 @@ extension Job.Raw: JSONInitialisable {
             case let .field(field):
                 switch field {
                 case let .preset(field):
+                    if let jobField = field.type.jobField(for: json, name: field.description) {
+                        fields[field] = jobField
+                    }
                     switch field {
                     case .name:
                         _name = try .init(from: json)
@@ -307,7 +341,7 @@ extension Job.Raw: JSONInitialisable {
                     break
                 case let .adHoc(field):
                     if let jobField = field.type.jobField(for: json, name: field.name) {
-                        fields.append(jobField)
+                        adHocFields.append(jobField)
                     }
                 }
             case .forEach:

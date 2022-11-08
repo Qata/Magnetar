@@ -72,6 +72,7 @@ extension SortingView {
                             .tag(Optional(field))
                     }
                 }
+                .pickerStyle(.inline)
             }
         }
     }

@@ -8,18 +8,21 @@
 
 import Foundation
 import Combine
+import Tagged
 
 struct Server: Hashable, Codable {
+    typealias Name = Tagged<Self, String>
+
     var url: URL
     var user: String?
     var password: String?
     var token: String?
     var port: UInt16
-    var name: String
+    var name: Name
     var downloadDirectories: [String] = []
     var api: APIDescriptor
     var refreshInterval: TimeInterval = 2
-    var timeoutInterval: TimeInterval = 10
+    var timeoutInterval: TimeInterval = 30
     var lastSeen: Unhashed<Date?> = .init(underlying: nil)
 
     var sorting: Sorting = .init()

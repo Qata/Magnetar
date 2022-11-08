@@ -21,7 +21,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
 
     let name: String
     let status: Status
-    let id: String
+    let id: Job.Id
     let uploadSpeed: Speed
     let downloadSpeed: Speed
     let uploaded: Size
@@ -29,6 +29,8 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
     let size: Size
     let eta: ETA
     let ratio: Ratio
+
+    let fields: [Job.Field.Descriptor.PresetField: Job.Field]
     let additional: [Job.Field]
     let additionalDictionary: [String: Job.Field]
 
@@ -42,7 +44,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
                 .if(true: key)
         } ?? .unknown
         self.name = job.name ?? ""
-        self.id = id
+        self.id = .init(rawValue: id)
         self.uploadSpeed = .init(
             bytes: job.uploadSpeed ?? .zero
         )
@@ -64,23 +66,36 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
             downloaded: downloaded.bytes,
             uploaded: uploaded.bytes
         )
-        self.additional = job.fields
-        self.additionalDictionary = Dictionary(job.fields.map { ($0.name, $0) }, uniquingKeysWith: { $1 })
+        self.fields = job.fields
+        self.additional = job.adHocFields
+        self.additionalDictionary = Dictionary(
+            job.adHocFields.map { ($0.name, $0) },
+            uniquingKeysWith: { $1 }
+        )
     }
-    
+
     var statusColor: Color {
         switch status {
         case .downloading:
             return .blue
         case .seeding:
             return .green
-        case .stopped, .seedQueued, .downloadQueued, .paused, .checkingFiles, .fileCheckQueued:
+        case .stopped,
+                .seedQueued,
+                .downloadQueued,
+                .paused,
+                .checkingFiles,
+                .fileCheckQueued:
             return .gray
         case .unknown:
             return .red
         }
     }
-    
+
+    subscript(_ field: Job.Field.Descriptor.PresetField) -> Job.Field? {
+        fields[field]
+    }
+
     var description: String {
         accessibleDescription
     }

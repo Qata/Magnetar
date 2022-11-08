@@ -14,11 +14,13 @@ enum ServerStatus: String, CustomStringConvertible, Codable {
     case attemptingConnection
 
     var description: String {
-        switch self {
-        case .online, .offline:
-            return "Host \(rawValue.capitalized)"
-        case .attemptingConnection:
-            return "Attempting Connection"
+        expression {
+            switch self {
+            case .online, .offline:
+                "Host \(rawValue.capitalized)"
+            case .attemptingConnection:
+                "Attempting Connection"
+            }
         }
     }
 }

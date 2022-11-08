@@ -8,15 +8,28 @@
 import SwiftUI
 
 struct CommandsMenu: View {
-    let jobs: [JobViewModel]
-    var image: SystemImage = .playpause
-    var onRemove: () -> Void = {}
+    var ids: [Job.Id]
+    var image: SystemImage
+    var onRemove: () -> Void
+
+    init<Identifiers: Sequence>(
+        ids: Identifiers,
+        image: SystemImage = .playpause,
+        onRemove: @escaping () -> Void = {}
+    ) where Identifiers.Element == Job.Id {
+        self.ids = .init(ids)
+        self.image = image
+        self.onRemove = onRemove
+    }
 
     var body: some View {
         Menu {
-            CommandsGroup(jobs: jobs, onRemove: onRemove)
+            CommandsGroup(
+                ids: ids,
+                onRemove: onRemove
+            )
         } label: {
-            image
+            Label("Commands", icon: image)
         }
     }
 }
@@ -24,13 +37,15 @@ struct CommandsMenu: View {
 struct CommandsGroup: View {
     static let statuses = Set(Status.allCases)
 
-    let ids: [String]
-    let jobs: [JobViewModel]
-    var onRemove: () -> Void = {}
-    
-    init(jobs: [JobViewModel], onRemove: @escaping () -> Void = {}) {
-        self.jobs = jobs
-        self.ids = jobs.map(\.id)
+    var ids: [Job.Id]
+    var onRemove: () -> Void
+
+    init<Identifiers: Sequence>(
+        ids: Identifiers,
+        image: SystemImage = .playpause,
+        onRemove: @escaping () -> Void = {}
+    ) where Identifiers.Element == Job.Id {
+        self.ids = .init(ids)
         self.onRemove = onRemove
     }
 
@@ -40,19 +55,21 @@ struct CommandsGroup: View {
         invalidStatuses: Set<Status>
     ) -> some View {
         OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
-            if api.available(command: command.discriminator),
-               !jobs.allSatisfy({ invalidStatuses.contains($0.status) })
-            {
-                Button {
-                    dispatch(async: .command(command))
-                } label: {
-                    Label(command.discriminator.description, icon: image)
+            StoreView(\.jobs.statuses) { statuses in
+                if api.available(command: command.discriminator),
+                   !statuses.allSatisfy(invalidStatuses.contains)
+                {
+                    Button {
+                        dispatch(async: .command(command))
+                    } label: {
+                        Label(command.discriminator.description, icon: image)
+                    }
+    //                .disabled(
+    //                    jobs.allSatisfy {
+    //                        invalidStatuses.contains($0.status)
+    //                    }
+    //                )
                 }
-//                .disabled(
-//                    jobs.allSatisfy {
-//                        invalidStatuses.contains($0.status)
-//                    }
-//                )
             }
         }
     }

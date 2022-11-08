@@ -24,7 +24,7 @@ indirect enum RequestJSON: Hashable, Codable {
     case parameter(RequestParameter)
 
     func resolve(command: Command, server: Server) -> JSON {
-        var ids: [String] = command.ids.reversed()
+        var ids: [Job.Id] = command.ids.reversed()
         func recurse(json: RequestJSON) -> JSON? {
             switch json {
             case let .object(json):

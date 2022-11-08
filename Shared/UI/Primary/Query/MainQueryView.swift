@@ -13,14 +13,22 @@ import SwiftUINavigation
 struct MainQueryView: View {
     let dispatch = Global.store.writeOnly(sync: { $0 })
     @State var showAddQuery = false
-    @State var query: Query?
+    @State var query: WebQuery?
     @State var url: URL??
     @State var searchString = ""
     
-    func delete(query named: String) {
+    func delete(query named: WebQuery.Name) {
         dispatch(sync: .delete(.query(name: named)))
     }
     
+    func deleteButton(name: WebQuery.Name) -> some View {
+        Button(role: .destructive) {
+            delete(query: name)
+        } label: {
+            Label("Delete", icon: .xmark)
+        }
+    }
+
     var queries: some View {
         StoreView(\.persistent.queries) { queries, dispatch in
             Section("Queries") {
@@ -32,14 +40,10 @@ struct MainQueryView: View {
                             self.query = query
                         }
                     } label: {
-                        Text(query.name)
+                        Text(query.name.rawValue)
                     }
                     .contextMenu {
-                        Button(role: .destructive) {
-                            delete(query: query.name)
-                        } label: {
-                            Label("Delete", icon: .xmarkBin)
-                        }
+                        deleteButton(name: query.name)
                     }
                     .accessibilityAction(named: "Delete") {
                         delete(query: query.name)
@@ -72,7 +76,7 @@ struct MainQueryView: View {
             }
 
             queries.alert(
-                query?.name ?? "",
+                query?.name.rawValue ?? "",
                 isPresented: $query.isPresent(),
                 actions: {
                     alertActions

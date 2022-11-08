@@ -10,10 +10,16 @@
 		CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
 		CB0F3B6F2884D9CE009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
 		CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = CB1B6F5628D2D2C7005758EA /* Overture */; };
+		CB56A33129038F3300B1FEFF /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = CB56A33029038F3300B1FEFF /* Collections */; };
+		CB56A33329038F3300B1FEFF /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = CB56A33229038F3300B1FEFF /* OrderedCollections */; };
+		CB56A3352903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */; };
+		CB56A3362903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */; };
 		CB577E0B27C4827D00F59AB3 /* Recombine.StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */; };
 		CB577E0C27C4827D00F59AB3 /* Recombine.StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */; };
 		CB577E0E27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */; };
 		CB577E0F27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */; };
+		CB632FAA28F01CEF00D480DA /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB632FA928F01CEF00D480DA /* Expression.swift */; };
+		CB632FAB28F01CEF00D480DA /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB632FA928F01CEF00D480DA /* Expression.swift */; };
 		CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
 		CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
 		CB66B87A27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */; };
@@ -21,14 +27,14 @@
 		CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */ = {isa = PBXBuildFile; productRef = CB66B87D27BF327000C2A62F /* ShareSheetView */; };
 		CB66B88027BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */; };
 		CB66B88127BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */; };
-		CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
-		CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Regex.swift */; };
+		CB66B88327BF7AA000C2A62F /* Swift.Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */; };
+		CB66B88427BF7AA000C2A62F /* Swift.Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */; };
 		CB66B88927C3330900C2A62F /* AddQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88827C3330900C2A62F /* AddQueryView.swift */; };
 		CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88827C3330900C2A62F /* AddQueryView.swift */; };
 		CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */; };
 		CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */; };
-		CB66B89227C3397400C2A62F /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* Query.swift */; };
-		CB66B89327C3397400C2A62F /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* Query.swift */; };
+		CB66B89227C3397400C2A62F /* WebQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* WebQuery.swift */; };
+		CB66B89327C3397400C2A62F /* WebQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B89127C3397400C2A62F /* WebQuery.swift */; };
 		CB673482287FE38400F9F35F /* AsyncServerQuerying.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB673481287FE38400F9F35F /* AsyncServerQuerying.swift */; };
 		CB6B0EF527B25225009CE0B5 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF427B25225009CE0B5 /* Tests_iOS.swift */; };
 		CB6B0EF727B25225009CE0B5 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0EF627B25225009CE0B5 /* Tests_iOSLaunchTests.swift */; };
@@ -122,6 +128,8 @@
 		CB6B0FB527B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */; };
 		CB6B0FB727B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
 		CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
+		CB73C05929164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */; };
+		CB73C05A29164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */; };
 		CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
 		CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
 		CB7AC3C027B3C8FC0087929C /* Synology.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Synology.swift */; };
@@ -160,6 +168,8 @@
 		CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = CB9F9E8327BCC52E00CA93E6 /* CasePaths */; };
 		CB9F9E8627BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */; };
 		CB9F9E8727BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */; };
+		CBA2171F290B6DD1003061EB /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA2171E290B6DD1003061EB /* LazyView.swift */; };
+		CBA21720290B6DD1003061EB /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA2171E290B6DD1003061EB /* LazyView.swift */; };
 		CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61828C8730400B0C6EA /* CommandsGroup.swift */; };
 		CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61828C8730400B0C6EA /* CommandsGroup.swift */; };
 		CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */; };
@@ -188,6 +198,8 @@
 		CBBF93B927B3C4060060CB06 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93B827B3C4060060CB06 /* Job.swift */; };
 		CBBF93BD27B3C4A90060CB06 /* Job.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */; };
 		CBBF93C227B3C4FF0060CB06 /* ETA.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF93C127B3C4FF0060CB06 /* ETA.swift */; };
+		CBC1981A28EE7EE400FD115B /* SwiftUI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1981928EE7EE400FD115B /* SwiftUI.View.swift */; };
+		CBC1981B28EE7EE400FD115B /* SwiftUI.View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC1981928EE7EE400FD115B /* SwiftUI.View.swift */; };
 		CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */; };
 		CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
 		CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */; };
@@ -219,15 +231,17 @@
 
 /* Begin PBXFileReference section */
 		CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedCollections.OrderedDictionary.swift; sourceTree = "<group>"; };
 		CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recombine.StoreView.swift; sourceTree = "<group>"; };
 		CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.Button.swift; sourceTree = "<group>"; };
+		CB632FA928F01CEF00D480DA /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		CB66B87627BDEAAE00C2A62F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKit.UIApplication.swift; sourceTree = "<group>"; };
 		CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.StringProtocol.swift; sourceTree = "<group>"; };
-		CB66B88227BF7AA000C2A62F /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.Regex.swift; sourceTree = "<group>"; };
 		CB66B88827C3330900C2A62F /* AddQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQueryView.swift; sourceTree = "<group>"; };
 		CB66B88B27C3332300C2A62F /* ExplodedUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplodedUrlView.swift; sourceTree = "<group>"; };
-		CB66B89127C3397400C2A62F /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		CB66B89127C3397400C2A62F /* WebQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebQuery.swift; sourceTree = "<group>"; };
 		CB673481287FE38400F9F35F /* AsyncServerQuerying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncServerQuerying.swift; sourceTree = "<group>"; };
 		CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnetarApp.swift; sourceTree = "<group>"; };
 		CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -279,6 +293,7 @@
 		CB6B0FAD27B27A9F009CE0B5 /* AutoSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSorting.swift; sourceTree = "<group>"; };
 		CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleCustomStringConvertible.swift; sourceTree = "<group>"; };
 		CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.AttributedString.swift; sourceTree = "<group>"; };
 		CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitialisable.swift; sourceTree = "<group>"; };
 		CB7AC3BF27B3C8FC0087929C /* Synology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synology.swift; sourceTree = "<group>"; };
 		CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
@@ -297,6 +312,7 @@
 		CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.Label.swift; sourceTree = "<group>"; };
 		CB9F9E7F27BC89A500CA93E6 /* SwiftUI.NavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.NavigationLink.swift; sourceTree = "<group>"; };
 		CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.Publisher.swift; sourceTree = "<group>"; };
+		CBA2171E290B6DD1003061EB /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		CBADD61828C8730400B0C6EA /* CommandsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandsGroup.swift; sourceTree = "<group>"; };
 		CBADD61B28C8C51200B0C6EA /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
 		CBADD61E28C8C5AD00B0C6EA /* SortingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingMenu.swift; sourceTree = "<group>"; };
@@ -313,6 +329,7 @@
 		CBBF93B827B3C4060060CB06 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		CBBF93BC27B3C4A90060CB06 /* Job.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.ViewModel.swift; sourceTree = "<group>"; };
 		CBBF93C127B3C4FF0060CB06 /* ETA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETA.swift; sourceTree = "<group>"; };
+		CBC1981928EE7EE400FD115B /* SwiftUI.View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.View.swift; sourceTree = "<group>"; };
 		CBDB1C0E28D2B7C200FCDF50 /* ViewDidLoadModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDidLoadModifier.swift; sourceTree = "<group>"; };
 		CBDB1C1428D2C55F00FCDF50 /* TextFieldSelectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSelectionModifier.swift; sourceTree = "<group>"; };
 		CBE69F8728BF237500BCECF7 /* ServerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerList.swift; sourceTree = "<group>"; };
@@ -326,8 +343,10 @@
 			files = (
 				CB6B0F2127B252A0009CE0B5 /* Algorithms in Frameworks */,
 				CB6B0F1B27B25262009CE0B5 /* MonadicJSON in Frameworks */,
+				CB56A33329038F3300B1FEFF /* OrderedCollections in Frameworks */,
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 				CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */,
+				CB56A33129038F3300B1FEFF /* Collections in Frameworks */,
 				CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 				CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */,
@@ -381,7 +400,7 @@
 				CB66B88727C332D300C2A62F /* Add Query */,
 				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
 				CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */,
-				CB66B89127C3397400C2A62F /* Query.swift */,
+				CB66B89127C3397400C2A62F /* WebQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -428,11 +447,11 @@
 		CB6B0EDB27B25224009CE0B5 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CB67347F287FE33500F9F35F /* Logic */,
 				CB6B0EDC27B25224009CE0B5 /* MagnetarApp.swift */,
+				CB6B0F6F27B253E2009CE0B5 /* Redux */,
+				CB67347F287FE33500F9F35F /* Logic */,
 				CB91361D28D41B5B0034E67F /* Mocks */,
 				CB6B0F8927B253F2009CE0B5 /* Model */,
-				CB6B0F6F27B253E2009CE0B5 /* Redux */,
 				CB6B0FAC27B27A8B009CE0B5 /* Sourcery */,
 				CB6B0F4A27B253DC009CE0B5 /* Types */,
 				CB9F9E7B27BC86D400CA93E6 /* Type Extensions */,
@@ -517,6 +536,7 @@
 				CB6B0F3627B2534D009CE0B5 /* JobRowView.swift */,
 				CB6B0F3827B2534D009CE0B5 /* TransferTotalsView.swift */,
 				CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */,
+				CBA2171E290B6DD1003061EB /* LazyView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -529,10 +549,10 @@
 				CB6B0F4D27B253DC009CE0B5 /* Clamping.swift */,
 				CB6B0F4C27B253DC009CE0B5 /* Either.swift */,
 				CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */,
+				CB632FA928F01CEF00D480DA /* Expression.swift */,
 				CB6B0F5127B253DC009CE0B5 /* LosslessValue.swift */,
 				CB91362828D6ECA40034E67F /* MultipartFormDataRequest.swift */,
 				CBBF938D27B34A5A0060CB06 /* Operators.swift */,
-				CB66B88227BF7AA000C2A62F /* Regex.swift */,
 				CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */,
 				CB6B0FA927B2788E009CE0B5 /* Sorting.swift */,
 				CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */,
@@ -643,19 +663,23 @@
 			isa = PBXGroup;
 			children = (
 				CB9F9E8527BCD7FE00CA93E6 /* Combine.Publisher.swift */,
+				CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */,
 				CB6B0F4F27B253DC009CE0B5 /* Foundation.StringInterpolation.swift */,
 				CB6B0F5627B253DC009CE0B5 /* Foundation.TimeInterval.swift */,
 				CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */,
+				CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */,
 				CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */,
 				CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */,
 				CB6B0F4E27B253DC009CE0B5 /* Swift.Collection.swift */,
 				CB6B0F5527B253DC009CE0B5 /* Swift.Optional.swift */,
+				CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */,
 				CB6B0F5027B253DC009CE0B5 /* Swift.Sequence.swift */,
 				CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */,
 				CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */,
 				CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */,
 				CB9F9E7C27BC877900CA93E6 /* SwiftUI.Label.swift */,
 				CB9F9E7F27BC89A500CA93E6 /* SwiftUI.NavigationLink.swift */,
+				CBC1981928EE7EE400FD115B /* SwiftUI.View.swift */,
 				CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */,
 			);
 			path = "Type Extensions";
@@ -737,6 +761,8 @@
 				CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */,
 				CBDB1C1228D2B95100FCDF50 /* Tagged */,
 				CB1B6F5628D2D2C7005758EA /* Overture */,
+				CB56A33029038F3300B1FEFF /* Collections */,
+				CB56A33229038F3300B1FEFF /* OrderedCollections */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -846,6 +872,7 @@
 				CBDB1C0B28D1DBA600FCDF50 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 				CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */,
+				CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -923,6 +950,7 @@
 				CB91362228D41B9D0034E67F /* qBittorrent.swift in Sources */,
 				CB6B0F3427B252FC009CE0B5 /* MainView.swift in Sources */,
 				CB91361828D409590034E67F /* RequestQueryItems.swift in Sources */,
+				CBC1981A28EE7EE400FD115B /* SwiftUI.View.swift in Sources */,
 				CB91361B28D410ED0034E67F /* RequestEndpoint.swift in Sources */,
 				CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
@@ -951,7 +979,7 @@
 				CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
 				CB91362928D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */,
-				CB66B88327BF7AA000C2A62F /* Regex.swift in Sources */,
+				CB66B88327BF7AA000C2A62F /* Swift.Regex.swift in Sources */,
 				CB91361F28D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CB6B0F5D27B253DC009CE0B5 /* Swift.Collection.swift in Sources */,
@@ -965,6 +993,7 @@
 				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB91362F28D6FE160034E67F /* RequestEndpoint.Path.swift in Sources */,
 				CB6B0F6727B253DC009CE0B5 /* Swift.Bool.swift in Sources */,
+				CBA2171F290B6DD1003061EB /* LazyView.swift in Sources */,
 				CB6B0F8327B253EA009CE0B5 /* Ratio.swift in Sources */,
 				CB91360F28D4061F0034E67F /* RequestParameter.swift in Sources */,
 				CBDB1C0F28D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
@@ -981,7 +1010,8 @@
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
 				CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
-				CB66B89227C3397400C2A62F /* Query.swift in Sources */,
+				CB632FAA28F01CEF00D480DA /* Expression.swift in Sources */,
+				CB66B89227C3397400C2A62F /* WebQuery.swift in Sources */,
 				CB6B0F2E27B252FC009CE0B5 /* SortingView.swift in Sources */,
 				CB6B0F9927B253F2009CE0B5 /* Payload.Expected.swift in Sources */,
 				CB6B0FB427B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift in Sources */,
@@ -995,10 +1025,12 @@
 				CB6B0FA127B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
+				CB73C05929164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
 				CB91362628D6CE6A0034E67F /* QueryItem.swift in Sources */,
 				CB9F9E8627BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
 				CBADD62728CEEB1000B0C6EA /* SettingsView.swift in Sources */,
+				CB56A3352903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */,
 				CB6B0F6D27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
 				CBE69F8828BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB673482287FE38400F9F35F /* AsyncServerQuerying.swift in Sources */,
@@ -1033,6 +1065,7 @@
 				CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
 				CB91361C28D410ED0034E67F /* RequestEndpoint.swift in Sources */,
 				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
+				CB56A3362903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */,
 				CB91362028D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
 				CB8C1F3727B2A1E600E1AAA4 /* SystemImage.swift in Sources */,
@@ -1059,6 +1092,7 @@
 				CB9F9E7E27BC877900CA93E6 /* SwiftUI.Label.swift in Sources */,
 				CB66B88A27C3330900C2A62F /* AddQueryView.swift in Sources */,
 				CB91362A28D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */,
+				CB632FAB28F01CEF00D480DA /* Expression.swift in Sources */,
 				CB6B0F4727B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CBADD61D28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F2F27B252FC009CE0B5 /* SortingView.swift in Sources */,
@@ -1071,6 +1105,7 @@
 				CB6B0F3D27B2534E009CE0B5 /* JobRowView.swift in Sources */,
 				CBADD62028C8C5AD00B0C6EA /* SortingMenu.swift in Sources */,
 				CB91362D28D6FC100034E67F /* RequestMultipartFormData.swift in Sources */,
+				CBC1981B28EE7EE400FD115B /* SwiftUI.View.swift in Sources */,
 				CB9F9E8727BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
 				CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
 				CB66B88127BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */,
@@ -1081,19 +1116,21 @@
 				CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */,
 				CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */,
 				CB91363028D6FE160034E67F /* RequestEndpoint.Path.swift in Sources */,
-				CB66B89327C3397400C2A62F /* Query.swift in Sources */,
-				CB66B88427BF7AA000C2A62F /* Regex.swift in Sources */,
+				CB66B89327C3397400C2A62F /* WebQuery.swift in Sources */,
+				CB66B88427BF7AA000C2A62F /* Swift.Regex.swift in Sources */,
 				CB6B0FA227B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA627B253F3009CE0B5 /* Status.swift in Sources */,
 				CB66B87B27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */,
 				CB6B0F8827B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB91362328D41B9D0034E67F /* qBittorrent.swift in Sources */,
 				CB6B0FA027B253F3009CE0B5 /* Server.swift in Sources */,
+				CB73C05A29164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */,
 				CB9F9E8127BC89A500CA93E6 /* SwiftUI.NavigationLink.swift in Sources */,
 				CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
+				CBA21720290B6DD1003061EB /* LazyView.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
 				CB91363328D70AA50034E67F /* RequestFileName.swift in Sources */,
 				CB91362728D6CE6A0034E67F /* QueryItem.swift in Sources */,
@@ -1532,6 +1569,14 @@
 				minimumVersion = 0.5.0;
 			};
 		};
+		CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rebeloper/ShareSheetView.git";
@@ -1611,6 +1656,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */;
 			productName = Overture;
+		};
+		CB56A33029038F3300B1FEFF /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		CB56A33229038F3300B1FEFF /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 		CB66B87D27BF327000C2A62F /* ShareSheetView */ = {
 			isa = XCSwiftPackageProductDependency;

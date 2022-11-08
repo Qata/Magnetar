@@ -39,7 +39,7 @@ protocol RequestParameterContainer {
 }
 
 extension RequestParameterContainer {
-    func resolve(parameter: RequestParameter, command: Command, server: Server, ids: inout [String]) -> Resolved {
+    func resolve(parameter: RequestParameter, command: Command, server: Server, ids: inout [Job.Id]) -> Resolved {
         switch parameter {
         case let .string(string):
             return promote(resolve(string: string))
@@ -72,6 +72,7 @@ extension RequestParameterContainer {
             case .id:
                 return promote(
                     ids.popLast()
+                        .map(\.rawValue)
                         .map(resolve(string:))
                 )
             }
@@ -82,7 +83,7 @@ extension RequestParameterContainer {
                 return promote(
                     ids.isEmpty.if(
                         false: resolve(
-                            array: ids,
+                            array: ids.map(\.rawValue),
                             separator: separator
                         )
                     )

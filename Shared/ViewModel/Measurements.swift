@@ -65,6 +65,10 @@ enum DataSizeClass: String, Codable, CaseIterable {
 struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
     private let size: Size
     
+    static var zero: Self {
+        .init(bytes: .zero)
+    }
+
     init(bytes: UInt) {
         size = .init(bytes: bytes)
         description = size.description + "/s"

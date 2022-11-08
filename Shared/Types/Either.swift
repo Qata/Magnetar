@@ -21,6 +21,12 @@ enum Either<Left, Right> {
     }
 }
 
+extension Either: Equatable where Left: Equatable, Right: Equatable {
+}
+
+extension Either: Hashable where Left: Hashable, Right: Hashable {
+}
+
 extension Either: Codable where Left: Codable, Right: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()

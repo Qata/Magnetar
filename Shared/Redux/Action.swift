@@ -7,6 +7,7 @@
 
 import Foundation
 import Recombine
+import OrderedCollections
 
 typealias Action = EitherAction<AsyncAction, SyncAction>
 enum AsyncAction {
@@ -16,14 +17,16 @@ enum AsyncAction {
 }
 enum SyncAction {
     enum Create {
-        case query(Query)
+        case query(WebQuery)
         case error(AppError)
+        case queuedCommand(Command)
     }
     enum Set {
+        case searchText(String)
         case sorting(Sorting)
         case selectedServer(Server)
         case refreshInterval(TimeInterval)
-        case jobs([String: JobViewModel])
+        case jobs(OrderedDictionary<Job.Id, JobViewModel>)
         case token(String?)
     }
     enum Update {
@@ -38,18 +41,22 @@ enum SyncAction {
         }
 
         case sorting(Sorting)
-        case jobs([String: JobViewModel?])
+        case jobs([Job.Id: JobViewModel?])
         case filter(Status)
     }
     enum Delete {
-        case jobs([String])
+        case server(Server.Name)
+        case jobs([Job.Id])
         case filter
         case errors
-        case query(name: String)
-        case queries(indices: IndexSet)
+        case query(name: WebQuery.Name)
+    }
+    enum Navigation {
+        case tab(Global.State.Navigation)
     }
     case create(Create)
     case set(Set)
     case update(Update)
     case delete(Delete)
+    case navigate(Navigation)
 }

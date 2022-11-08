@@ -28,6 +28,8 @@ let synologyAPI = APIDescriptor(
     authentication: [
         
     ],
+    errors: [
+    ],
     jobs: .init(
         status: [
             .seedQueued: [],

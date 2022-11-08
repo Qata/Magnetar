@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ServerStatusHeader: View {
     let status: ServerStatus
-    let ids: [String]
+    let ids: [Job.Id]
 
     func button(for command: Command, image: SystemImage) -> some View {
         OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in

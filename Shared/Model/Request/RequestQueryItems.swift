@@ -33,7 +33,7 @@ struct RequestQueryItems: Hashable, Codable {
     }
 
     func resolve(command: Command, server: Server) -> [Magnetar.QueryItem] {
-        var ids: [String] = command.ids.reversed()
+        var ids: [Job.Id] = command.ids.reversed()
         return queryItems.map { item -> Magnetar.QueryItem in
             switch item.value {
             case let .value(value):

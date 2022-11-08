@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Tagged
 
-struct Query: Codable, Hashable {
+struct WebQuery: Codable, Hashable {
     struct Parameter: Codable, Hashable {
         enum Location: String, Codable, Hashable {
             case none
@@ -16,7 +17,7 @@ struct Query: Codable, Hashable {
         }
         let location: Location
         let index: Int
-        
+
         static var none: Self {
             .init(location: .none, index: .zero)
         }
@@ -36,7 +37,9 @@ struct Query: Codable, Hashable {
         }
     }
 
-    var name = ""
+    typealias Name = Tagged<Self, String>
+
+    var name = Name(rawValue: "")
     let base: URL
     var path: Indexed<String>
     var queryItems: Indexed<QueryItem>
@@ -44,7 +47,7 @@ struct Query: Codable, Hashable {
     
     func updated(name: String, parameter: Parameter?) -> Self {
         var copy = self
-        copy.name = name
+        copy.name.rawValue = name
         copy.parameter = parameter
         return copy
     }
@@ -78,7 +81,7 @@ struct Query: Codable, Hashable {
     }
 }
 
-extension Query {
+extension WebQuery {
     init?(url: URL) {
         guard var components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             return nil

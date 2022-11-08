@@ -12,7 +12,7 @@ struct CommandButton<Content: View>: View {
 
     init(
         title: Bool,
-        command: ([String]) -> Command,
+        command: ([Job.Id]) -> Command,
         viewModel: JobViewModel,
         invalidStatuses: [Status],
         api: APIDescriptor,
@@ -64,13 +64,20 @@ struct CommandButton<Content: View>: View {
 }
 
 struct JobDetailView: View {
+    enum Presentation {
+        case sheet
+        case push
+    }
+
     let store: SubStore<JobViewModel?, AsyncAction, SyncAction>
+    let presentation: Presentation
     @Environment(\.dismiss) var dismiss
     @State var viewModel: JobViewModel
     
-    init?(id: String) {
+    init?(id: Job.Id, presentation: Presentation) {
+        self.presentation = presentation
         store = Global.store.lensing {
-            $0.jobs[id]
+            $0.jobs.all[id]
         }
         guard let viewModel = store.state else {
             return nil
@@ -90,7 +97,7 @@ struct JobDetailView: View {
 
     var secondSection: some View {
         Section {
-            HLabel("ID", text: viewModel.id)
+            HLabel("Identifier", text: viewModel.id)
             HLabel("Upload Speed", text: viewModel.uploadSpeed)
             HLabel("Download Speed", text: viewModel.downloadSpeed)
             HLabel("Ratio", text: viewModel.ratio)
@@ -115,15 +122,28 @@ struct JobDetailView: View {
     var body: some View {
         VStack {
             List {
-                firstSection
-                secondSection
-                additionalSection
+                if presentation == .sheet {
+                    HStack {
+                        Spacer()
+//                        CommandsMenu(image: .playpause) {
+//                            dismiss()
+//                        }
+                    }
+                }
+                Group {
+                    firstSection
+                    secondSection
+                    additionalSection
+                }
+                .monospacedDigit()
             }
             .navigationTitle(viewModel.name)
             .toolbar {
-                ToolbarItemGroup(placement: .primaryAction) {
-                    CommandsMenu(jobs: [viewModel], image: .playpause) {
-                        dismiss()
+                if presentation == .push {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        CommandsMenu(ids: [viewModel.id]) {
+                            dismiss()
+                        }
                     }
                 }
             }
