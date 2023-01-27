@@ -84,7 +84,6 @@ struct JobRowView: View {
     }
 
     var body: some View {
-        #warning("Fix CommandsMenu")
         VStack {
             Text(viewModel.name)
                 .font(.body.bold())
@@ -97,7 +96,10 @@ struct JobRowView: View {
                 .accessibility(label: Text("Name"))
                 .padding(.bottom, -2)
             ProgressBar(
-                current: viewModel.downloaded.bytes,
+                current: (viewModel.status == .seeding).if(
+                    true: viewModel.size.bytes,
+                    false: viewModel.downloaded.bytes
+                ),
                 max: max(
                     viewModel.downloaded.bytes,
                     viewModel.size.bytes

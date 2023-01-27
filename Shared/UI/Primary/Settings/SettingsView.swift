@@ -11,12 +11,12 @@ struct SettingsView: View {
     var body: some View {
         List {
             NavigationLink(
-                destination: EmptyView(),
-                label: Label("APIs", icon: .cloudFill)
-            )
-            NavigationLink(
                 destination: ServerList(),
                 label: Label("Servers", icon: .serverRack)
+            )
+            NavigationLink(
+                destination: EmptyView(),
+                label: Label("APIs", icon: .cloudFill)
             )
             NavigationLink(
                 destination: List {
@@ -26,6 +26,7 @@ struct SettingsView: View {
                 label: Label("Info", icon: .infoCircle)
             )
         }
+        .navigationTitle("Settings")
     }
 }
 

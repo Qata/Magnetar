@@ -10,30 +10,32 @@ import Recombine
 import ShareSheetView
 import Overture
 
-struct QueryWebView: View {
-    enum PendingJob {
-        case file(URL)
-        case uri(URL)
+enum PendingJob: Hashable, Codable {
+    case file(URL)
+    case uri(URL)
 
-        func action(location: String?) -> AsyncAction {
-            switch self {
-            case let .uri(url):
-                return .command(.addURI(url.absoluteString, location: location))
-            case let .file(url):
-                return .reuploadFile(url, location: location)
-            }
+    func action(location: String?) -> AsyncAction {
+        switch self {
+        case let .uri(url):
+            return .command(.addURI(url.absoluteString, location: location))
+        case let .file(url):
+            return .reuploadFile(url, location: location)
         }
     }
-    
+}
+
+struct QueryWebView: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
     @StateObject var webViewStore = WebViewStore()
     @Environment(\.dismiss) var dismiss
     let initialUrl: URL?
     @State var showAddQuery = false
+
     @State var viewWidth = CGFloat.zero
     @State var urlString = ""
     @State var pendingJob: PendingJob?
     @State private var isShareSheetViewPresented = false
+    @State private var isOutboxPresented = false
     @FocusState private var urlFocused: Bool
 
     init(url: URL?) {
@@ -43,14 +45,13 @@ struct QueryWebView: View {
     init(url: String) {
         self.init(url: URL(string: url))
     }
-    
+
     func sanitiseURL() {
-        let validSchemes = ["https", "http"].map({ "\($0)://"})
-        if !validSchemes.contains(where: urlString.hasPrefix) {
-            urlString = validSchemes[0] + urlString
+        if !urlString.starts(with: /https?:\/\//) {
+            urlString = "https://" + urlString
         }
     }
-    
+
     func submit() {
         sanitiseURL()
         webViewStore.tryLoad(string: urlString)
@@ -106,7 +107,7 @@ struct QueryWebView: View {
         .padding(.horizontal, 24)
         .backgroundStyle(.secondary)
     }
-    
+
     func onAppear() {
         if urlString.isEmpty {
             urlFocused = true
@@ -214,7 +215,7 @@ struct QueryWebView: View {
             }
         }
     }
-    
+
     func addJob(directories: [String], type: WebView.AddJobType, url: URL) {
         let pending: PendingJob
         switch type {
@@ -229,7 +230,7 @@ struct QueryWebView: View {
             dispatch(async: pending.action(location: directories.first))
         }
     }
-    
+
     func webView(
         for directories: [String],
         dispatch: ActionLens<AsyncAction, SyncAction>
@@ -252,9 +253,9 @@ struct QueryWebView: View {
     var body: some View {
         VStack(spacing: .zero) {
             StoreView {
-                $0.persistent.selectedServer?.downloadDirectories ?? []
+                $0.persistent.selectedServer?.destinations ?? []
             } content: {
-                webView(for: $0, dispatch: $1)
+                webView(for: Array($0), dispatch: $1)
             }
             VStack {
                 urlView
@@ -270,6 +271,31 @@ struct QueryWebView: View {
                     .bold()
                     .lineLimit(1)
             }
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                OutboxButton(count: 0, binding: $isOutboxPresented)
+            }
         }
+    }
+}
+
+struct OutboxButton: View {
+    let count: Int
+    @Binding var binding: Bool
+
+    var badgeSystemName: String {
+        (count <= 50).if(
+            true: "\(count).circle.fill",
+            false: "exclamationmark.circle.fill"
+        )
+    }
+
+    var body: some View {
+        Button(image: .outbox, binding: $binding)
+            .padding(.trailing, 10)
+            .overlay(alignment: .bottomTrailing) {
+                Image(systemName: badgeSystemName)
+                    .foregroundStyle(.white, .clear, .red)
+                    .font(.footnote)
+            }
     }
 }

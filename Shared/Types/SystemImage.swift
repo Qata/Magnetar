@@ -45,9 +45,14 @@ public enum SystemImage: String, View {
     case squareAndArrowUp
     case stop
     case stopFill
+    case trayAndArrowUp
     case xmark
     case xmarkBin
     case xmarkCircleFill
+
+    static var outbox: Self {
+        .trayAndArrowUp
+    }
 
     static var filter: Self {
         .line3HorizontalDecreaseCircle

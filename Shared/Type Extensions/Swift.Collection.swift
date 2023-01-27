@@ -9,35 +9,25 @@
 import Foundation
 
 public extension Collection {
-    /// Same functionality as `joined` but without the flattening.
-    func intersperse(element: Element) -> some Collection {
-        Array(
-            zip(self, repeatElement(element, count: numericCast(count)))
-                .flatMap { [$0, $1] }
-                .dropLast()
-        )
+    subscript(index index: Index) -> Element? {
+        indices
+            .contains(index)
+            .if(true: self[index])
     }
 
-    func chunked<I: BinaryInteger>(stride length: I) -> some Collection {
-        stride(from: 0, to: count, by: numericCast(length))
-            .map { dropFirst($0).prefix(numericCast(length)) }
+    subscript(index index: Index, default defaultValue: @autoclosure () -> Element) -> Element {
+        self[index: index] ?? defaultValue()
     }
 }
 
-extension Array {
-    public subscript(index: Int, default defaultValue: @autoclosure () -> Element) -> Element {
-        guard index >= 0, index < endIndex else {
-            return defaultValue()
-        }
-
-        return self[index]
+public extension Collection where Index == Int {
+    /// Returns the element at the specified offset from the start of the collection, if it is within bounds, otherwise nil.
+    subscript<Offset: BinaryInteger>(offset offset: Offset) -> Element? {
+        self[index: startIndex.advanced(by: numericCast(offset))]
     }
 
-    public subscript(index index: Int) -> Element? {
-        guard index >= 0, index < endIndex else {
-            return nil
-        }
-
-        return self[index]
+    /// Returns the element at the specified offset from the start of the collection, if it is within bounds, otherwise `default`.
+    subscript<Offset: BinaryInteger>(offset offset: Offset, default defaultValue: @autoclosure () -> Element) -> Element? {
+        self[index: startIndex.advanced(by: numericCast(offset)), default: defaultValue()]
     }
 }

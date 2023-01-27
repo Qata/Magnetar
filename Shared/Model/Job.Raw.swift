@@ -38,10 +38,8 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
         guard let id = job.id else {
             throw Error.missing(.id)
         }
-        let statusDescriptor = context.jobs.status.firstNonNil { key, value in
-            value
-                .contains { $0.wrappedValue == job.status }
-                .if(true: key)
+        let statusDescriptor = context.jobs.status.firstKey {
+            $0.contains { $0.wrappedValue == job.status }
         } ?? .unknown
         self.name = job.name ?? ""
         self.id = .init(rawValue: id)
@@ -81,8 +79,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
         case .seeding:
             return .green
         case .stopped,
-                .seedQueued,
-                .downloadQueued,
+                .queued,
                 .paused,
                 .checkingFiles,
                 .fileCheckQueued:
@@ -117,7 +114,7 @@ struct JobViewModel: Codable, Hashable, AccessibleCustomStringConvertible {
                 "Upload ratio of \(ratio.accessibleDescription)",
                 "\(uploaded.accessibleDescription) uploaded"
             ]
-        case .downloadQueued, .seedQueued, .stopped, .paused, .checkingFiles, .fileCheckQueued, .unknown:
+        case .queued, .stopped, .paused, .checkingFiles, .fileCheckQueued, .unknown:
             context = [
                 "Upload ratio of \(ratio.accessibleDescription)"
             ]

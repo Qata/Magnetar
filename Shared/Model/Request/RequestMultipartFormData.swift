@@ -7,6 +7,7 @@
 
 import Foundation
 import MonadicJSON
+import Alamofire
 
 struct RequestMultipartFormData: Codable, Hashable {
     struct Field: Codable, Hashable {
@@ -23,27 +24,46 @@ struct RequestMultipartFormData: Codable, Hashable {
         var value: Field.Value
     }
     var fields: [Field]
+    
+    func resolve(command: Command, server: Server, formData: Alamofire.MultipartFormData) {
+        var ids = command.ids
+        fields.map {
+            $0.resolve(
+                parameter: $0.value,
+                command: command,
+                server: server,
+                ids: &ids
+            )
+        }
+        .forEach { field in
+            switch field.value {
+            case let .string(string):
+                formData.append(string.data(using: .utf8)!, withName: field.name)
+            case let .data(data, mimeType, fileName):
+                formData.append(data, withName: field.name, fileName: fileName, mimeType: mimeType)
+            }
+        }
+    }
 
     func resolve(command: Command, server: Server, request: inout URLRequest) {
         var ids = command.ids
-        fields
-            .map {
-                $0.resolve(
-                    parameter: $0.value,
-                    command: command,
-                    server: server,
-                    ids: &ids
-                )
+        fields.map {
+            $0.resolve(
+                parameter: $0.value,
+                command: command,
+                server: server,
+                ids: &ids
+            )
+        }
+        .reduce(into: MultipartFormData()) { formData, field in
+            switch field.value {
+            case let .string(string):
+                formData.add(field: field.name, value: string)
+            case let .data(data, mimeType, fileName):
+                formData.add(field: field.name, data: data, mimeType: mimeType, fileName: fileName)
             }
-            .reduce(into: MultipartFormData()) { formData, field in
-                switch field.value {
-                case let .string(string):
-                    formData.add(field: field.name, value: string)
-                case let .data(data, mimeType, fileName):
-                    formData.add(field: field.name, data: data, mimeType: mimeType, fileName: fileName)
-                }
-            }
-            .inject(into: &request)
+        }
+        .inject(into: &request)
     }
 }
 

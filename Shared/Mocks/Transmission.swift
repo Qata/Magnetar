@@ -10,11 +10,9 @@ import Foundation
 let transmissionAPI = APIDescriptor(
     name: "Transmission v17",
     endpoint: .init(path: ["transmission", "rpc"]),
-    supportedURIs: [
-        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
-    ],
-    supportedFilePathExtensions: [
-        .init(value: "torrent", encoding: .bencoding),
+    supportedJobLocators: [
+        .scheme("magnet"),
+        .pathExtension("torrent"),
     ],
     authentication: [
         .basic,
@@ -40,8 +38,7 @@ let transmissionAPI = APIDescriptor(
             .stopped: [0],
             .seeding: [6],
             .downloading: [4],
-            .downloadQueued: [3],
-            .seedQueued: [5],
+            .queued: [3, 5],
             .checkingFiles: [2],
             .fileCheckQueued: [1]
         ]
@@ -50,7 +47,7 @@ let transmissionAPI = APIDescriptor(
         .login: .init(
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object(["method": .string("port-test")])
                     )
                 )
@@ -59,7 +56,7 @@ let transmissionAPI = APIDescriptor(
         .start: .init(
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object([
                             "method": .string("torrent-start-now"),
                             "arguments": .object([
@@ -73,7 +70,7 @@ let transmissionAPI = APIDescriptor(
         .stop: .init(
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object([
                             "method": .string("torrent-stop"),
                             "arguments": .object([
@@ -87,7 +84,7 @@ let transmissionAPI = APIDescriptor(
         .remove: .init(
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object([
                             "method": .string("torrent-remove"),
                             "arguments": .object([
@@ -101,7 +98,7 @@ let transmissionAPI = APIDescriptor(
         .deleteData: .init(
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object([
                             "method": .string("torrent-remove"),
                             "arguments": .object([
@@ -118,29 +115,29 @@ let transmissionAPI = APIDescriptor(
                 "arguments": .object([
                     "torrents": .forEach([
                         .object([
-                            "hashString": .field(.preset(.id)),
-                            "name": .field(.preset(.name)),
-                            "status": .field(.preset(.status)),
-                            "rateUpload": .field(.preset(.uploadSpeed)),
-                            "rateDownload": .field(.preset(.downloadSpeed)),
-                            "uploadedEver": .field(.preset(.uploaded)),
-                            "downloadedEver": .field(.preset(.downloaded)),
-                            "sizeWhenDone": .field(.preset(.size)),
-                            "eta": .field(.preset(.eta)),
-                            "errorString": .field(.adHoc(.init(name: "Error", type: .string))),
-                            "addedDate": .field(.adHoc(.init(name: "Date Added", type: .unixDate))),
-                            "doneDate": .field(.adHoc(.init(name: "Date Finished", type: .unixDate))),
-                            "downloadDir": .field(.adHoc(.init(name: "Download Directory", type: .string))),
-                            "isStalled": .field(.adHoc(.init(name: "Stalled", type: .bool))),
-                            "queuePosition": .field(.adHoc(.init(name: "Queue Position", type: .int))),
-                            "comment": .field(.adHoc(.init(name: "Comment", type: .string))),
+                            "hashString": .parameter(.field(.preset(.id))),
+                            "name": .parameter(.field(.preset(.name))),
+                            "status": .parameter(.field(.preset(.status))),
+                            "rateUpload": .parameter(.field(.preset(.uploadSpeed))),
+                            "rateDownload": .parameter(.field(.preset(.downloadSpeed))),
+                            "uploadedEver": .parameter(.field(.preset(.uploaded))),
+                            "downloadedEver": .parameter(.field(.preset(.downloaded))),
+                            "sizeWhenDone": .parameter(.field(.preset(.size))),
+                            "eta": .parameter(.field(.preset(.eta))),
+                            "errorString": .parameter(.field(.adHoc(.init(name: "Error", type: .string)))),
+                            "addedDate": .parameter(.field(.adHoc(.init(name: "Date Added", type: .unixDate)))),
+                            "doneDate": .parameter(.field(.adHoc(.init(name: "Date Finished", type: .unixDate)))),
+                            "downloadDir": .parameter(.field(.adHoc(.init(name: "Download Directory", type: .string)))),
+                            "isStalled": .parameter(.field(.adHoc(.init(name: "Stalled", type: .bool)))),
+                            "queuePosition": .parameter(.field(.adHoc(.init(name: "Queue Position", type: .int)))),
+                            "comment": .parameter(.field(.adHoc(.init(name: "Comment", type: .string)))),
                         ])
                     ])
                 ])
             ])),
             request: .init(
                 method: .post(
-                    payload: .jsonrpc(
+                    payload: .json(
                         .object([
                             "method": .string("torrent-get"),
                             "arguments": .object([
@@ -174,7 +171,7 @@ let transmissionAPI = APIDescriptor(
                 "result": .string("success")
             ])),
             request: .init(method: .post(
-                payload: .jsonrpc(
+                payload: .json(
                     .object([
                         "method": .string("torrent-add"),
                         "arguments": .object([
@@ -190,7 +187,7 @@ let transmissionAPI = APIDescriptor(
                 "result": .string("success")
             ])),
             request: .init(method: .post(
-                payload: .jsonrpc(
+                payload: .json(
                     .object([
                         "method": .string("torrent-add"),
                         "arguments": .object([
@@ -205,25 +202,14 @@ let transmissionAPI = APIDescriptor(
 )
 
 let transmissionServer = Server(
-    url: URL(string: "http://192.168.20.21")!,
+    url: URL(string: "http://mini.local")!,
     user: "lotte",
     password: "lol",
     port: 9091,
-    name: "Home",
-    downloadDirectories: [
+    name: "Home2",
+    destinations: [
         "/Volumes/Storage/Entertainment/Series",
         "/Volumes/Storage/Entertainment/Movies"
     ],
-    api: transmissionAPI,
-    lastSeen: .init(underlying: nil)
-)
-
-let transmissionServer2 = Server(
-    url: URL(string: "http://192.168.20.21")!,
-    user: "lotte",
-    password: "lol",
-    port: 9091,
-    name: "Away",
-    api: transmissionAPI,
-    lastSeen: .init(underlying: nil)
+    api: transmissionAPI
 )

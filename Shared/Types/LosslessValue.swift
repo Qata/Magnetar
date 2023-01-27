@@ -1,7 +1,7 @@
 import Foundation
 import MonadicJSON
 
-public typealias LosslessStringCodable = LosslessStringConvertible & Codable
+typealias LosslessStringCodable = LosslessStringConvertible & Codable
 
 extension Optional: CustomStringConvertible, LosslessStringConvertible where Wrapped: LosslessStringConvertible {
     public init?(_ description: String) {
@@ -22,29 +22,38 @@ extension Optional: CustomStringConvertible, LosslessStringConvertible where Wra
 ///
 /// `LosslessDecodingStrategy` provides a generic strategy that the `LosslessValueCodable` property wrapper can use to provide
 /// the ordered list of decodable types in order to maximize preservation for the inferred type.
-public protocol LosslessDecodingStrategy {
+protocol LosslessDecodingStrategy {
     associatedtype Value: LosslessStringCodable
 
     /// An ordered list of decodable scenarios used to infer the encoded type
     static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] { get }
 }
 
-private func losslessStringCodable(from json: JSON) throws -> LosslessStringCodable {
-    switch json {
+private func losslessStringCodable(from response: StructuredResponse) throws -> LosslessStringCodable {
+    switch response {
     case let .bool(value):
         return value
     case let .string(value):
         return value
+    case let .date(value):
+        return value.description
     case let .number(value):
-        switch (Int(value), Double(value)) {
-        case let (int?, double) where double == .init(int):
-            return int
-        case let (_, double?):
-            return double
-        default:
-            throw AppError.losslessStringEncoding(expectedOneOf: [.number])
+        switch value {
+        case let .int(value):
+            return value
+        case let .double(value):
+            return value
+        case let .any(value):
+            switch (Int(value), Double(value)) {
+            case let (int?, double) where double == .init(int):
+                return int
+            case let (_, double?):
+                return double
+            default:
+                throw AppError.losslessStringEncoding(expectedOneOf: [.number])
+            }
         }
-    case .object, .array, .null:
+    case .dictionary, .array, .null, .data:
         throw AppError.losslessStringEncoding(expectedOneOf: [.number, .bool, .string])
     }
 }
@@ -55,23 +64,23 @@ private func losslessStringCodable(from json: JSON) throws -> LosslessStringCoda
 ///
 /// The preferred type order is provided by a generic `LosslessDecodingStrategy` that provides an ordered list of `losslessDecodableTypes`.
 @propertyWrapper
-public struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable {
+struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable {
     let type: LosslessStringCodable.Type
 
-    public var wrappedValue: Strategy.Value
+    var wrappedValue: Strategy.Value
 
-    public init(wrappedValue: Strategy.Value) {
+    init(wrappedValue: Strategy.Value) {
         self.wrappedValue = wrappedValue
         self.type = Strategy.Value.self
     }
     
-    public init(from json: JSON) throws {
+    init(from response: StructuredResponse) throws {
         try self.init(
-            value: losslessStringCodable(from: json)
+            value: losslessStringCodable(from: response)
         )
     }
     
-    public init(value: LosslessStringCodable) throws {
+    init(value: LosslessStringCodable) throws {
         guard let wrapped = Strategy.Value("\(value)") else {
             throw AppError.unableToConvertTypeLosslessly
         }
@@ -79,7 +88,7 @@ public struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable 
         self.type = Swift.type(of: value)
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         do {
             self.wrappedValue = try Strategy.Value.init(from: decoder)
             self.type = Strategy.Value.self
@@ -94,7 +103,7 @@ public struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable 
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         let string = String(describing: wrappedValue)
 
         guard let original = type.init(string) else {
@@ -107,31 +116,31 @@ public struct LosslessValueCodable<Strategy: LosslessDecodingStrategy>: Codable 
 }
 
 extension LosslessValueCodable: Equatable where Strategy.Value: Equatable {
-    public static func == (lhs: LosslessValueCodable<Strategy>, rhs: LosslessValueCodable<Strategy>) -> Bool {
+    static func == (lhs: LosslessValueCodable<Strategy>, rhs: LosslessValueCodable<Strategy>) -> Bool {
         return lhs.wrappedValue == rhs.wrappedValue
     }
 }
 
 extension LosslessValueCodable: Hashable where Strategy.Value: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(wrappedValue)
     }
 }
 
 extension LosslessValue: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: IntegerLiteralType) {
+    init(integerLiteral value: IntegerLiteralType) {
         self = try! .init(value: value)
     }
 }
 
 extension LosslessValue: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
+    init(stringLiteral value: StringLiteralType) {
         self = try! .init(value: value)
     }
 }
 
-public struct LosslessDefaultStrategy<Value: LosslessStringCodable>: LosslessDecodingStrategy {
-    public static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] {
+struct LosslessDefaultStrategy<Value: LosslessStringCodable>: LosslessDecodingStrategy {
+    static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] {
         @inline(__always)
         func decode<T: LosslessStringCodable>(_: T.Type) -> (Decoder) -> LosslessStringCodable? {
             return { try? T(from: $0) }
@@ -154,8 +163,8 @@ public struct LosslessDefaultStrategy<Value: LosslessStringCodable>: LosslessDec
     }
 }
 
-public struct LosslessBooleanStrategy<Value: LosslessStringCodable>: LosslessDecodingStrategy {
-    public static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] {
+struct LosslessBooleanStrategy<Value: LosslessStringCodable>: LosslessDecodingStrategy {
+    static var losslessDecodableTypes: [(Decoder) -> LosslessStringCodable?] {
         @inline(__always)
         func decode<T: LosslessStringCodable>(_: T.Type) -> (Decoder) -> LosslessStringCodable? {
             return { try? T.init(from: $0) }
@@ -203,7 +212,7 @@ public struct LosslessBooleanStrategy<Value: LosslessStringCodable>: LosslessDec
 /// // value.sku == "87"
 /// // value.id == "123"
 /// ```
-public typealias LosslessValue<T> = LosslessValueCodable<LosslessDefaultStrategy<T>> where T: LosslessStringCodable
+typealias LosslessValue<T> = LosslessValueCodable<LosslessDefaultStrategy<T>> where T: LosslessStringCodable
 
 /// Decodes Codable values into their respective preferred types.
 ///
@@ -226,4 +235,4 @@ public typealias LosslessValue<T> = LosslessValueCodable<LosslessDefaultStrategy
 /// // value.foo == true
 /// // value.bar == 2
 /// ```
-public typealias LosslessBoolValue<T> = LosslessValueCodable<LosslessBooleanStrategy<T>> where T: LosslessStringCodable
+typealias LosslessBoolValue<T> = LosslessValueCodable<LosslessBooleanStrategy<T>> where T: LosslessStringCodable

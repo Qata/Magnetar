@@ -17,6 +17,8 @@ enum AsyncAction {
 }
 enum SyncAction {
     enum Create {
+        case server(Server)
+        case destination(String)
         case query(WebQuery)
         case error(AppError)
         case queuedCommand(Command)

@@ -55,9 +55,9 @@ struct CommandsGroup: View {
         invalidStatuses: Set<Status>
     ) -> some View {
         OptionalStoreView(\.persistent.selectedServer?.api) { api, dispatch in
-            StoreView(\.jobs.statuses) { statuses in
+            StoreView(\.jobs.pairedStatuses) { statuses in
                 if api.available(command: command.discriminator),
-                   !statuses.allSatisfy(invalidStatuses.contains)
+                   !ids.allSatisfy({ statuses[$0].map(invalidStatuses.contains) ?? false })
                 {
                     Button {
                         dispatch(async: .command(command))
@@ -107,26 +107,26 @@ struct CommandsGroup: View {
             for: .start(ids),
             image: SystemImage.playFill,
             invalidStatuses: Self.statuses
-                .subtracting([.paused, .stopped, .unknown])
+                .subtracting([.paused, .stopped])
         )
     }
-    
+
     var pauseButton: some View {
         button(
             for: .pause(ids),
             image: SystemImage.pauseFill,
-            invalidStatuses: [.paused, .unknown]
+            invalidStatuses: [.paused]
         )
     }
-    
+
     var stopButton: some View {
         button(
             for: .stop(ids),
             image: SystemImage.stopFill,
-            invalidStatuses: [.stopped, .unknown]
+            invalidStatuses: [.stopped]
         )
     }
-    
+
     var body: some View {
         Group {
             if ids.count > 1 {

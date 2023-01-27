@@ -95,31 +95,18 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
               let api = Global.store.state.persistent.selectedServer?.api
         else { return }
 
-        for uri in api.supportedURIs {
+        for uri in api.supportedJobLocators {
             switch uri {
-            case let .scheme(scheme) where scheme.value == url.scheme:
+            case let .scheme(scheme) where scheme.rawValue == url.scheme:
                 action = .cancel
-                if let item = scheme.nameLocation {
-                    #warning("Add local notification support")
-//                    if let name = URLComponents(url: url, resolvingAgainstBaseURL: true)?
-//                        .queryItems?
-//                        .first(where: { $0.name == item })
-//                    {
-//                        print("::\(name.value)")
-//                    }
-                }
+#warning("Add local notification support")
                 return addJob(.uri, url)
-            case let .pathExtension(pathExtension) where pathExtension.value == url.pathExtension:
+            case .pathExtension(.init(rawValue: url.pathExtension)):
                 action = .cancel
                 return addJob(.file, url)
             default:
                 break
             }
-        }
-        
-        if api.supportedFilePathExtensions.contains(where: { $0.value == url.pathExtension }) {
-            action = .cancel
-            return addJob(.file, url)
         }
     }
 }

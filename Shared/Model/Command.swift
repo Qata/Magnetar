@@ -19,7 +19,8 @@ enum Command: Codable, Hashable {
         case some([Job.Id])
     }
 
-    indirect case login(andThen: Self)
+    indirect case login(andThen: [Self])
+    case info
     case fetch(FetchType)
     case start([Job.Id])
     case stop([Job.Id])
@@ -27,7 +28,7 @@ enum Command: Codable, Hashable {
     case remove([Job.Id])
     case deleteData([Job.Id])
     case addURI(String, location: String?)
-    case addFile(Data, location: String?)
+    case addFile(Data, name: String?, location: String?)
 
     var ids: [Job.Id] {
         switch self {
@@ -45,6 +46,7 @@ enum Command: Codable, Hashable {
                 return []
             }
         case .login,
+                .info,
                 .addURI,
                 .addFile:
             return []
@@ -64,8 +66,17 @@ enum Command: Codable, Hashable {
         switch self {
         case let .addURI(_, location):
             return location
-        case let .addFile(_, location):
+        case let .addFile(_, _, location):
             return location
+        default:
+            return nil
+        }
+    }
+    
+    var fileName: String? {
+        switch self {
+        case let .addFile(_, name, _):
+            return name
         default:
             return nil
         }
@@ -73,7 +84,7 @@ enum Command: Codable, Hashable {
 
     var file: Data? {
         switch self {
-        case let .addFile(data, _):
+        case let .addFile(data, _, _):
             return data
         default:
             return nil
@@ -83,6 +94,7 @@ enum Command: Codable, Hashable {
 
 extension Command {
     enum Discriminator: String, Codable, Hashable, CustomStringConvertible {
+        case info
         case login
         case fetch
         case start
@@ -114,7 +126,7 @@ extension Command {
                 return .deleteData(ids)
             case .fetch:
                 return .fetch(.some(ids))
-            case .login, .addURI, .addFile:
+            case .login, .addURI, .addFile, .info:
                 return nil
             }
         }
@@ -122,6 +134,8 @@ extension Command {
 
     var discriminator: Discriminator {
         switch self {
+        case .info:
+            return .info
         case .login:
             return .login
         case .fetch:
@@ -148,30 +162,37 @@ extension Payload {
     var adHocFields: [Job.Field.Descriptor.AdHocField] {
         var fields = [Job.Field.Descriptor.AdHocField]()
 
-        func recurse(expected: Payload.JSON) {
+        func recurse(expected: Payload.StructuredResponse) {
             switch expected {
-            case let .object(expected):
+            case let .dictionary(expected):
                 expected.values.forEach(recurse)
             case let .array(expected):
                 expected.forEach(recurse)
-            case let .field(field):
-                switch field {
-                case .preset:
+            case let .parameter(parameter):
+                switch parameter {
+                case let .field(field):
+                    switch field {
+                    case .preset:
+                        break
+                    case let .adHoc(field) where field.type == .irrelevant:
+                        break
+                    case let .adHoc(field):
+                        fields.append(field)
+                    }
+                case .token, .destination:
                     break
-                case let .adHoc(field) where field.type == .irrelevant:
-                    break
-                case let .adHoc(field):
-                    fields.append(field)
                 }
             case let .forEach(expected):
                 expected.forEach(recurse)
-            case .string, .bool, .token:
+            case .string, .bool, .int, .date, .data:
                 break
             }
         }
         switch self {
         case let .json(expected):
-            recurse(expected: expected)
+            recurse(expected: StructuredResponse(json: expected))
+        case let .xmlRpc(expected):
+            try? recurse(expected: StructuredResponse(xml: expected))
         }
         return fields.sorted(keyPath: \.name)
     }

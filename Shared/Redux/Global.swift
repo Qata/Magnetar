@@ -15,7 +15,7 @@ enum Global {
             persistent: Global.keychain[data: "persistent"].flatMap { try? JSONDecoder().decode(State.PersistentState.self, from: $0) } ??
                 .init(
                     queries: [],
-                    servers: [transmissionServer, qBittorrentServer, synologyServer],
+                    servers: [transmissionServer, qBittorrentServer],
                     apis: [transmissionAPI, qBittorrentAPI, synologyAPI],
                     selectedServer: transmissionServer
                 ),

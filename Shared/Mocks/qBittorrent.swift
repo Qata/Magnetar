@@ -10,11 +10,9 @@ import Foundation
 let qBittorrentAPI = APIDescriptor(
     name: "qBittorrent v2.8.3",
     endpoint: .init(path: ["api", "v2"]),
-    supportedURIs: [
-        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
-    ],
-    supportedFilePathExtensions: [
-        .init(value: "torrent", encoding: .bencoding),
+    supportedJobLocators: [
+        .scheme("magnet"),
+        .pathExtension("torrent"),
     ],
     authentication: [
     ],
@@ -24,10 +22,9 @@ let qBittorrentAPI = APIDescriptor(
     jobs: .init(
         status: [
             .seeding: ["uploading", "forcedUP"],
-            .seedQueued: ["queuedUP", "stalledUP"],
+            .queued: ["queuedUP", "stalledUP", "queuedDL", "stalledDL"],
             .paused: ["pausedDL", "pausedUP"],
             .downloading: ["allocating", "downloading", "metaDL"],
-            .downloadQueued: ["queuedDL", "stalledDL"],
             .checkingFiles: ["checkingDL", "checkingUP", "checkingResumeData"],
             .unknown: ["unknown", "moving"],
         ]
@@ -158,17 +155,17 @@ let qBittorrentAPI = APIDescriptor(
             expected: .json(
                 .forEach([
                     .object([
-                        "added_on": .field(.adHoc(.init(name: "Date Added", type: .unixDate))),
-                        "dlspeed": .field(.preset(.downloadSpeed)),
-                        "downloaded": .field(.preset(.downloaded)),
-                        "eta": .field(.preset(.eta)),
-                        "hash": .field(.preset(.id)),
-                        "name": .field(.preset(.name)),
-                        "save_path": .field(.adHoc(.init(name: "Location", type: .string))),
-                        "state": .field(.preset(.status)),
-                        "size": .field(.preset(.size)),
-                        "uploaded": .field(.preset(.uploaded)),
-                        "upspeed": .field(.preset(.uploadSpeed)),
+                        "added_on": .parameter(.field(.adHoc(.init(name: "Date Added", type: .unixDate)))),
+                        "dlspeed": .parameter(.field(.preset(.downloadSpeed))),
+                        "downloaded": .parameter(.field(.preset(.downloaded))),
+                        "eta": .parameter(.field(.preset(.eta))),
+                        "hash": .parameter(.field(.preset(.id))),
+                        "name": .parameter(.field(.preset(.name))),
+                        "save_path": .parameter(.field(.adHoc(.init(name: "Location", type: .string)))),
+                        "state": .parameter(.field(.preset(.status))),
+                        "size": .parameter(.field(.preset(.size))),
+                        "uploaded": .parameter(.field(.preset(.uploaded))),
+                        "upspeed": .parameter(.field(.preset(.uploadSpeed))),
                     ])
                 ])
             ),
@@ -189,7 +186,7 @@ let qBittorrentServer = Server(
     password: "adminadmin",
     port: 8080,
     name: "qBit",
-    downloadDirectories: ["/Users/charlie/Videos"],
+    destinations: ["/Users/charlie/Videos"],
     api: qBittorrentAPI,
     lastSeen: .init(underlying: nil)
 )

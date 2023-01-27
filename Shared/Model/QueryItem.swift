@@ -12,14 +12,18 @@ struct QueryItem: Codable, Hashable, CustomStringConvertible {
     var value: String?
     
     var description: String {
-        "\(name)=\(value ?? "")"
+        value.map {
+            "\(name)=\($0)"
+        } ?? name
     }
 }
 
 extension Sequence where Element == QueryItem {
     func asURLQueryItems() -> [URLQueryItem] {
-        self.map {
-            URLQueryItem(name: $0.name, value: $0.value)
+        self.compactMap { item in
+            item.value.map {
+                URLQueryItem(name: item.name, value: $0)
+            }
         }
     }
 }

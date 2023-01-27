@@ -21,19 +21,19 @@ extension RequestEndpoint {
 extension RequestEndpoint.Path: RequestParameterContainer {
     typealias Value = String
     typealias Resolved = String
-    
+
     func resolve(array: [String], separator: String?) -> String {
         array.joined(separator: separator ?? ",")
     }
-    
+
     func resolve(string: String) -> String {
         string
     }
-    
+
     func resolve(bool: Bool) -> String {
         bool.description
     }
-    
+
     func resolve(data: Data, name: RequestFileName) -> String {
         fatalError("Bytes cannot be encoded to a path")
     }

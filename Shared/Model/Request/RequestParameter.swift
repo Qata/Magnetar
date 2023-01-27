@@ -15,6 +15,7 @@ enum RequestParameter: Hashable, Codable {
         case base64
         case data(fileName: RequestFileName)
     }
+    indirect case quoted(value: Self, quotationMark: String)
     case bool(Bool)
     case string(String)
     case username
@@ -25,6 +26,12 @@ enum RequestParameter: Hashable, Codable {
     case file(FileEncoding)
     case field(Field)
     case forEach(Field, separator: String? = nil)
+}
+
+extension RequestParameter: ExpressibleByStringLiteral {
+    init(stringLiteral value: String) {
+        self = .string(value)
+    }
 }
 
 protocol RequestParameterContainer {
@@ -43,6 +50,70 @@ extension RequestParameterContainer {
         switch parameter {
         case let .string(string):
             return promote(resolve(string: string))
+        case let .quoted(parameter, mark):
+            func quote(_ string: String) -> Value {
+                resolve(
+                    string: [mark, string, mark].joined()
+                )
+            }
+            func promoteQuote(_ string: String?) -> Resolved {
+                promote(
+                    string.map(quote)
+                )
+            }
+            switch parameter {
+            case .quoted:
+                return resolve(parameter: parameter, command: command, server: server, ids: &ids)
+            case let .string(string):
+                return promoteQuote(string)
+            case let .bool(bool):
+                return promoteQuote(bool.description)
+            case .username:
+                return promoteQuote(server.user)
+            case .password:
+                return promoteQuote(server.password)
+            case .token:
+                return promoteQuote(server.token)
+            case .uri:
+                return promoteQuote(command.uri)
+            case .location:
+                return promoteQuote(command.location)
+            case let .file(encoding):
+                return promote(
+                    command.file.map {
+                        switch encoding {
+                        case .base64:
+                            return quote($0.base64EncodedString())
+                        case let .data(fileName):
+                            return resolve(
+                                data: $0,
+                                name: command.fileName.map(RequestFileName.string) ?? fileName
+                            )
+                        }
+                    }
+                )
+            case let .field(value):
+                switch value {
+                case .id:
+                    return promoteQuote(
+                        ids.popLast()
+                            .map(\.rawValue)
+                    )
+                }
+            case let .forEach(field, separator):
+                switch field {
+                case .id:
+                    defer { ids = [] }
+                    return promote(
+                        ids.isEmpty.if(
+                            false: resolve(
+                                array: ids.map(\.rawValue).map { [mark, $0, mark].joined() },
+                                separator: separator
+                            )
+                        )
+                    )
+                }
+            }
         case let .bool(bool):
             return promote(resolve(bool: bool))
         case .username:
@@ -57,15 +128,17 @@ extension RequestParameterContainer {
             return promote(command.location.map(resolve(string:)))
         case let .file(encoding):
             return promote(
-                command.file
-                    .map {
-                        switch encoding {
-                        case .base64:
-                            return resolve(string: $0.base64EncodedString())
-                        case let .data(fileName):
-                            return resolve(data: $0, name: fileName)
-                        }
+                command.file.map {
+                    switch encoding {
+                    case .base64:
+                        return resolve(string: $0.base64EncodedString())
+                    case let .data(fileName):
+                        return resolve(
+                            data: $0,
+                            name: command.fileName.map(RequestFileName.string) ?? fileName
+                        )
                     }
+                }
             )
         case let .field(value):
             switch value {

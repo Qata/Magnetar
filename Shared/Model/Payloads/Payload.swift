@@ -7,4 +7,5 @@
 
 enum Payload: Codable, Hashable {
     case json(Payload.JSON)
+    case xmlRpc(Payload.XMLRPC.Response)
 }

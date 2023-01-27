@@ -8,15 +8,15 @@
 import Foundation
 
 enum RequestFileName: Codable, Hashable {
-    case string(name: String, extension: String)
+    case string(name: String)
     case random(extension: String)
     
     var name: String {
         switch self {
-        case let .string(name, ext):
-            return "\(name).\(ext)"
+        case let .string(name):
+            return name
         case let .random(ext):
-            return Self.string(name: UUID().uuidString, extension: ext).name
+            return "\(UUID().lowercased()).\(ext)"
         }
     }
 }

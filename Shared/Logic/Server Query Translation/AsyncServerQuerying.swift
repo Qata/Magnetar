@@ -10,6 +10,8 @@ import UIKit
 import Combine
 import MonadicJSON
 import Overture
+import Alamofire
+import SwiftXMLRPC
 
 enum QueryResult {
     struct Success {
@@ -29,7 +31,8 @@ private extension Publisher {
     func extractCommands(command: Command, server: Server) -> AnyPublisher<(Server, Command.Descriptor), AppError> {
         server.api
             .commands[command.discriminator]
-            .publisher(nilError: .commandMissing)
+            .publisher
+            .setFailureType(to: AppError.self)
             .map { (server, $0) }
             .eraseToAnyPublisher()
     }
@@ -75,6 +78,33 @@ extension Publisher where Output == Global.State, Failure == Never {
                 .eraseToAnyPublisher()
             }
 
+            switch command.request.method {
+            case .post(payload: .multipartFormData):
+                let request = command.request.afRequest(
+                    for: server,
+                    command: actionCommand
+                )
+                return request
+                    .publishData()
+                    .value()
+                    .handleEvents(receiveOutput: { data in
+                        Swift.print("+++ Received \(String(describing: String(data: data, encoding: .ascii)))")
+                    })
+                    .mapError(AppError.afError)
+                    .map {
+                        .right(
+                            QueryResult.Success(
+                                data: $0,
+                                command: command,
+                                context: server.api
+                            )
+                        )
+                    }
+                    .eraseToAnyPublisher()
+            default:
+                break
+            }
+
             let urlRequest = command.request.urlRequest(
                 for: server,
                 command: actionCommand
@@ -82,13 +112,13 @@ extension Publisher where Output == Global.State, Failure == Never {
             return URLSession.shared
                 .dataTaskPublisher(for: urlRequest)
                 .handleEvents(receiveOutput: { data, _ in
-//                    Swift.print(
-//                    """
-//                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
-//                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
-//                    +++ Received \(String(describing: String(data: data, encoding: .ascii)))
-//                    """
-//                    )
+                    Swift.print(
+                    """
+                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
+                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
+                    +++ Received \(String(describing: String(data: data, encoding: .ascii)))
+                    """
+                    )
                 })
                 .mapError(AppError.urlError)
                 .flatMap(handleTask(data:response:))
@@ -146,7 +176,7 @@ extension Publisher where Output == Global.State, Failure == Never {
                                     ]
                                 }
                             // Otherwise, request it and try again.
-                            ?? [.async(.command(.login(andThen: actionCommand)))]
+                            ?? [.async(.command(.login(andThen: [actionCommand])))]
                         )
                     )
                 }
@@ -163,29 +193,59 @@ extension Publisher where Output == Global.State, Failure == Never {
 }
 
 extension Publisher where Output == Global.State, Failure == Never {
-    func query<T: JSONInitialisable>(
+    func query<T: StructuredResponseInitialisable>(
         command actionCommand: Command,
         transform: @escaping (T) throws -> [Action]
-    ) -> AnyPublisher<Action, AppError> {
-        if case .login(andThen: .login) = actionCommand {
+    ) -> AnyPublisher<[Action], AppError> {
+        if case let .login(andThen: next) = actionCommand, case .login? = next.first {
             // Prevents infinite looping by failing on a nested token request.
             return Fail(error: .tokenRequestFailed)
                 .eraseToAnyPublisher()
         } else {
             return query(command: actionCommand)
-                .flatMap { (queryResult: QueryResponse) -> AnyPublisher<Action, AppError> in
+                .flatMap { (queryResult: QueryResponse) -> AnyPublisher<[Action], AppError> in
                     switch queryResult {
                     case let .left(retry):
-                        return retry.actions
-                            .publisher
+                        return Just(retry.actions)
                             .setFailureType(to: AppError.self)
                             .eraseToAnyPublisher()
                     case let .right(response):
 //                        Swift.print("+++\(actionCommand)\(String(data: response.data, encoding: .ascii)!)")
                         switch response.command.expected {
                         case nil:
-                            return Empty(outputType: Action.self, failureType: AppError.self)
+                            return Empty(outputType: [Action].self, failureType: AppError.self)
                                 .eraseToAnyPublisher()
+                        case let .xmlRpc(payload):
+                            return XMLRPC.Response.deserialize(
+                                from: String(data: response.data, encoding: .utf8)!,
+                                sourceName: "XMLRPC"
+                            )
+                            .publisher
+                            .mapError(AppError.finalParsing)
+                            .flatMap { xml in
+                                Result {
+                                    try T(
+                                        from: StructuredResponse(xml: xml),
+                                        against: Payload.StructuredResponse(xml: payload),
+                                        context: response.context
+                                    )
+                                }
+                                .publisher
+                                .mapError {
+                                    .responseParsing(
+                                        $0 as! ResponseParseError,
+                                        command: actionCommand.discriminator
+                                    )
+                                }
+                                .flatMap { value in
+                                    Result {
+                                        try transform(value)
+                                    }
+                                    .publisher
+                                    .mapError(AppError.finalParsing)
+                                }
+                            }
+                            .eraseToAnyPublisher()
                         case let .json(payload):
                             return JSONParser.parse(data: response.data)
                                 .publisher
@@ -197,12 +257,16 @@ extension Publisher where Output == Global.State, Failure == Never {
                                 }
                                 .flatMap { json in
                                     Result {
-                                        try T(from: json, against: payload, context: response.context)
+                                        try T(
+                                            from: StructuredResponse(json: json),
+                                            against: Payload.StructuredResponse(json: payload),
+                                            context: response.context
+                                        )
                                     }
                                     .publisher
                                     .mapError {
-                                        .jsonParsing(
-                                            $0 as! JSONParseError,
+                                        .responseParsing(
+                                            $0 as! ResponseParseError,
                                             command: actionCommand.discriminator
                                         )
                                     }
@@ -212,7 +276,6 @@ extension Publisher where Output == Global.State, Failure == Never {
                                         }
                                         .publisher
                                         .mapError(AppError.finalParsing)
-                                        .flatMap(\.publisher)
                                     }
                                 }
                                 .eraseToAnyPublisher()
@@ -222,11 +285,11 @@ extension Publisher where Output == Global.State, Failure == Never {
                 .eraseToAnyPublisher()
         }
     }
-    
-    func query<T: JSONInitialisable>(
+
+    func query<T: StructuredResponseInitialisable>(
         command: Command,
         setting transform: @escaping (T) throws -> SyncAction.Set
-    ) -> AnyPublisher<Action, AppError> {
+    ) -> AnyPublisher<[Action], AppError> {
         query(command: command, transform: { try [.sync(.set(transform($0)))] })
     }
 }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ProgressBar : View {
+struct ProgressBar: View {
     @ScaledMetric var height: CGFloat = 2
     @Clamping var value: CGFloat
     

@@ -77,46 +77,59 @@ extension Job.Field {
             // Useful for APIs that return arrays.
             case irrelevant
 
-            func jobField(for json: JSON, name: String) -> Job.Field? {
-                switch (self, json) {
-                case let (.int, .number(value)):
-                    return Int(value)
-                        .map { .init(name: name, value: .int($0)) }
-                case let (.float, .number(value)):
-                    return Double(value)
-                        .map { .init(name: name, value: .float($0)) }
-                case let (.unixDate, .number(value)):
-                    return TimeInterval(value)
-                        .map(Date.init(timeIntervalSince1970:))
-                        .map { .init(name: name, value: .unixDate($0)) }
-                case let (.speed, .number(value)):
-                    return Double(value)
-                        .map { Speed(bytes: .init(max(0, $0))) }
-                        .map { .init(name: name, value: .speed($0)) }
-                case let (.size, .number(value)):
-                    return Double(value)
-                        .map { Size(bytes: .init(max(0, $0))) }
-                        .map { .init(name: name, value: .size($0)) }
-                case let (.seconds, .number(value)):
-                    return Double(value)
-                        .map { number in
-                            (number < 0).if(
-                                true: ETA.infinite,
-                                false: ETA.finite(seconds: UInt(number))
-                            )
-                        }
-                        .map { .init(name: name, value: .seconds($0)) }
-                case let (.string, .string(value)):
-                    return .init(name: name, value: .string(value))
-                case let (.string, .bool(value)):
-                    return .init(name: name, value: .string(value.description))
-                case let (.string, .number(value)):
-                    return .init(name: name, value: .string(value.description))
-                case let (.bool, .bool(value)):
-                    return .init(name: name, value: .bool(value))
+            func string(from response: StructuredResponse) -> String? {
+                switch response {
+                case let .string(value):
+                    return value
+                case let .bool(value):
+                    return value.description
+                case let .number(value):
+                    return value.description
+                case .null:
+                    return "null"
                 default:
                     return nil
                 }
+            }
+
+            func jobField(for response: StructuredResponse, name: String) -> Job.Field? {
+                Optional(()).flatMap {
+                    switch self {
+                    case .int:
+                        return response.int
+                            .map { .int($0) }
+                    case .float:
+                        return response.double
+                            .map { .float($0) }
+                    case .unixDate:
+                        return response.date
+                            .map { .unixDate($0) }
+                    case .speed:
+                        return response.uint
+                            .map { .speed(.init(bytes: $0)) }
+                    case .size:
+                        return response.uint
+                            .map { .size(.init(bytes: $0)) }
+                    case .seconds:
+                        return response.double
+                            .map { number in
+                                (number < 0).if(
+                                    true: ETA.infinite,
+                                    false: ETA.finite(seconds: UInt(number))
+                                )
+                            }
+                            .map { .seconds($0) }
+                    case .string:
+                        return string(from: response)
+                            .map { .string($0) }
+                    case .bool:
+                        return response.bool
+                            .map { .bool($0) }
+                    case .irrelevant:
+                        return nil
+                    }
+                }
+                .map { .init(name: name, value: $0) }
             }
         }
         enum PresetField: String, Codable, Hashable, CaseIterable, CustomStringConvertible {
@@ -270,86 +283,106 @@ extension Job.Field {
     }
 }
 
-extension Job.Raw: JSONInitialisable {
-    init(from json: JSON, against expected: Payload.JSON, context: APIDescriptor) throws {
-        func recurseObjects(json: [String: JSON], expected: [String: Payload.JSON]) throws {
+extension Job.Raw: StructuredResponseInitialisable {
+    init(
+        from response: StructuredResponse,
+        against expected: Payload.StructuredResponse,
+        context: APIDescriptor
+    ) throws {
+        func recurseDictionary(response: [String: StructuredResponse], expected: [String: Payload.StructuredResponse]) throws {
             try expected
-                .compactMap { key, value -> (JSON, Payload.JSON)? in
-                    Optional.zip(json[key], value)
+                .map { key, value -> (StructuredResponse, Payload.StructuredResponse) in
+                    guard let response = response[key] else {
+                        throw ResponseParseError(response: .dictionary(response), expected: .dictionary(expected))
+                    }
+                    return (response, value)
                 }
                 .forEach(recurse)
         }
 
-        func recurse(json: JSON, expected: Payload.JSON) throws {
+        func recurse(response: StructuredResponse, expected: Payload.StructuredResponse) throws {
             switch expected {
-            case let .object(expectedObject):
-                switch json {
-                case let .object(json):
-                    try recurseObjects(json: json, expected: expectedObject)
+            case let .parameter(parameter):
+                switch parameter {
+                case let .field(field):
+                    switch field {
+                    case let .preset(field):
+                        if let jobField = field.type.jobField(for: response, name: field.description) {
+                            fields[field] = jobField
+                        }
+                        switch field {
+                        case .name:
+                            _name = try .init(from: response)
+                        case .status:
+                            _status = try .init(from: response)
+                        case .id:
+                            _id = try .init(from: response)
+                        case .uploadSpeed:
+                            _uploadSpeed = try .init(from: response)
+                        case .downloadSpeed:
+                            _downloadSpeed = try .init(from: response)
+                        case .uploaded:
+                            _uploaded = try .init(from: response)
+                        case .downloaded:
+                            _downloaded = try .init(from: response)
+                        case .size:
+                            _size = try .init(from: response)
+                        case .eta:
+                            _eta = try .init(from: response)
+                        }
+                    case let .adHoc(field) where field.type == .irrelevant:
+                        break
+                    case let .adHoc(field):
+                        if let jobField = field.type.jobField(for: response, name: field.name) {
+                            adHocFields.append(jobField)
+                        }
+                    }
+                case .token:
+                    break
+                case .destination:
+                    break
+                }
+            case let .dictionary(expectedDictionary):
+                switch response {
+                case let .dictionary(response):
+                    try recurseDictionary(response: response, expected: expectedDictionary)
                 default:
-                    throw JSONParseError(json: json, expected: expected)
+                    throw ResponseParseError(response: response, expected: expected)
                 }
             case let .string(expectedString):
-                switch json {
+                switch response {
                 case .string(expectedString):
                     break
                 default:
-                    throw JSONParseError(json: json, expected: expected)
+                    throw ResponseParseError(response: response, expected: expected)
                 }
             case let .bool(expectedBool):
-                switch json {
+                switch response {
                 case .bool(expectedBool):
                     break
                 default:
-                    throw JSONParseError(json: json, expected: expected)
+                    throw ResponseParseError(response: response, expected: expected)
                 }
-            case let .array(expectedArray):
-                switch json {
-                case let .array(json):
-                    try zip(json, expectedArray)
-                        .forEach(recurse)
+            case let .array(expectedArray), let .forEach(expectedArray):
+                switch response {
+                case let .array(response):
+                    try zip(response, expectedArray).forEach(recurse)
                 default:
-                    throw JSONParseError(json: json, expected: expected)
+                    throw ResponseParseError(response: response, expected: expected)
                 }
-            case let .field(field):
-                switch field {
-                case let .preset(field):
-                    if let jobField = field.type.jobField(for: json, name: field.description) {
-                        fields[field] = jobField
-                    }
-                    switch field {
-                    case .name:
-                        _name = try .init(from: json)
-                    case .status:
-                        _status = try .init(from: json)
-                    case .id:
-                        _id = try .init(from: json)
-                    case .uploadSpeed:
-                        _uploadSpeed = try .init(from: json)
-                    case .downloadSpeed:
-                        _downloadSpeed = try .init(from: json)
-                    case .uploaded:
-                        _uploaded = try .init(from: json)
-                    case .downloaded:
-                        _downloaded = try .init(from: json)
-                    case .size:
-                        _size = try .init(from: json)
-                    case .eta:
-                        _eta = try .init(from: json)
-                    }
-                case let .adHoc(field) where field.type == .irrelevant:
+            case let .int(expectedInt):
+                switch response {
+                case .number(.int(expectedInt)):
                     break
-                case let .adHoc(field):
-                    if let jobField = field.type.jobField(for: json, name: field.name) {
-                        adHocFields.append(jobField)
-                    }
+                default:
+                    throw ResponseParseError(response: response, expected: expected)
                 }
-            case .forEach:
+            case .date:
                 break
-            case .token:
+            case .data:
                 break
             }
         }
-        try recurse(json: json, expected: expected)
+        try recurse(response: response, expected: expected)
     }
 }

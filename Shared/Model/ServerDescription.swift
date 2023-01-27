@@ -10,12 +10,14 @@ import SwiftUI
 import Algorithms
 import MonadicJSON
 import CasePaths
+import Alamofire
+import Tagged
+import SwiftXMLRPC
 
 struct APIDescriptor: Codable, Hashable {
     var name: String
     var endpoint: RequestEndpoint = .init(path: [])
-    var supportedURIs: [URI] = []
-    var supportedFilePathExtensions: [PathExtension] = []
+    var supportedJobLocators: [JobLocator] = []
     var authentication: [Authentication]
     var errors: [Error]
     var jobs: Job.Descriptor
@@ -27,31 +29,18 @@ struct APIDescriptor: Codable, Hashable {
 }
 
 extension APIDescriptor {
-    enum URI: Codable, Hashable {
+    enum JobLocator: Codable, Hashable {
         case pathExtension(PathExtension)
         case scheme(Scheme)
     }
-    
+
     enum NameLocation: Codable, Hashable {
         case lastPathComponent
         case queryItem(String)
     }
-    
-    struct Scheme: Codable, Hashable {
-        var value: String
-        var nameLocation: NameLocation?
-    }
 
-    struct PathExtension: Codable, Hashable {
-        enum Encoding: Codable, Hashable {
-            case bencoding
-            case xml
-            case newLineSeparated
-        }
-
-        var value: String
-        var encoding: Encoding?
-    }
+    typealias Scheme = Tagged<Self, String>
+    typealias PathExtension = Tagged<Self, String>
 
     struct Error: Codable, Hashable {
         enum ErrorType: Codable, Hashable {
@@ -66,7 +55,8 @@ extension APIDescriptor {
 
 struct Request: Codable, Hashable {
     enum Payload: Codable, Hashable {
-        case jsonrpc(RequestJSON)
+        case xmlRpc(method: String, params: [RequestXMLRPC])
+        case json(RequestJSON)
         case queryItems([RequestQueryItems.QueryItem])
         case multipartFormData(RequestMultipartFormData)
     }
@@ -87,47 +77,100 @@ struct Request: Codable, Hashable {
     }
     var method: Method
     var relativeEndpoint: RequestEndpoint = .init(path: [])
-
-    func urlRequest(for server: Server, command: Command) -> URLRequest {
-        func constructRequest() -> URLRequest {
-            let url = server.url
-            let port = server.port
-            let endpoint = server.api.endpoint
-                .appending(relativeEndpoint)
-                .resolve(command: command, server: server)
-            var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-            components?.queryItems = endpoint.queryItems?.asURLQueryItems()
-            components?.port = numericCast(port)
-            var request = URLRequest(
-                url: endpoint.path.reduce(into: components!.url!) {
-                    $0.appendPathComponent($1)
-                },
-                cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
-            )
-            server.api.authentication.forEach { auth in
-                switch auth {
-                case .basic:
-                    Optional.zip(
-                        server.user,
-                        server.password
-                    )
-                    .flatMap {
-                        "\($0):\($1)".data(using: .utf8)?.base64EncodedString()
-                    }
-                    .map {
-                        request.setValue("Basic \($0)", forHTTPHeaderField: "Authorization")
-                    }
-                case let .token(.header(field, code: _)):
-                    if let token = server.token {
-                        request.setValue(token, forHTTPHeaderField: field)
-                    }
+    
+    private func constructRequest(for server: Server, command: Command) -> URLRequest {
+        let url = server.url
+        let port = server.port
+        let endpoint = server.api.endpoint
+            .appending(relativeEndpoint)
+            .resolve(command: command, server: server)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        components?.queryItems = endpoint.queryItems?.asURLQueryItems()
+        components?.port = numericCast(port)
+        var request = URLRequest(
+            url: endpoint.path.reduce(into: components!.url!) {
+                $0.appendPathComponent($1)
+            },
+            cachePolicy: .reloadIgnoringLocalAndRemoteCacheData
+        )
+        server.api.authentication.forEach { auth in
+            switch auth {
+            case .basic:
+                Optional.zip(
+                    server.user,
+                    server.password
+                )
+                .map {
+                    Data("\($0):\($1)".utf8).base64EncodedString()
+                }
+                .map {
+                    request.setValue("Basic \($0)", forHTTPHeaderField: "Authorization")
+                }
+            case let .token(.header(field, code: _)):
+                if let token = server.token {
+                    request.setValue(token, forHTTPHeaderField: field)
                 }
             }
-            request.httpMethod = method.method
-            request.timeoutInterval = server.timeoutInterval
-            return request
         }
-        var request = constructRequest()
+        request.httpMethod = method.method
+        request.timeoutInterval = server.timeoutInterval
+        return request
+    }
+    
+    func afRequest(for server: Server, command: Command) -> DataRequest {
+        var urlRequest = constructRequest(for: server, command: command)
+        switch method {
+        case .get:
+            return AF.request(urlRequest)
+        case let .post(payload):
+            switch payload {
+            case let .multipartFormData(multipartFormData):
+                return AF.upload(
+                    multipartFormData: { formData in
+                        multipartFormData.resolve(
+                            command: command,
+                            server: server,
+                            formData: formData
+                        )
+                    },
+                    with: urlRequest
+                )
+            case let .xmlRpc(method, payload):
+                urlRequest.httpBody = XMLRPC.Call(
+                    method: method,
+                    params: payload.map {
+                        $0.resolve(command: command, server: server)
+                    }
+                ).serialize()
+                return AF.request(urlRequest)
+            case let .json(payload):
+                urlRequest.httpBody = try? JSONEncoder().encode(
+                    payload
+                        .resolve(command: command, server: server)
+                        .encodable()
+                )
+                return AF.request(urlRequest)
+            case let .queryItems(queryItems):
+                urlRequest.httpBody = RequestQueryItems(queryItems: queryItems)
+                    .resolve(command: command, server: server)
+                    .compactMap { item in
+                        (item.value?.urlEncoded).flatMap { value in
+                            item.name.urlEncoded.map {
+                                ($0, value)
+                            }
+                        }
+                    }
+                    .map { "\($0)=\($1)" }
+                    .map(\.description)
+                    .joined(separator: "&")
+                    .data(using: .utf8)
+                return AF.request(urlRequest)
+            }
+        }
+    }
+
+    func urlRequest(for server: Server, command: Command) -> URLRequest {
+        var request = constructRequest(for: server, command: command)
         switch method {
         case .get:
             return request
@@ -140,20 +183,30 @@ struct Request: Codable, Hashable {
                 request.httpBody = RequestQueryItems(queryItems: queryItems)
                     .resolve(command: command, server: server)
                     .compactMap { item in
-                        item.name.urlEncoded.map {
-                            ($0, item.value?.urlEncoded)
+                        (item.value?.urlEncoded).flatMap { value in
+                            item.name.urlEncoded.map {
+                                ($0, value)
+                            }
                         }
                     }
-                    .map { "\($0)=\($1 ?? "")" }
+                    .map { "\($0)=\($1)" }
                     .map(\.description)
                     .joined(separator: "&")
                     .data(using: .utf8)
-            case let .jsonrpc(payload):
-                request.httpBody = try! JSONEncoder().encode(
+            case let .json(payload):
+                request.httpBody = try? JSONEncoder().encode(
                     payload
                         .resolve(command: command, server: server)
                         .encodable()
                 )
+            case let .xmlRpc(method, params):
+                request.httpBody = XMLRPC.Call(
+                    method: method,
+                    params: params.map {
+                        $0.resolve(command: command, server: server)
+                    }
+                )
+                .serialize()
             }
         }
         return request
@@ -221,14 +274,5 @@ enum ETADescription: Codable, Hashable {
         case let .seconds(value):
             return value
         }
-    }
-}
-
-struct JSONParseError: Error, CustomStringConvertible {
-    let json: JSON
-    let expected: Payload.JSON
-
-    var description: String {
-        String("Expected \(expected) but encountered \(json)")
     }
 }

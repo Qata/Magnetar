@@ -13,7 +13,7 @@ public extension UIApplication {
         UIApplication.shared
             .connectedScenes
             .filter(keyPath: \.activationState, ==.foregroundActive)
-            .firstNonNil { $0 as? UIWindowScene }?
+            .first(ofType: UIWindowScene.self)?
             .windows
             .first(where: \.isKeyWindow)
     }

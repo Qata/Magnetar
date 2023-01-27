@@ -12,11 +12,14 @@ import MonadicJSON
 import CoreMedia
 import CasePaths
 import OrderedCollections
+import Alamofire
+import UIKit
 
 enum AppError: Error {
+    case afError(AFError)
     case urlError(URLError)
     case jsonDecoding(JSONParser.Error, command: Command.Discriminator)
-    case jsonParsing(JSONParseError, command: Command.Discriminator)
+    case responseParsing(ResponseParseError, command: Command.Discriminator)
     case losslessStringEncoding(expectedOneOf: [JSON.Discriminator])
     case finalParsing(Error)
     case authenticationFailure(html: AttributedString?)
@@ -28,12 +31,14 @@ enum AppError: Error {
     
     var title: String {
         switch self {
-        case let .urlError(error):
+        case .afError:
+            return "Netowrking Error"
+        case .urlError:
             return "URL Error"
         case .jsonDecoding:
             return "JSON Decoding Error"
-        case .jsonParsing:
-            return "JSON Parsing Error"
+        case .responseParsing:
+            return "Structure Parsing Error"
         case .finalParsing:
             return "Parsing Error"
         case .authenticationFailure:
@@ -55,11 +60,13 @@ enum AppError: Error {
 
     var description: AttributedString? {
         switch self {
+        case let .afError(error):
+            return .init(error.localizedDescription)
         case let .urlError(error):
             return .init(error.localizedDescription)
         case let .jsonDecoding(error, command):
             return .init("\(String(describing: error)) for \(command.description) request")
-        case let .jsonParsing(error, command):
+        case let .responseParsing(error, command):
             return .init("\(error.description) for \(command.description) request")
         case let .finalParsing(error):
             return .init(error.localizedDescription)
@@ -110,36 +117,47 @@ extension Global {
             }
         }
     }
-    
+
     private static func reuploadFile(url: URL, location: String?) -> AnyPublisher<Action, Never> {
         URLSession.shared
             .dataTaskPublisher(for: URLRequest(url: url))
             .map { data, response in
-                .async(.command(.addFile(data, location: location)))
+                .async(.command(.addFile(data, name: url.lastPathComponent, location: location)))
             }
             .mapError(AppError.urlError)
             .liftError()
             .eraseToAnyPublisher()
     }
-    
+
     private static func command(
         store: StorePublishers<State, AsyncAction, SyncAction>,
         command: Command
     ) -> AnyPublisher<Action, Never> {
         let state = store.state.changes.first()
         switch command {
-        case let .login(andThen: nextCommand):
+        case let .login(andThen: nextCommands):
+            let commands: [Action] = nextCommands.map { .async(.command($0)) }
             return state.query(
                 command: command
-            ) { (value: JSONValues) in
-                switch value.values[.token]?.first {
-                case let .string(token):
-                    return [.sync(.set(.token(token)))]
-                default:
-                    return []
-                }
+            ) { (value: ResponseValues) in
+                value.extractActions()
             }
-            .append(.async(.command(nextCommand)))
+            .flatMap {
+                Just($0).merge(
+                    with: Just(commands)
+                        .delay(for: 0, scheduler: DispatchQueue.main)
+                )
+            }
+            .replaceEmpty(with: commands)
+            .flatMap(\.publisher)
+            .liftError()
+        case .info:
+            return state.query(
+                command: command
+            ) { (value: ResponseValues) in
+                value.extractActions()
+            }
+            .flatMap(\.publisher)
             .liftError()
         case let .fetch(ids):
             return state.server
@@ -168,31 +186,38 @@ extension Global {
                             }
                         }
                     )
-                    .prefix(
-                        // Cancel if the jobs are updated.
-                        untilOutputFrom: store.actions.sync.post
-                            .first(matching: /Action.Sync.update..Action.Sync.Update.jobs)
-                    )
-                    .prefix(
-                        // Cancel if the jobs are set.
-                        untilOutputFrom: store.actions.sync.post
-                            .first(matching: /Action.Sync.set..Action.Sync.Set.jobs)
-                    )
-                    .prefix(
-                        // Cancel if any jobs get removed.
-                        untilOutputFrom: store.actions.sync.post
-                            .first(matching: /Action.Sync.delete..Action.Sync.Delete.jobs)
-                    )
-//                    .replaceEmpty(with: .async(.command(command)))
                 }
+                .flatMap(\.publisher)
+                .prefix(
+                    // Cancel if the jobs are updated.
+                    untilOutputFrom: store.actions.sync.post
+                        .first(matching: /Action.Sync.update..Action.Sync.Update.jobs)
+                )
+                .prefix(
+                    // Cancel if the jobs are set.
+                    untilOutputFrom: store.actions.sync.post
+                        .first(matching: /Action.Sync.set..Action.Sync.Set.jobs)
+                )
+                .prefix(
+                    // Cancel if any jobs get removed.
+                    untilOutputFrom: store.actions.sync.post
+                        .first(matching: /Action.Sync.delete..Action.Sync.Delete.jobs)
+                )
+                .prefix(
+                    untilOutputFrom: NotificationCenter.default.publisher(
+                        for: UIApplication.willResignActiveNotification
+                    )
+                )
+//                .replaceEmpty(with: .async(.command(command)))
                 .liftError()
         case .start, .pause, .stop, .addURI, .addFile:
             return state.query(
                 command: command
-            ) { (value: JSONValues) in
-                // Leveraging JSONValues to validate the expected response.
+            ) { (value: ResponseValues) in
+                // Leveraging ResponseValues to validate the expected response.
                 []
             }
+            .flatMap(\.publisher)
             .append(.async(.command(.fetch(.some(command.ids)))))
             .append(
                 // Some servers will queue the change of status and complete the request without setting
@@ -205,15 +230,16 @@ extension Global {
         case .remove, .deleteData:
             return state.query(
                 command: command
-            ) { (value: JSONValues) in
-                // Leveraging JSONValues to validate the expected response.
+            ) { (value: ResponseValues) in
+                // Leveraging ResponseValues to validate the expected response.
                 []
             }
+            .flatMap(\.publisher)
             .append(.sync(.delete(.jobs(command.ids))))
             .liftError()
         }
     }
-    
+
     private static func start(store: StorePublishers<State, AsyncAction, SyncAction>) -> AnyPublisher<Action, Never> {
         #warning("When the UI is driven from the state, add a filter based on whether the torrent list is visible")
         return store.state.changes
@@ -232,7 +258,7 @@ extension Global {
                                 untilOutputFrom: store.actions.sync.post
                                     .first(matching: /Action.Sync.set..Action.Sync.Set.jobs)
                             )
-                            .prepend(.async(.command(.login(andThen: .fetch(.all)))))
+                            .prepend(.async(.command(.login(andThen: [.info, .fetch(.all)]))))
                     }
                     .eraseToAnyPublisher()
             }

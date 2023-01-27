@@ -18,11 +18,17 @@ enum DataSizeClass: String, Codable, CaseIterable {
     case exbibytes
     case zebibytes
     case yobibytes
-    
+
+    static let all: [UInt: Self] = Dictionary(
+        uniqueKeysWithValues: allCases.map {
+            ($0.standing, $0)
+        }
+    )
+
     var name: String {
-        return rawValue
+        rawValue
     }
-    
+
     var prefix: Character? {
         switch self {
         case .bytes:
@@ -31,13 +37,13 @@ enum DataSizeClass: String, Codable, CaseIterable {
             return rawValue.capitalized.first
         }
     }
-    
+
     var abbreviation: String {
         [prefix.map { "\($0)i" }, "B"]
             .compactMap { $0 }
             .joined()
     }
-    
+
     var standing: UInt {
         switch self {
         case .bytes:
@@ -64,7 +70,7 @@ enum DataSizeClass: String, Codable, CaseIterable {
 
 struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
     private let size: Size
-    
+
     static var zero: Self {
         .init(bytes: .zero)
     }
@@ -86,11 +92,11 @@ struct Speed: Codable, Hashable, AccessibleCustomStringConvertible {
     var sizeClass: DataSizeClass {
         size.sizeClass
     }
-    
+
     var rawDescription: String {
         size.rawDescription
     }
-    
+
     let description: String
     let accessibleDescription: String
 }
@@ -107,11 +113,14 @@ struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
 
     init(bytes: UInt) {
         self.bytes = bytes
-        let bytes = Double(bytes)
-        let logged = UInt(floor(Optional(log2(bytes)).filter { $0.isFinite } ?? 0) / 10)
-        sizeClass = DataSizeClass.allCases
-            .first { $0.standing == logged }
-            ?? .bytes
+        let logged = Optional(Double(bytes))
+            .map(abs)
+            .map(log2)
+            .filter(\.isFinite)
+            .map { UInt(floor($0)) / 10 }
+        ?? 0
+
+        sizeClass = DataSizeClass.all[logged, default: .bytes]
     }
 
     var rawDescription: String {
@@ -119,18 +128,12 @@ struct Size: Codable, Hashable, AccessibleCustomStringConvertible {
     }
 
     var description: String {
-        return [
-            rawDescription,
-            sizeClass.abbreviation
-            ]
+        [rawDescription, sizeClass.abbreviation]
             .joined(separator: " ")
     }
-    
+
     var accessibleDescription: String {
-        return [
-            rawDescription,
-            sizeClass.name
-            ]
+        [rawDescription, sizeClass.name]
             .joined(separator: " ")
     }
 }

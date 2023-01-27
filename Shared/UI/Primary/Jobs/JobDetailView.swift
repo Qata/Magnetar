@@ -19,10 +19,9 @@ struct CommandButton<Content: View>: View {
         content: @escaping (_ title: Text?, _ image: SystemImage, _ action: @escaping () -> Void) -> Content
     ) {
         self.command = command([viewModel.id])
-        self.title = title
-            .if(
-                true: self.command.discriminator.description
-            ).map(Text.init)
+        self.title = title.if(
+            true: self.command.discriminator.description
+        ).map(Text.init)
         self.status = viewModel.status
         self.invalidStatuses = invalidStatuses
         self.api = api
@@ -41,6 +40,8 @@ struct CommandButton<Content: View>: View {
     
     var image: SystemImage {
         switch command {
+        case .info:
+            return .infoCircle
         case .login:
             return .arrowClockwise
         case .fetch:
@@ -70,12 +71,10 @@ struct JobDetailView: View {
     }
 
     let store: SubStore<JobViewModel?, AsyncAction, SyncAction>
-    let presentation: Presentation
     @Environment(\.dismiss) var dismiss
     @State var viewModel: JobViewModel
     
-    init?(id: Job.Id, presentation: Presentation) {
-        self.presentation = presentation
+    init?(id: Job.Id) {
         store = Global.store.lensing {
             $0.jobs.all[id]
         }
@@ -122,14 +121,6 @@ struct JobDetailView: View {
     var body: some View {
         VStack {
             List {
-                if presentation == .sheet {
-                    HStack {
-                        Spacer()
-//                        CommandsMenu(image: .playpause) {
-//                            dismiss()
-//                        }
-                    }
-                }
                 Group {
                     firstSection
                     secondSection
@@ -139,11 +130,9 @@ struct JobDetailView: View {
             }
             .navigationTitle(viewModel.name)
             .toolbar {
-                if presentation == .push {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        CommandsMenu(ids: [viewModel.id]) {
-                            dismiss()
-                        }
+                ToolbarItemGroup(placement: .primaryAction) {
+                    CommandsMenu(ids: [viewModel.id]) {
+                        dismiss()
                     }
                 }
             }

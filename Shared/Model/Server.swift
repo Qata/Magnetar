@@ -11,6 +11,11 @@ import Combine
 import Tagged
 
 struct Server: Hashable, Codable {
+    enum Defaults {
+        static let refreshInterval: TimeInterval = 2
+        static let timeoutInterval: TimeInterval = 30
+    }
+    
     typealias Name = Tagged<Self, String>
 
     var url: URL
@@ -19,10 +24,11 @@ struct Server: Hashable, Codable {
     var token: String?
     var port: UInt16
     var name: Name
-    var downloadDirectories: [String] = []
+    var destinations: Set<String> = []
     var api: APIDescriptor
-    var refreshInterval: TimeInterval = 2
-    var timeoutInterval: TimeInterval = 30
+    var pendingJobs: [PendingJob] = []
+    var refreshInterval: TimeInterval = Defaults.refreshInterval
+    var timeoutInterval: TimeInterval = Defaults.timeoutInterval
     var lastSeen: Unhashed<Date?> = .init(underlying: nil)
 
     var sorting: Sorting = .init()

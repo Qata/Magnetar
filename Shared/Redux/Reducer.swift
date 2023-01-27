@@ -91,6 +91,11 @@ extension Global {
 
         static let create = Recombine.Reducer<Global.State, SyncAction.Create, Global.Environment> { state, action, _ in
             switch action {
+            case let .server(server):
+                state.persistent.servers.append(server)
+                if state.persistent.selectedServer == nil {
+                    state.persistent.selectedServer = server
+                }
             case let .error(error):
                 state.errors.write(
                     .init(
@@ -116,6 +121,8 @@ extension Global {
                 state.persistent.queries.append(query)
             case let .queuedCommand(command):
                 state.persistent.queuedCommands.append(command)
+            case let .destination(destination):
+                state.persistent.selectedServer?.destinations.insert(destination)
             }
         }
 

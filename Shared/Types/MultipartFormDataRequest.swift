@@ -7,8 +7,16 @@
 
 import Foundation
 
+extension UUID {
+    func lowercased() -> String {
+        UUID().uuidString
+            .filter(!="-")
+            .lowercased()
+    }
+}
+
 struct MultipartFormData {
-    private let boundary: String = UUID().uuidString
+    private let boundary: String = "magnetar.boundary.\(UUID().lowercased())"
     private var httpBody = Data()
 
     mutating func add(field name: String, value: String) {
@@ -19,8 +27,6 @@ struct MultipartFormData {
         [
             "--\(boundary)\r\n",
             "Content-Disposition: form-data; name=\"\(name)\"\r\n",
-            "Content-Type: text/plain; charset=ISO-8859-1\r\n",
-            "Content-Transfer-Encoding: 8bit\r\n",
             "\r\n",
             "\(value)\r\n",
         ].joined()
@@ -49,6 +55,7 @@ struct MultipartFormData {
     func inject(into request: inout URLRequest) {
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("br;q=1.0, gzip;q=0.9, deflate;q=0.8", forHTTPHeaderField: "Accept-Encoding")
         request.httpBody = httpBody.appending("--\(boundary)--")
     }
 }

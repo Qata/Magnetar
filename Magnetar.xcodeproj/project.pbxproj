@@ -130,8 +130,6 @@
 		CB6B0FB827B28D2E009CE0B5 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */; };
 		CB73C05929164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */; };
 		CB73C05A29164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */; };
-		CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
-		CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */; };
 		CB7AC3C027B3C8FC0087929C /* Synology.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Synology.swift */; };
 		CB7AC3C127B3C8FC0087929C /* Synology.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7AC3BF27B3C8FC0087929C /* Synology.swift */; };
 		CB8C1F3627B2A1E600E1AAA4 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */; };
@@ -188,6 +186,17 @@
 		CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */; };
 		CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
 		CBADD63428D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
+		CBB010FC2942B7F200771C17 /* Swift.Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */; };
+		CBB010FD2942B7F200771C17 /* Swift.Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */; };
+		CBB0111D294AEDA100771C17 /* rTorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0111C294AEDA100771C17 /* rTorrent.swift */; };
+		CBB0111E294AEDA100771C17 /* rTorrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0111C294AEDA100771C17 /* rTorrent.swift */; };
+		CBB01120294AEF1200771C17 /* RequestXMLRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0111F294AEF1200771C17 /* RequestXMLRPC.swift */; };
+		CBB01121294AEF1200771C17 /* RequestXMLRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0111F294AEF1200771C17 /* RequestXMLRPC.swift */; };
+		CBB01124294B2F6300771C17 /* SwiftXMLRPC in Frameworks */ = {isa = PBXBuildFile; productRef = CBB01123294B2F6300771C17 /* SwiftXMLRPC */; };
+		CBB011292950418D00771C17 /* StructuredResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB011282950418D00771C17 /* StructuredResponse.swift */; };
+		CBB0112A2950418D00771C17 /* StructuredResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB011282950418D00771C17 /* StructuredResponse.swift */; };
+		CBB0112C2950476A00771C17 /* ParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0112B2950476A00771C17 /* ParseError.swift */; };
+		CBB0112D2950476A00771C17 /* ParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB0112B2950476A00771C17 /* ParseError.swift */; };
 		CBB8571D28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */; };
 		CBB8571E28D9F31300B71D60 /* MonadicJSON.JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */; };
 		CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */; };
@@ -210,6 +219,7 @@
 		CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8728BF237500BCECF7 /* ServerList.swift */; };
 		CBE69F8B28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
 		CBE69F8C28BF250F00BCECF7 /* Unhashed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE69F8A28BF250F00BCECF7 /* Unhashed.swift */; };
+		CBFB18162921CF1400B5AB95 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CBFB18152921CF1300B5AB95 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,7 +304,6 @@
 		CB6B0FB327B27FF0009CE0B5 /* AccessibleCustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleCustomStringConvertible.swift; sourceTree = "<group>"; };
 		CB6B0FB627B28D2E009CE0B5 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
 		CB73C05829164F8B00263FA5 /* Foundation.AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.AttributedString.swift; sourceTree = "<group>"; };
-		CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitialisable.swift; sourceTree = "<group>"; };
 		CB7AC3BF27B3C8FC0087929C /* Synology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synology.swift; sourceTree = "<group>"; };
 		CB8C1F3527B2A1E600E1AAA4 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
 		CB8E9CAE28582BE400089B4B /* EqualWidthHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualWidthHStack.swift; sourceTree = "<group>"; };
@@ -322,6 +331,11 @@
 		CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryWebView.swift; sourceTree = "<group>"; };
 		CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.GeometryReader.swift; sourceTree = "<group>"; };
+		CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.Dictionary.swift; sourceTree = "<group>"; };
+		CBB0111C294AEDA100771C17 /* rTorrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rTorrent.swift; sourceTree = "<group>"; };
+		CBB0111F294AEF1200771C17 /* RequestXMLRPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestXMLRPC.swift; sourceTree = "<group>"; };
+		CBB011282950418D00771C17 /* StructuredResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredResponse.swift; sourceTree = "<group>"; };
+		CBB0112B2950476A00771C17 /* ParseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseError.swift; sourceTree = "<group>"; };
 		CBB8571B28D71BEA00B71D60 /* Magnetar--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Magnetar--iOS--Info.plist"; sourceTree = "<group>"; };
 		CBB8571C28D9F31300B71D60 /* MonadicJSON.JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonadicJSON.JSON.swift; sourceTree = "<group>"; };
 		CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueryView.swift; sourceTree = "<group>"; };
@@ -347,12 +361,14 @@
 				CB6B0F1E27B2528F009CE0B5 /* Recombine in Frameworks */,
 				CBDB1C1328D2B95100FCDF50 /* Tagged in Frameworks */,
 				CB56A33129038F3300B1FEFF /* Collections in Frameworks */,
+				CBB01124294B2F6300771C17 /* SwiftXMLRPC in Frameworks */,
 				CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 				CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */,
 				CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */,
 				CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */,
 				CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */,
+				CBFB18162921CF1400B5AB95 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,7 +607,7 @@
 				CB6B0F8A27B253F2009CE0B5 /* ServerDescription.swift */,
 				CB91362528D6CE6A0034E67F /* QueryItem.swift */,
 				CB6B0F8B27B253F2009CE0B5 /* ServerStatus.swift */,
-				CB7AC3BC27B3C8930087929C /* JSONInitialisable.swift */,
+				CBB011282950418D00771C17 /* StructuredResponse.swift */,
 				CB6B0F9027B253F2009CE0B5 /* Server.swift */,
 				CB6B0F9127B253F2009CE0B5 /* Command.swift */,
 				CB6B0F9327B253F2009CE0B5 /* Status.swift */,
@@ -599,6 +615,7 @@
 				CBBF93B727B3C3F90060CB06 /* Job */,
 				CB6B0F9427B253F2009CE0B5 /* Job.Raw.swift */,
 				CB91361128D4088C0034E67F /* Request */,
+				CBB0112B2950476A00771C17 /* ParseError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -635,6 +652,7 @@
 				CB91360E28D4061F0034E67F /* RequestParameter.swift */,
 				CB91361728D409590034E67F /* RequestQueryItems.swift */,
 				CB91361428D409160034E67F /* RequestJSON.swift */,
+				CBB0111F294AEF1200771C17 /* RequestXMLRPC.swift */,
 				CB91362B28D6FC100034E67F /* RequestMultipartFormData.swift */,
 				CB91363128D70AA50034E67F /* RequestFileName.swift */,
 			);
@@ -647,6 +665,7 @@
 				CB7AC3BF27B3C8FC0087929C /* Synology.swift */,
 				CB91362128D41B9D0034E67F /* qBittorrent.swift */,
 				CB91361E28D41B6A0034E67F /* Transmission.swift */,
+				CBB0111C294AEDA100771C17 /* rTorrent.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -671,6 +690,7 @@
 				CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */,
 				CB6B0F5327B253DC009CE0B5 /* Swift.Bool.swift */,
 				CB6B0F4E27B253DC009CE0B5 /* Swift.Collection.swift */,
+				CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */,
 				CB6B0F5527B253DC009CE0B5 /* Swift.Optional.swift */,
 				CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */,
 				CB6B0F5027B253DC009CE0B5 /* Swift.Sequence.swift */,
@@ -763,6 +783,8 @@
 				CB1B6F5628D2D2C7005758EA /* Overture */,
 				CB56A33029038F3300B1FEFF /* Collections */,
 				CB56A33229038F3300B1FEFF /* OrderedCollections */,
+				CBFB18152921CF1300B5AB95 /* Alamofire */,
+				CBB01123294B2F6300771C17 /* SwiftXMLRPC */,
 			);
 			productName = "Magnetar (iOS)";
 			productReference = CB6B0EE327B25225009CE0B5 /* Magnetar.app */;
@@ -873,6 +895,8 @@
 				CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 				CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */,
 				CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */,
+				CBFB18142921CF1300B5AB95 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				CBB01122294B2F6300771C17 /* XCRemoteSwiftPackageReference "SwiftXMLRPC" */,
 			);
 			productRefGroup = CB6B0EE427B25225009CE0B5 /* Products */;
 			projectDirPath = "";
@@ -953,6 +977,7 @@
 				CBC1981A28EE7EE400FD115B /* SwiftUI.View.swift in Sources */,
 				CB91361B28D410ED0034E67F /* RequestEndpoint.swift in Sources */,
 				CBADD62228C9641600B0C6EA /* JobsListTopBar.swift in Sources */,
+				CBB0112C2950476A00771C17 /* ParseError.swift in Sources */,
 				CB6B0F7727B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB9F9E8027BC89A500CA93E6 /* SwiftUI.NavigationLink.swift in Sources */,
 				CB577E0E27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */,
@@ -979,6 +1004,7 @@
 				CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */,
 				CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */,
 				CB91362928D6ECA40034E67F /* MultipartFormDataRequest.swift in Sources */,
+				CBB010FC2942B7F200771C17 /* Swift.Dictionary.swift in Sources */,
 				CB66B88327BF7AA000C2A62F /* Swift.Regex.swift in Sources */,
 				CB91361F28D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB66B88C27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
@@ -989,6 +1015,7 @@
 				CB6B0F5F27B253DC009CE0B5 /* Foundation.StringInterpolation.swift in Sources */,
 				CB6B0F0427B25225009CE0B5 /* MagnetarApp.swift in Sources */,
 				CB6B0F3027B252FC009CE0B5 /* JobsListView.swift in Sources */,
+				CBB01120294AEF1200771C17 /* RequestXMLRPC.swift in Sources */,
 				CB91363228D70AA50034E67F /* RequestFileName.swift in Sources */,
 				CB6B0F6527B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB91362F28D6FE160034E67F /* RequestEndpoint.Path.swift in Sources */,
@@ -1005,6 +1032,7 @@
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
 				CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */,
 				CBADD63028D078AD00B0C6EA /* QueryWebView.swift in Sources */,
+				CBB011292950418D00771C17 /* StructuredResponse.swift in Sources */,
 				CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
@@ -1019,13 +1047,13 @@
 				CB6B0F6B27B253DC009CE0B5 /* Swift.Optional.swift in Sources */,
 				CB6B0F3C27B2534E009CE0B5 /* JobRowView.swift in Sources */,
 				CB6B0FB727B28D2E009CE0B5 /* JobDetailView.swift in Sources */,
-				CB7AC3BD27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0FAA27B2788E009CE0B5 /* Sorting.swift in Sources */,
 				CB6B0F3E27B2534E009CE0B5 /* ProgressBar.swift in Sources */,
 				CB6B0FA127B253F3009CE0B5 /* Command.swift in Sources */,
 				CB6B0FA527B253F3009CE0B5 /* Status.swift in Sources */,
 				CB6B0F8727B253EA009CE0B5 /* Measurements.swift in Sources */,
 				CB73C05929164F8B00263FA5 /* Foundation.AttributedString.swift in Sources */,
+				CBB0111D294AEDA100771C17 /* rTorrent.swift in Sources */,
 				CB6B0F9F27B253F3009CE0B5 /* Server.swift in Sources */,
 				CB91362628D6CE6A0034E67F /* QueryItem.swift in Sources */,
 				CB9F9E8627BCD7FE00CA93E6 /* Combine.Publisher.swift in Sources */,
@@ -1055,7 +1083,6 @@
 				CB6B0F7827B253E2009CE0B5 /* Reducer.swift in Sources */,
 				CB6B0F6227B253DC009CE0B5 /* Swift.Sequence.swift in Sources */,
 				CB6B0F3327B252FC009CE0B5 /* AddServerForm.swift in Sources */,
-				CB7AC3BE27B3C8930087929C /* JSONInitialisable.swift in Sources */,
 				CB6B0F7A27B253E2009CE0B5 /* Thunk.swift in Sources */,
 				CB6B0F4127B2534E009CE0B5 /* TransferTotalsView.swift in Sources */,
 				CB6B0F9E27B253F3009CE0B5 /* Payload.swift in Sources */,
@@ -1076,7 +1103,9 @@
 				CB6B0F7627B253E2009CE0B5 /* Global.swift in Sources */,
 				CB6B0F6027B253DC009CE0B5 /* Foundation.StringInterpolation.swift in Sources */,
 				CB6B0F0527B25225009CE0B5 /* MagnetarApp.swift in Sources */,
+				CBB0112A2950418D00771C17 /* StructuredResponse.swift in Sources */,
 				CB6B0F3127B252FC009CE0B5 /* JobsListView.swift in Sources */,
+				CBB010FD2942B7F200771C17 /* Swift.Dictionary.swift in Sources */,
 				CB6B0F6627B253DC009CE0B5 /* Atomic.swift in Sources */,
 				CB6B0F6827B253DC009CE0B5 /* Swift.Bool.swift in Sources */,
 				CB6B0F8427B253EA009CE0B5 /* Ratio.swift in Sources */,
@@ -1084,6 +1113,7 @@
 				CB6B0F5827B253DC009CE0B5 /* Yield.swift in Sources */,
 				CB6B0F9627B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938C27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
+				CBB0111E294AEDA100771C17 /* rTorrent.swift in Sources */,
 				CBE69F8928BF237500BCECF7 /* ServerList.swift in Sources */,
 				CB8E9CB028582BE400089B4B /* EqualWidthHStack.swift in Sources */,
 				CBADD63428D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */,
@@ -1130,8 +1160,10 @@
 				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
 				CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
+				CBB0112D2950476A00771C17 /* ParseError.swift in Sources */,
 				CBA21720290B6DD1003061EB /* LazyView.swift in Sources */,
 				CB6B0FA827B253F3009CE0B5 /* Job.Raw.swift in Sources */,
+				CBB01121294AEF1200771C17 /* RequestXMLRPC.swift in Sources */,
 				CB91363328D70AA50034E67F /* RequestFileName.swift in Sources */,
 				CB91362728D6CE6A0034E67F /* QueryItem.swift in Sources */,
 			);
@@ -1625,6 +1657,14 @@
 				kind = branch;
 			};
 		};
+		CBB01122294B2F6300771C17 /* XCRemoteSwiftPackageReference "SwiftXMLRPC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Qata/SwiftXMLRPC";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mchakravarty/CodeEditorView.git";
@@ -1647,6 +1687,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.7.0;
+			};
+		};
+		CBFB18142921CF1300B5AB95 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1712,6 +1760,11 @@
 			package = CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePaths;
 		};
+		CBB01123294B2F6300771C17 /* SwiftXMLRPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBB01122294B2F6300771C17 /* XCRemoteSwiftPackageReference "SwiftXMLRPC" */;
+			productName = SwiftXMLRPC;
+		};
 		CBBF93B527B3C06A0060CB06 /* CodeEditorView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */;
@@ -1726,6 +1779,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */;
 			productName = Tagged;
+		};
+		CBFB18152921CF1300B5AB95 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBFB18142921CF1300B5AB95 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

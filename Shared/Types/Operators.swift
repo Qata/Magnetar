@@ -14,14 +14,6 @@ prefix operator >
 prefix operator >=
 infix operator ?=
 
-//prefix func + (value: String) -> (String) -> String {
-//    { $0 + value }
-//}
-//
-//postfix func + (value: String) -> (String) -> String {
-//    {  value + $0 }
-//}
-
 prefix func + (value: String) -> (String?) -> String {
     { ($0 ?? "") + value }
 }

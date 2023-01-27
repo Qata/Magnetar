@@ -8,22 +8,20 @@
 import Foundation
 
 let synologyAPI = APIDescriptor(
-    name: "Synology ",
+    name: "Synology",
     endpoint: .init(
         path: ["webapi"]
     ),
-    supportedURIs: [
-        .scheme(.init(value: "magnet", nameLocation: .queryItem("dn"))),
-        .scheme(.init(value: "ftp", nameLocation: .lastPathComponent)),
-        .scheme(.init(value: "thunder")),
-        .scheme(.init(value: "qqdl")),
-        .scheme(.init(value: "flashget")),
-        .scheme(.init(value: "ed2k"))
-    ],
-    supportedFilePathExtensions: [
-        .init(value: "torrent", encoding: .bencoding),
-        .init(value: "nzb", encoding: .xml),
-        .init(value: "txt", encoding: .newLineSeparated),
+    supportedJobLocators: [
+        .scheme("magnet"),
+        .scheme("ftp"),
+        .scheme("thunder"),
+        .scheme("qqdl"),
+        .scheme("flashget"),
+        .scheme("ed2k"),
+        .pathExtension("torrent"),
+        .pathExtension("nzb"),
+        .pathExtension("txt"),
     ],
     authentication: [
         
@@ -32,31 +30,15 @@ let synologyAPI = APIDescriptor(
     ],
     jobs: .init(
         status: [
-            .seedQueued: [],
-            .paused: [],
+            .seeding: ["seeding"],
+            .queued: ["waiting"],
+            .paused: ["paused", "finished"],
             .downloading: ["downloading"],
-            .downloadQueued: [],
             .checkingFiles: [],
             .unknown: [],
         ]
     ),
     commands: [
-//        .login: .init(
-//            request: .init(
-//                method: .get,
-//                relativeEndpoint: .init(
-//                    path: ["query.cgi"],
-//                    queryItems: .init(
-//                        queryItems: [
-//                            .init(name: "api", value: "SYNO.API.Info"),
-//                            .init(name: "version", value: "1"),
-//                            .init(name: "method", value: "query"),
-//                            .init(name: "query", value: "SYNO.API.Auth,SYNO.DownloadStation.Task"),
-//                        ]
-//                    )
-//                )
-//            )
-//        ),
         // https://github.com/Sonarr/Sonarr/issues/3943#issuecomment-706807653
         .login: .init(
             expected: .json(
@@ -79,11 +61,32 @@ let synologyAPI = APIDescriptor(
                 )
             )
         ),
+        .info: .init(
+            expected: .json(
+                .object([
+                    "data": .object([
+                        "default_destination": .parameter(.destination)
+                    ]),
+                    "success": .bool(true)
+                ])
+            ),
+            request: .init(
+                method: .get,
+                relativeEndpoint: .init(
+                    path: ["DownloadStation", "info.cgi"],
+                    queryItems: [
+                        .init(name: "api", value: "SYNO.DownloadStation.Info"),
+                        .init(name: "version", value: "1"),
+                        .init(name: "method", value: "getconfig"),
+                    ]
+                )
+            )
+        ),
         .start: .init(
             request: .init(
                 method: .get,
                 relativeEndpoint: .init(
-                    path: ["task.cgi"],
+                    path: ["DownloadStation", "task.cgi"],
                     queryItems: [
                         .init(name: "api", value: "SYNO.DownloadStation.Task"),
                         .init(name: "version", value: "1"),
@@ -93,11 +96,11 @@ let synologyAPI = APIDescriptor(
                 )
             )
         ),
-        .stop: .init(
+        .pause: .init(
             request: .init(
                 method: .get,
                 relativeEndpoint: .init(
-                    path: ["task.cgi"],
+                    path: ["DownloadStation", "task.cgi"],
                     queryItems: [
                         .init(name: "api", value: "SYNO.DownloadStation.Task"),
                         .init(name: "version", value: "1"),
@@ -119,7 +122,34 @@ let synologyAPI = APIDescriptor(
                     ])
                 ),
                 relativeEndpoint: .init(
-                    path: ["task.cgi"]
+                    path: ["DownloadStation", "task.cgi"]
+                )
+            )
+        ),
+        .addFile: .init(
+            request: .init(
+                method: .post(
+                    payload: .multipartFormData(
+                        .init(
+                            fields: [
+                                .init(name: "api", value: "SYNO.DownloadStation2.Task"),
+                                .init(name: "method", value: "create"),
+                                .init(name: "version", value: "2"),
+                                .init(name: "type", value: .quoted(value: .string("file"), quotationMark: #"""#)),
+                                .init(name: "file", value: #"["torrent"]"#),
+                                .init(name: "destination", value: .quoted(value: .location, quotationMark: #"""#)),
+                                .init(name: "create_list", value: .bool(false)),
+                                .init(
+                                    name: "torrent",
+                                    value: .file(.data(fileName: .random(extension: "torrent"))),
+                                    mimeType: "application/x-bitfileType"
+                                )
+                            ]
+                        )
+                    )
+                ),
+                relativeEndpoint: .init(
+                    path: ["entry.cgi", "SYNO.DownloadStation2.Task"]
                 )
             )
         ),
@@ -127,11 +157,12 @@ let synologyAPI = APIDescriptor(
             request: .init(
                 method: .get,
                 relativeEndpoint: .init(
-                    path: ["task.cgi"],
+                    path: ["DownloadStation", "task.cgi"],
                     queryItems: [
                         .init(name: "api", value: "SYNO.DownloadStation.Task"),
                         .init(name: "version", value: "1"),
                         .init(name: "method", value: "delete"),
+                        .init(name: "force_complete", value: "false"),
                         .init(name: "id", value: .parameter(.forEach(.id, separator: ","))),
                     ]
                 )
@@ -143,24 +174,26 @@ let synologyAPI = APIDescriptor(
                     "data": .object([
                         "tasks": .forEach([
                             .object([
-                                "id": .field(.preset(.id)),
-                                "title": .field(.preset(.name)),
-                                "size": .field(.preset(.size)),
-                                "status": .field(.preset(.status)),
+                                "id": .parameter(.field(.preset(.id))),
+                                "title": .parameter(.field(.preset(.name))),
+                                "size": .parameter(.field(.preset(.size))),
+                                "status": .parameter(.field(.preset(.status))),
                                 "additional": .object([
                                     "detail": .object([
-                                        "create_time": .field(
-                                            .adHoc(.init(
-                                                name: "Date Added",
-                                                type: .unixDate
-                                            ))
+                                        "create_time": .parameter(
+                                            .field(
+                                                .adHoc(.init(
+                                                    name: "Date Added",
+                                                    type: .unixDate
+                                                ))
+                                            )
                                         )
                                     ]),
                                     "transfer": .object([
-                                        "size_downloaded": .field(.preset(.downloaded)),
-                                        "size_uploaded": .field(.preset(.uploaded)),
-                                        "speed_download": .field(.preset(.downloadSpeed)),
-                                        "speed_upload": .field(.preset(.uploadSpeed)),
+                                        "size_downloaded": .parameter(.field(.preset(.downloaded))),
+                                        "size_uploaded": .parameter(.field(.preset(.uploaded))),
+                                        "speed_download": .parameter(.field(.preset(.downloadSpeed))),
+                                        "speed_upload": .parameter(.field(.preset(.uploadSpeed))),
                                     ])
                                 ]),
                             ])
@@ -176,19 +209,10 @@ let synologyAPI = APIDescriptor(
                         .init(name: "api", value: "SYNO.DownloadStation.Task"),
                         .init(name: "version", value: "1"),
                         .init(name: "method", value: "list"),
-                        .init(name: "additional", value: "detail,transfer,file")
+                        .init(name: "additional", value: "detail,transfer")
                     ]
                 )
             )
         )
     ]
-)
-
-let synologyServer = Server(
-    url: URL(string: "http://atextech.com")!,
-    user: "Magnetar",
-    password: "Sixcyf-7dehwa-jabvex",
-    port: 6192,
-    name: "Synology",
-    api: synologyAPI
 )

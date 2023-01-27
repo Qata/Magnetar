@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Algorithms
 
 extension StringProtocol {
     var unCamelCased: [SubSequence] {

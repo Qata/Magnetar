@@ -15,7 +15,6 @@ import SwiftUINavigation
 struct JobListView: View {
     @State var searchText: String = ""
     @State var presentedJob: Job.Id?
-    @State var detailPresentation = JobDetailView.Presentation.push
     let dispatch = Global.store.writeOnly()
 
     @ViewBuilder
@@ -26,10 +25,8 @@ struct JobListView: View {
         role: ButtonRole? = nil
     ) -> some View {
         if api.available(command: command.discriminator) {
-            Button(role: role) {
+            Button(role: role, image: icon) {
                 dispatch(async: .command(command))
-            } label: {
-                Label(command.discriminator.description, icon: icon)
             }
         }
     }
@@ -77,34 +74,11 @@ struct JobListView: View {
         OptionalStoreView(\.persistent.selectedServer) { server in
             ForEach(jobs, id: \.id) { job in
                 ZStack(alignment: .leading) {
-                    if detailPresentation == .push {
-                        NavigationLink(
-                            destination: LazyView(
-                                JobDetailView(
-                                    id: job.id,
-                                    presentation: detailPresentation
-                                )
-                            )
-                        ) {
-                            EmptyView()
-                        }
-                        .opacity(0)
+                    NavigationLink(destination: LazyView(JobDetailView(id: job.id))) {
+                        EmptyView()
                     }
+                    .opacity(0)
                     JobRowView(viewModel: job)
-                        .if(detailPresentation == .sheet) {
-                            $0.sheet(unwrapping: $presentedJob) {
-                                JobDetailView(
-                                    id: $0.wrappedValue,
-                                    presentation: detailPresentation
-                                )?.presentationDetents([
-                                    .medium,
-                                    .large
-                                ])
-                            }
-                            .onTapGesture {
-                                presentedJob = job.id
-                            }
-                        }
                 }
                 .swipeActions(edge: .leading) {
                     leadingSwipeActions(job: job, api: server.api)

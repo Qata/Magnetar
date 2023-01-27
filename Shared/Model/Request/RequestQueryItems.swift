@@ -12,11 +12,11 @@ struct RequestQueryItems: Hashable, Codable {
         enum QueryValue: Hashable, Codable, ExpressibleByStringLiteral, ExpressibleByNilLiteral {
             case value(String? = nil)
             case parameter(RequestParameter)
-            
+
             init(stringLiteral value: StringLiteralType) {
                 self = .value(value)
             }
-            
+
             init(nilLiteral: ()) {
                 self = .value(nil)
             }
@@ -25,7 +25,7 @@ struct RequestQueryItems: Hashable, Codable {
         let value: QueryValue
     }
     let queryItems: [QueryItem]
-    
+
     func appending(_ descriptor: Self) -> Self {
         .init(
             queryItems: queryItems + descriptor.queryItems

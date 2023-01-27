@@ -14,10 +14,9 @@ enum Status: String, Codable, Hashable, CaseIterable, Comparable, CustomStringCo
         allCases.firstIndex(of: lhs)! < allCases.firstIndex(of: rhs)!
     }
     
-    case downloadQueued
+    case queued
     case downloading
     case seeding
-    case seedQueued
     case checkingFiles
     case fileCheckQueued
     case paused

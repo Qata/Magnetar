@@ -11,7 +11,7 @@ import CasePaths
 
 public extension Sequence {
     /// Returns the first element in `self` that matches the given type.
-    func first<T>(withTypeMatching _: T.Type) -> T? {
+    func first<T>(ofType _: T.Type) -> T? {
         firstNonNil { $0 as? T }
     }
 
