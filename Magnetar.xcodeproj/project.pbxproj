@@ -24,7 +24,6 @@
 		CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
 		CB66B87A27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */; };
 		CB66B87B27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */; };
-		CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */ = {isa = PBXBuildFile; productRef = CB66B87D27BF327000C2A62F /* ShareSheetView */; };
 		CB66B88027BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */; };
 		CB66B88127BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */; };
 		CB66B88327BF7AA000C2A62F /* Swift.Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */; };
@@ -365,7 +364,6 @@
 				CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */,
 				CBBF93B627B3C06A0060CB06 /* CodeEditorView in Frameworks */,
 				CBDB1C0D28D1DBA600FCDF50 /* SwiftUINavigation in Frameworks */,
-				CB66B87E27BF327000C2A62F /* ShareSheetView in Frameworks */,
 				CB9F9E7827B791D600CA93E6 /* KeychainAccess in Frameworks */,
 				CB9F9E8427BCC52E00CA93E6 /* CasePaths in Frameworks */,
 				CBFB18162921CF1400B5AB95 /* Alamofire in Frameworks */,
@@ -777,7 +775,6 @@
 				CBBF93B527B3C06A0060CB06 /* CodeEditorView */,
 				CB9F9E7727B791D600CA93E6 /* KeychainAccess */,
 				CB9F9E8327BCC52E00CA93E6 /* CasePaths */,
-				CB66B87D27BF327000C2A62F /* ShareSheetView */,
 				CBDB1C0C28D1DBA600FCDF50 /* SwiftUINavigation */,
 				CBDB1C1228D2B95100FCDF50 /* Tagged */,
 				CB1B6F5628D2D2C7005758EA /* Overture */,
@@ -890,7 +887,6 @@
 				CBBF93B427B3C06A0060CB06 /* XCRemoteSwiftPackageReference "CodeEditorView" */,
 				CB9F9E7627B791D600CA93E6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CB9F9E8227BCC52E00CA93E6 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
-				CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */,
 				CBDB1C0B28D1DBA600FCDF50 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
 				CBDB1C1128D2B95100FCDF50 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 				CB1B6F5528D2D2C7005758EA /* XCRemoteSwiftPackageReference "swift-overture" */,
@@ -1609,14 +1605,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rebeloper/ShareSheetView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.1;
-			};
-		};
 		CB6B0F1927B25262009CE0B5 /* XCRemoteSwiftPackageReference "MonadicJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Qata/MonadicJSON/";
@@ -1714,11 +1702,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB56A32F29038F3300B1FEFF /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
-		};
-		CB66B87D27BF327000C2A62F /* ShareSheetView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB66B87C27BF327000C2A62F /* XCRemoteSwiftPackageReference "ShareSheetView" */;
-			productName = ShareSheetView;
 		};
 		CB6B0F1A27B25262009CE0B5 /* MonadicJSON */ = {
 			isa = XCSwiftPackageProductDependency;

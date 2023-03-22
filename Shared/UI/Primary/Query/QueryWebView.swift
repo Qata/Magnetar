@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Recombine
-import ShareSheetView
 import Overture
 
 enum PendingJob: Hashable, Codable {
@@ -94,7 +93,7 @@ struct QueryWebView: View {
         }
         .sheet(isPresented: $isShareSheetViewPresented) {
             if let url = webViewStore.url {
-                ShareSheetView(activityItems: [url])
+                ShareLink(item: url)
             }
         }
     }
