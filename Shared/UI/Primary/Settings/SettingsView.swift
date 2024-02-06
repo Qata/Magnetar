@@ -9,24 +9,26 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        List {
-            NavigationLink(
-                destination: ServerList(),
-                label: Label("Servers", icon: .serverRack)
-            )
-            NavigationLink(
-                destination: EmptyView(),
-                label: Label("APIs", icon: .cloudFill)
-            )
-            NavigationLink(
-                destination: List {
-                    Text("Created by Charles Maria Tor.")
-                    Text("If you find this app useful, please consider supporting its continued development over on Patreon.")
-                },
-                label: Label("Info", icon: .infoCircle)
-            )
+        NavigationStack {
+            List {
+                NavigationLink(
+                    destination: ServerList(),
+                    label: Label("Servers", icon: .serverRack)
+                )
+                NavigationLink(
+                    destination: EmptyView(),
+                    label: Label("APIs", icon: .cloudFill)
+                )
+                NavigationLink(
+                    destination: List {
+                        Text("Created by Charles Maria Tor.")
+                        Text("If you find this app useful, please consider supporting its continued development over on Patreon.")
+                    },
+                    label: Label("Info", icon: .infoCircle)
+                )
+            }
+            .navigationTitle("Settings")
         }
-        .navigationTitle("Settings")
     }
 }
 

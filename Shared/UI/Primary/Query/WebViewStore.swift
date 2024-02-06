@@ -1,12 +1,11 @@
-//
-//  WebView.swift
-//  Magnetar
-//
-//  Created by Charles Maria Tor on 17/2/22.
-//
-
 import SwiftUI
 import WebKit
+
+private extension URL {
+    var baseHost: String? {
+        host()?.split(separator: ".").suffix(2).joined(separator: ".")
+    }
+}
 
 @dynamicMemberLookup
 public class WebViewStore: ObservableObject {
@@ -69,6 +68,8 @@ public class WebViewStore: ObservableObject {
 public class WebViewCoordinator: NSObject, WKNavigationDelegate {
     public let urlDidChange: (URL?) -> Void
     public let addJob: (WebView.AddJobType, URL) -> Void
+    let blockedUrls: Set<String>
+    var currentUrl: URL?
 
     public init(
         urlDidChange: @escaping (URL?) -> Void,
@@ -76,9 +77,15 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
     ) {
         self.urlDidChange = urlDidChange
         self.addJob = addJob
+        self.blockedUrls = Bundle.main.url(forResource: "BlockedUrls", withExtension: "plist")
+            .flatMap { try? Data(contentsOf: $0) }
+            .flatMap { try? PropertyListSerialization.propertyList(from: $0, options: [], format: nil) as? [String] }
+            .map(Set.init)
+        ?? []
     }
 
     public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        currentUrl = webView.url
         urlDidChange(webView.url)
     }
 
@@ -108,6 +115,25 @@ public class WebViewCoordinator: NSObject, WKNavigationDelegate {
                 break
             }
         }
+
+//        if let host = url.baseHost {
+//            if let currentHost = currentUrl?.baseHost, host != currentHost {
+//                action = .cancel
+//                return
+//            }
+//        } else {
+//            action = .cancel
+//            return
+//        }
+
+        guard let host = url.baseHost,
+              !blockedUrls.contains(host)
+        else {
+            action = .cancel
+            return
+        }
+
+        print(":::\(url)")
     }
 }
 

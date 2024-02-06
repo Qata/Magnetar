@@ -92,6 +92,7 @@ extension Global {
         static let create = Recombine.Reducer<Global.State, SyncAction.Create, Global.Environment> { state, action, _ in
             switch action {
             case let .server(server):
+                state.persistent.servers.removeAll(where: { $0.name == server.name })
                 state.persistent.servers.append(server)
                 if state.persistent.selectedServer == nil {
                     state.persistent.selectedServer = server

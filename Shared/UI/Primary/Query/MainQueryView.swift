@@ -87,7 +87,7 @@ struct MainQueryView: View {
         }
         .navigationDestination(isPresented: $url.isPresent()) {
             if let url = url {
-                QueryWebView(url: url.flatMap { $0 })
+                WebBrowserView(url: url.flatMap { $0 })
             }
         }
         .navigationTitle("")

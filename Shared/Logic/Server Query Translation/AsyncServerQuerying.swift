@@ -111,15 +111,15 @@ extension Publisher where Output == Global.State, Failure == Never {
             )
             return URLSession.shared
                 .dataTaskPublisher(for: urlRequest)
-                .handleEvents(receiveOutput: { data, _ in
-                    Swift.print(
-                    """
-                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
-                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
-                    +++ Received \(String(describing: String(data: data, encoding: .ascii)))
-                    """
-                    )
-                })
+//                .handleEvents(receiveOutput: { data, _ in
+//                    Swift.print(
+//                    """
+//                    +++ Sent \(actionCommand.discriminator) to \(urlRequest)
+//                    +++ Body \(String(describing: urlRequest.httpBody.map(flip(curry(String.init(data:encoding:)))(.ascii))))
+//                    +++ Received \(String(describing: String(data: data, encoding: .ascii)))
+//                    """
+//                    )
+//                })
                 .mapError(AppError.urlError)
                 .flatMap(handleTask(data:response:))
                 .map {

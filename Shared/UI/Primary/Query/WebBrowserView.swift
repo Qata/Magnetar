@@ -1,10 +1,3 @@
-//
-//  QueryWebView.swift
-//  Magnetar
-//
-//  Created by Charles Maria Tor on 13/9/2022.
-//
-
 import SwiftUI
 import Recombine
 import Overture
@@ -23,7 +16,7 @@ enum PendingJob: Hashable, Codable {
     }
 }
 
-struct QueryWebView: View {
+struct WebBrowserView: View {
     let dispatch = Global.store.writeOnly(async: { $0 })
     @StateObject var webViewStore = WebViewStore()
     @Environment(\.dismiss) var dismiss

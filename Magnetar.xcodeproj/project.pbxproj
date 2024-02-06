@@ -10,6 +10,8 @@
 		CB0F3B6E2884D9CD009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
 		CB0F3B6F2884D9CE009D5AAB /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */; };
 		CB1B6F5728D2D2C7005758EA /* Overture in Frameworks */ = {isa = PBXBuildFile; productRef = CB1B6F5628D2D2C7005758EA /* Overture */; };
+		CB1F09D32B7221A400BB8D0C /* BlockedUrls.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1F09D22B7221A400BB8D0C /* BlockedUrls.plist */; };
+		CB1F09D42B7221A400BB8D0C /* BlockedUrls.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB1F09D22B7221A400BB8D0C /* BlockedUrls.plist */; };
 		CB56A33129038F3300B1FEFF /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = CB56A33029038F3300B1FEFF /* Collections */; };
 		CB56A33329038F3300B1FEFF /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = CB56A33229038F3300B1FEFF /* OrderedCollections */; };
 		CB56A3352903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */; };
@@ -20,8 +22,8 @@
 		CB577E0F27C4968600F59AB3 /* SwiftUI.Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */; };
 		CB632FAA28F01CEF00D480DA /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB632FA928F01CEF00D480DA /* Expression.swift */; };
 		CB632FAB28F01CEF00D480DA /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB632FA928F01CEF00D480DA /* Expression.swift */; };
-		CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
-		CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebView.swift */; };
+		CB66B87727BDEAAE00C2A62F /* WebViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebViewStore.swift */; };
+		CB66B87827BDEAAE00C2A62F /* WebViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87627BDEAAE00C2A62F /* WebViewStore.swift */; };
 		CB66B87A27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */; };
 		CB66B87B27BF2B5800C2A62F /* UIKit.UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */; };
 		CB66B88027BF47CF00C2A62F /* Swift.StringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */; };
@@ -181,8 +183,8 @@
 		CBADD62B28CEEC5300B0C6EA /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62928CEEC5300B0C6EA /* ErrorView.swift */; };
 		CBADD62D28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
 		CBADD62E28CEF10800B0C6EA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */; };
-		CBADD63028D078AD00B0C6EA /* QueryWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */; };
-		CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */; };
+		CBADD63028D078AD00B0C6EA /* WebBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* WebBrowserView.swift */; };
+		CBADD63128D078AD00B0C6EA /* WebBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD62F28D078AD00B0C6EA /* WebBrowserView.swift */; };
 		CBADD63328D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
 		CBADD63428D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */; };
 		CBB010FC2942B7F200771C17 /* Swift.Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */; };
@@ -240,11 +242,12 @@
 
 /* Begin PBXFileReference section */
 		CB0F3B6D2884D9CD009D5AAB /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		CB1F09D22B7221A400BB8D0C /* BlockedUrls.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BlockedUrls.plist; sourceTree = "<group>"; };
 		CB56A3342903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedCollections.OrderedDictionary.swift; sourceTree = "<group>"; };
 		CB577E0A27C4827D00F59AB3 /* Recombine.StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recombine.StoreView.swift; sourceTree = "<group>"; };
 		CB577E0D27C4968600F59AB3 /* SwiftUI.Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.Button.swift; sourceTree = "<group>"; };
 		CB632FA928F01CEF00D480DA /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
-		CB66B87627BDEAAE00C2A62F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		CB66B87627BDEAAE00C2A62F /* WebViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewStore.swift; sourceTree = "<group>"; };
 		CB66B87927BF2B5800C2A62F /* UIKit.UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKit.UIApplication.swift; sourceTree = "<group>"; };
 		CB66B87F27BF47CF00C2A62F /* Swift.StringProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.StringProtocol.swift; sourceTree = "<group>"; };
 		CB66B88227BF7AA000C2A62F /* Swift.Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.Regex.swift; sourceTree = "<group>"; };
@@ -328,7 +331,7 @@
 		CBADD62628CEEB1000B0C6EA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CBADD62928CEEC5300B0C6EA /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		CBADD62C28CEF10800B0C6EA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
-		CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryWebView.swift; sourceTree = "<group>"; };
+		CBADD62F28D078AD00B0C6EA /* WebBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebBrowserView.swift; sourceTree = "<group>"; };
 		CBADD63228D07E8C00B0C6EA /* SwiftUI.GeometryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.GeometryReader.swift; sourceTree = "<group>"; };
 		CBB010FB2942B7F200771C17 /* Swift.Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.Dictionary.swift; sourceTree = "<group>"; };
 		CBB0111C294AEDA100771C17 /* rTorrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rTorrent.swift; sourceTree = "<group>"; };
@@ -410,10 +413,10 @@
 		CB66B88627C323EB00C2A62F /* Query */ = {
 			isa = PBXGroup;
 			children = (
-				CB66B87627BDEAAE00C2A62F /* WebView.swift */,
+				CB66B87627BDEAAE00C2A62F /* WebViewStore.swift */,
 				CB66B88727C332D300C2A62F /* Add Query */,
 				CBBF938A27B2D48A0060CB06 /* MainQueryView.swift */,
-				CBADD62F28D078AD00B0C6EA /* QueryWebView.swift */,
+				CBADD62F28D078AD00B0C6EA /* WebBrowserView.swift */,
 				CB66B89127C3397400C2A62F /* WebQuery.swift */,
 			);
 			path = Query;
@@ -672,6 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6B0EDE27B25225009CE0B5 /* Assets.xcassets */,
+				CB1F09D22B7221A400BB8D0C /* BlockedUrls.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -912,6 +916,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F0827B25225009CE0B5 /* Assets.xcassets in Resources */,
+				CB1F09D32B7221A400BB8D0C /* BlockedUrls.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,6 +925,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB6B0F0927B25225009CE0B5 /* Assets.xcassets in Resources */,
+				CB1F09D42B7221A400BB8D0C /* BlockedUrls.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,12 +1033,12 @@
 				CB6B0F9527B253F2009CE0B5 /* ServerDescription.swift in Sources */,
 				CBBF938B27B2D48A0060CB06 /* MainQueryView.swift in Sources */,
 				CBBF938E27B34A5A0060CB06 /* Operators.swift in Sources */,
-				CBADD63028D078AD00B0C6EA /* QueryWebView.swift in Sources */,
+				CBADD63028D078AD00B0C6EA /* WebBrowserView.swift in Sources */,
 				CBB011292950418D00771C17 /* StructuredResponse.swift in Sources */,
 				CBADD61928C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CBADD61C28C8C51200B0C6EA /* FilterMenu.swift in Sources */,
 				CB6B0F6327B253DC009CE0B5 /* LosslessValue.swift in Sources */,
-				CB66B87727BDEAAE00C2A62F /* WebView.swift in Sources */,
+				CB66B87727BDEAAE00C2A62F /* WebViewStore.swift in Sources */,
 				CB6B0F4627B2534E009CE0B5 /* HLabelledView.swift in Sources */,
 				CB632FAA28F01CEF00D480DA /* Expression.swift in Sources */,
 				CB66B89227C3397400C2A62F /* WebQuery.swift in Sources */,
@@ -1087,7 +1093,7 @@
 				CB6B0FAF27B27AA0009CE0B5 /* AutoSorting.swift in Sources */,
 				CBDB1C1028D2B7C200FCDF50 /* ViewDidLoadModifier.swift in Sources */,
 				CB91361C28D410ED0034E67F /* RequestEndpoint.swift in Sources */,
-				CB66B87827BDEAAE00C2A62F /* WebView.swift in Sources */,
+				CB66B87827BDEAAE00C2A62F /* WebViewStore.swift in Sources */,
 				CB56A3362903910E00B1FEFF /* OrderedCollections.OrderedDictionary.swift in Sources */,
 				CB91362028D41B6A0034E67F /* Transmission.swift in Sources */,
 				CB6B0F5A27B253DC009CE0B5 /* Either.swift in Sources */,
@@ -1154,7 +1160,7 @@
 				CB9F9E8127BC89A500CA93E6 /* SwiftUI.NavigationLink.swift in Sources */,
 				CBADD61A28C8730400B0C6EA /* CommandsGroup.swift in Sources */,
 				CB66B88D27C3332300C2A62F /* ExplodedUrlView.swift in Sources */,
-				CBADD63128D078AD00B0C6EA /* QueryWebView.swift in Sources */,
+				CBADD63128D078AD00B0C6EA /* WebBrowserView.swift in Sources */,
 				CB6B0F6E27B253DC009CE0B5 /* Foundation.TimeInterval.swift in Sources */,
 				CBB0112D2950476A00771C17 /* ParseError.swift in Sources */,
 				CBA21720290B6DD1003061EB /* LazyView.swift in Sources */,

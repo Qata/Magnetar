@@ -34,6 +34,8 @@ struct AddServerForm: View {
     @State var apis: [APIDescriptor]?
     @State var usedNames: Set<Server.Name> = []
 
+    @State var editingServer: Server?
+
     @Environment(\.dismiss) var dismiss
 
     func picker(apis: [APIDescriptor]) -> some View {
@@ -103,9 +105,15 @@ struct AddServerForm: View {
                             .disabled(saveDisabled)
                     }
                     .onAppear {
-                        usedNames = .init(servers.map(\.name))
+                        usedNames = .init(
+                            servers.map(\.name)
+                        ).subtracting(
+                            editingServer
+                                .map { [$0.name] }
+                            ?? []
+                        )
                         self.apis = apis
-                        api = apis.first
+                        api = editingServer?.api ?? apis.first
                     }
                 }
             }
