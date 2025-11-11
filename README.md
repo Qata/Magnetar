@@ -2,7 +2,13 @@
 
 <img src="Resources/icon-128.png">
 
-Magnetar is a simple yet powerful file transfer remote for iOS 15 and above.
+Magnetar is a simple yet powerful file transfer remote for modern iOS.
+
+## Project Status
+
+This project is in active development and nearly ready to launch, I'm just no longer pushing changes to this repository because I can no longer afford to have it be free and open source.
+Magnetar will need to be a paid app, or have some feature(s) locked off as paid, simply due to personal circumstances; ideologically I'm a FOSS fanatic, but realistically: I have a mortgage.
+If you're a fan of BarMagnet and keen to be part of the TestFlight group for Magnetar, please join the [discussions](https://github.com/Qata/Magnetar/discussions).
 
 ## Features
 
